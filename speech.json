@@ -1,0 +1,144 @@
+{
+    "negations" : false,
+    "polite" : false,
+    "tenses": 
+    {
+        "time": {
+            "present" : {
+                "english": "I eat",
+                "japanese": "たべる",
+                "alts": []
+            },
+            "past" : {
+                "english": "I ate",
+                "japanese": "たべた",
+                "alts": []
+            },
+            "future" : {
+                "english": "I will eat",
+                "japanese": "たべる",
+                "alts": []
+            }
+        },
+        "aspect": {
+            "simple" : {
+                "english": "I eat",
+                "japanese": "たべる",
+                "alts": []
+            },
+            "progressive" : {
+                "english": "I am eating",
+                "japanese": "たべている",
+                "alts": []
+            },
+            "perfect" : {
+                "english": "I have eaten",
+                "japanese": "たべたばかり",
+                "alts": []
+            },
+            "perfect_progressive" : {
+                "english": "I have been eating",
+                "japanese": "たべている",
+                "alts": []
+            }  
+        },
+        "mood" : {
+            "indicative" : {
+                "english": "I eat",
+                "japanese": "たべる",
+                "alts": []
+            },
+            "subjunctive" : {
+                "english": "I wish I ate",
+                "japanese": "たべたらいいのに",
+                "alts": []
+            },
+            "conditional" : {
+                "english": "If I ate",
+                "japanese": "たべれば",
+                "alts": ["たべれば", "たべたら"]
+            },
+            "imperative" : {
+                "english": "Eat",
+                "japanese": "たべろ",
+                "alts": []
+            },
+            "volitional" : {
+                "english": "Let's eat",
+                "japanese": "たべよう",
+                "alts": []
+            }
+        },
+        "modals" :{
+            "potential" : {
+                "english": "I can eat",
+                "japanese": "たべられる",
+                "alts": []
+            },
+            "causative" : {
+                "english": "I make you eat",
+                "japanese": "食べさせる",
+                "alts": []
+            },
+            "deontic" : {
+                "english": "I must eat",
+                "japanese": "たべなければならない",
+                "alts": []
+            }
+        },
+        "desire" : {
+            "subject":  {
+                "english": "I want to eat",
+                "japanese": "たべたい",
+                "alts": []
+            },
+            "object": {
+                "english": "I want an apple",
+                "japanese": "りんごが欲しい",
+                "alts": []
+            },
+            "others": {
+                "english": "I want you to eat",
+                "japanese": "食べてほしい",
+                "alts": []
+            }
+
+        }
+    },
+    "state": {
+        "basic" : { 
+            "english" : "it is an apple",
+            "japanese" : "りんごだ",
+            "alts" : ["りんごです"]
+        },
+        "negative" : {
+            "english" : "it is not an apple",
+            "japanese" : "りんごじゃない",
+            "alts" : ["りんごではない"]
+        },
+        "existance" :{
+            "english" : "there is an apple",
+            "japanese" : "りんごがある",
+            "alts" : ["りんごがあります"]
+        },
+        "possessive" : {
+            "english" : "I have an apple",
+            "japanese" : "りんごがもっている",
+            "alts" : ["りんごがもっています"]
+        }
+    },
+
+    "voice" : {
+        "active" : {
+            "english": "I eat",
+            "japanese": "たべる",
+            "alts": []
+        },
+        "passive" : {
+            "english": "It is eaten by me",
+            "japanese": "食べられた",
+            "alts": []
+        }
+    }
+
+}

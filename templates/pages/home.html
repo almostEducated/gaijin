@@ -1,0 +1,32 @@
+{{define "content"}}
+
+    <div class="container">
+        <h1 class="welcome-text">よこそう</h1>
+        <p class="subtitle">Welcome to Gaijin</p>
+        <p class="description">
+            Your comprehensive platform for studying Japanese Kanji and Grammar. 
+            Master the beautiful complexity of the Japanese language with our 
+            interactive learning tools and structured curriculum.
+        </p>
+        
+        <div class="features">
+            <div class="feature">
+                <h3>漢字 (Kanji)</h3>
+                <p>Learn and practice Japanese characters with stroke order and meanings</p>
+            </div>
+            <div class="feature">
+                <h3>文法 (Grammar)</h3>
+                <p>Master Japanese grammar patterns and sentence structures</p>
+            </div>
+            <div class="feature">
+                <h3>練習 (Practice)</h3>
+                <p>Interactive exercises and quizzes to reinforce your learning</p>
+            </div>
+        </div>
+        
+        <button class="cta-button" hx-get="/api/status" hx-target="body">
+            Get Started
+        </button>
+    </div>
+
+{{end}}

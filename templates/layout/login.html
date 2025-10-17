@@ -1,0 +1,115 @@
+{{define "login"}}
+<!DOCTYPE html>
+<html lang="en">
+    <head> 
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login - Gaijin</title>
+        <link rel="stylesheet" href="/static/main.css">
+    </head>
+    <body>
+        <div class="login-page">
+            <div class="login-card">
+                <!-- Form Toggle Buttons -->
+                <div class="form-toggle">
+                    <button type="button" id="show-login" class="active">Login</button>
+                    <button type="button" id="show-register">Register</button>
+                </div>
+    
+                <!-- Login Form -->
+                <form id="login-form" class="login-form" method="POST" action="/login">
+                    <h1>Login to Gaijin</h1>
+    
+                    <!-- Response area for login messages -->
+                    <div id="login-response">
+                        {{if .Error}}
+                        <div class="error-message">
+                            {{.Error}}
+                        </div>
+                        {{end}}
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="login-username">Username</label>
+                        <input type="text" id="login-username" name="username" placeholder="Enter your username" required>
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" name="password" placeholder="Enter your password" required>
+                    </div>
+    
+                    <button type="submit" id="login-button">
+                        Login
+                    </button>
+                </form>
+    
+                <!-- Registration Form -->
+                <form id="register-form" class="login-form hidden" method="POST" action="/register">
+                    <h1>Register for Gaijin</h1>
+    
+                    <!-- Response area for registration messages -->
+                    <div id="register-response">
+                        {{if .RegisterError}}
+                        <div class="error-message">
+                            {{.RegisterError}}
+                        </div>
+                        {{end}}
+                        {{if .RegisterSuccess}}
+                        <div class="success-message">
+                            {{.RegisterSuccess}}
+                        </div>
+                        {{end}}
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="register-username">Username</label>
+                        <input type="text" id="register-username" name="username" placeholder="Choose a username" required>
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="register-email">Email</label>
+                        <input type="email" id="register-email" name="email" placeholder="Your email" required>
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="register-password">Password</label>
+                        <input type="password" id="register-password" name="password" placeholder="Choose a password" required>
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="register-confirm">Confirm Password</label>
+                        <input type="password" id="register-confirm" name="confirm" placeholder="Confirm your password" required>
+                    </div>
+    
+                    <button type="submit" id="register-button">
+                        Create Account
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <script>
+            // Toggle between login and register forms
+            const showLoginBtn = document.getElementById('show-login');
+            const showRegisterBtn = document.getElementById('show-register');
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+
+            showLoginBtn.addEventListener('click', () => {
+                showLoginBtn.classList.add('active');
+                showRegisterBtn.classList.remove('active');
+                loginForm.classList.remove('hidden');
+                registerForm.classList.add('hidden');
+            });
+
+            showRegisterBtn.addEventListener('click', () => {
+                showRegisterBtn.classList.add('active');
+                showLoginBtn.classList.remove('active');
+                registerForm.classList.remove('hidden');
+                loginForm.classList.add('hidden');
+            });
+        </script>
+    </body>
+</html>
+{{end}}

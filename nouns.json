@@ -1,0 +1,29 @@
+{
+    "cases" : {
+        "subject" : {
+            "english": "I eat",
+            "japanese": "は",
+            "alts": ["が"]
+        },
+        "object" : {
+            "english": "I eat an apple",
+            "japanese": "を",
+            "alts": []
+        },
+        "genitive" : {
+            "english": "My apple",
+            "japanese": "の",
+            "alts": []
+        },
+        "locative" : {
+            "english": "In the house",
+            "japanese": "に",
+            "alts": ["へ", "で", "と"]
+        },
+        "dative" : {
+            "english": "I give you an apple",
+            "japanese": "に",
+            "alts": []
+        }
+    }
+}

@@ -1,5 +1,164 @@
 {{define "content"}}
 <div class="container">
     <h1>Profile</h1>
+    
+    <div class="profile-section">
+        <h2>User Settings</h2>
+        <p>Coming soon...</p>
+    </div>
+    
+    <div class="profile-section">
+        <h2>⌨️ Keyboard Shortcuts</h2>
+        <p class="section-description">Use these hotkeys to navigate and interact with Gaijin more efficiently:</p>
+        
+        <div class="hotkeys-grid">
+            <div class="hotkey-item">
+                <div class="hotkey-keys">
+                    <kbd>Enter</kbd>
+                </div>
+                <div class="hotkey-description">
+                    Submit answer / Continue
+                </div>
+            </div>
+            
+            <div class="hotkey-item">
+                <div class="hotkey-keys">
+                    <kbd>Space</kbd>
+                </div>
+                <div class="hotkey-description">
+                    Reveal answer / Flip card
+                </div>
+            </div>
+            
+            <div class="hotkey-item">
+                <div class="hotkey-keys">
+                    <kbd>Esc</kbd>
+                </div>
+                <div class="hotkey-description">
+                    Close modal / Cancel
+                </div>
+            </div>
+            
+            <div class="hotkey-item">
+                <div class="hotkey-keys">
+                    <kbd>1</kbd> - <kbd>4</kbd>
+                </div>
+                <div class="hotkey-description">
+                    Select multiple choice answer
+                </div>
+            </div>
+            
+            <div class="hotkey-item">
+                <div class="hotkey-keys">
+                    <kbd>←</kbd> <kbd>→</kbd>
+                </div>
+                <div class="hotkey-description">
+                    Navigate between cards
+                </div>
+            </div>
+            
+            <div class="hotkey-item">
+                <div class="hotkey-keys">
+                    <kbd>Ctrl</kbd> + <kbd>K</kbd>
+                </div>
+                <div class="hotkey-description">
+                    Quick search
+                </div>
+            </div>
+            
+            <div class="hotkey-item">
+                <div class="hotkey-keys">
+                    <kbd>?</kbd>
+                </div>
+                <div class="hotkey-description">
+                    Show help / keyboard shortcuts
+                </div>
+            </div>
+            
+            <div class="hotkey-item">
+                <div class="hotkey-keys">
+                    <kbd>H</kbd>
+                </div>
+                <div class="hotkey-description">
+                    Go to home page
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="profile-section">
+        <h2>Study Statistics</h2>
+        <p>Coming soon...</p>
+    </div>
 </div>
+
+<style>
+.profile-section {
+    margin: 2rem 0;
+    padding: 2rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profile-section h2 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.section-description {
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+.hotkeys-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+.hotkey-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border: 1px solid #e9ecef;
+}
+
+.hotkey-keys {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    min-width: 120px;
+    margin-right: 1rem;
+}
+
+kbd {
+    display: inline-block;
+    padding: 0.3rem 0.6rem;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    color: #333;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    white-space: nowrap;
+}
+
+.hotkey-description {
+    color: #555;
+    font-size: 0.95rem;
+}
+
+.cta-button.secondary {
+    background: #6c757d;
+}
+
+.cta-button.secondary:hover {
+    background: #5a6268;
+}
+</style>
 {{end}}

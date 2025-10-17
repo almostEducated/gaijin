@@ -24,9 +24,14 @@
             </div>
         </div>
         
-        <button class="cta-button" hx-get="/api/status" hx-target="body">
-            Get Started
-        </button>
+        <div class="action-buttons">
+            <button class="cta-button" onclick="window.location.href='/study'">
+                Start Studying
+            </button>
+            <button class="cta-button secondary" onclick="window.location.href='/profile'">
+                Profile
+            </button>
+        </div>
     </div>
 
 {{end}}

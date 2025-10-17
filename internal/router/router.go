@@ -90,6 +90,10 @@ func (r *Router) SetupRoutes() {
 	r.Mux.HandleFunc("/register", r.logger.Middleware(r.authHandler.HandleRegister))
 	r.Mux.HandleFunc("/logout", r.logger.Middleware(r.authHandler.HandleLogout))
 
+	// Study routes
+	r.Mux.HandleFunc("/study", r.logger.Middleware(r.auth.Middleware(r.pageHandler.HandleStudy)))
+	r.Mux.HandleFunc("/profile", r.logger.Middleware(r.auth.Middleware(r.pageHandler.HandleProfile)))
+
 	// Static files - no logging for performance (optional)
 	r.Mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 }

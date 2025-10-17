@@ -1,0 +1,6546 @@
+[
+  {
+    "id": 4964,
+    "word": "齎らす",
+    "meaning": "to bring; to take; to bring about",
+    "furigana": "もたらす",
+    "romaji": "motarasu",
+    "level": 1
+  },
+  {
+    "id": 4971,
+    "word": "先先月",
+    "meaning": "month before last",
+    "furigana": "せんせんげつ",
+    "romaji": "sensengetsu",
+    "level": 1
+  },
+  {
+    "id": 4982,
+    "word": "造り",
+    "meaning": "make up; structure; physique",
+    "furigana": "つくり",
+    "romaji": "tsukuri",
+    "level": 1
+  },
+  {
+    "id": 4988,
+    "word": "余程",
+    "meaning": "very; greatly; much; to a large extent; quite",
+    "furigana": "よっぽど",
+    "romaji": "yoppodo",
+    "level": 1
+  },
+  {
+    "id": 4990,
+    "word": "チャンネル",
+    "meaning": "a channel",
+    "furigana": "",
+    "romaji": "channeru",
+    "level": 1
+  },
+  {
+    "id": 4991,
+    "word": "心掛け",
+    "meaning": "readiness; intention; aim",
+    "furigana": "こころがけ",
+    "romaji": "kokorogake",
+    "level": 1
+  },
+  {
+    "id": 4996,
+    "word": "取り引き",
+    "meaning": "transactions; dealings; business",
+    "furigana": "とりひき",
+    "romaji": "torihiki",
+    "level": 1
+  },
+  {
+    "id": 4998,
+    "word": "黴菌",
+    "meaning": "bacteria; germ(s)",
+    "furigana": "ばいきん",
+    "romaji": "baikin",
+    "level": 1
+  },
+  {
+    "id": 5003,
+    "word": "度忘れ",
+    "meaning": "lapse of memory; forget for a moment",
+    "furigana": "どわすれ",
+    "romaji": "dowasure",
+    "level": 1
+  },
+  {
+    "id": 5082,
+    "word": "梅干",
+    "meaning": "dried plum",
+    "furigana": "うめぼし",
+    "romaji": "umeboshi",
+    "level": 1
+  },
+  {
+    "id": 5109,
+    "word": "五月蝿い",
+    "meaning": "noisy; loud; fussy",
+    "furigana": "うるさい",
+    "romaji": "urusai",
+    "level": 1
+  },
+  {
+    "id": 5132,
+    "word": "現われる",
+    "meaning": "to appear; to come in sight; to become visible; to come out; to embody; to materialize; to express oneself",
+    "furigana": "あらわれる",
+    "romaji": "arawareru",
+    "level": 1
+  },
+  {
+    "id": 5139,
+    "word": "伊井",
+    "meaning": "that one; Italy",
+    "furigana": "いい",
+    "romaji": "ii",
+    "level": 1
+  },
+  {
+    "id": 5182,
+    "word": "箇箇",
+    "meaning": "individual; separate",
+    "furigana": "ここ",
+    "romaji": "koko",
+    "level": 1
+  },
+  {
+    "id": 5191,
+    "word": "活ける",
+    "meaning": "to arrange (flowers)",
+    "furigana": "いける",
+    "romaji": "ikeru",
+    "level": 1
+  },
+  {
+    "id": 5205,
+    "word": "拐う",
+    "meaning": "to carry off; to run away with; to kidnap; to abduct",
+    "furigana": "さらう",
+    "romaji": "sarau",
+    "level": 1
+  },
+  {
+    "id": 5236,
+    "word": "控室",
+    "meaning": "waiting room",
+    "furigana": "ひかえしつ",
+    "romaji": "hikaeshitsu",
+    "level": 1
+  },
+  {
+    "id": 5246,
+    "word": "手当て",
+    "meaning": "allowance; compensation; treatment; medical care",
+    "furigana": "てあて",
+    "romaji": "teate",
+    "level": 1
+  },
+  {
+    "id": 5258,
+    "word": "填まる",
+    "meaning": "to get into; to go into; to fit; to be fit for; to suit; to fall into; to plunge into; to be deceived; to be",
+    "furigana": "はまる",
+    "romaji": "hamaru",
+    "level": 1
+  },
+  {
+    "id": 5259,
+    "word": "加留多",
+    "meaning": "(pt:) (n) playing cards (pt: carta)",
+    "furigana": "かるた",
+    "romaji": "karuta",
+    "level": 1
+  },
+  {
+    "id": 5275,
+    "word": "あられ",
+    "meaning": "kind of cookie; cartoon character",
+    "furigana": "",
+    "romaji": "arare",
+    "level": 1
+  },
+  {
+    "id": 5293,
+    "word": "沈殿",
+    "meaning": "precipitation; settlement",
+    "furigana": "ちんでん",
+    "romaji": "chinden",
+    "level": 1
+  },
+  {
+    "id": 5307,
+    "word": "傑",
+    "meaning": "excellence",
+    "furigana": "けつ",
+    "romaji": "ketsu",
+    "level": 1
+  },
+  {
+    "id": 5335,
+    "word": "織",
+    "meaning": "weave; weaving; woven item",
+    "furigana": "おり",
+    "romaji": "ori",
+    "level": 1
+  },
+  {
+    "id": 5347,
+    "word": "お蔭様で",
+    "meaning": "Thanks to god; thanks to you",
+    "furigana": "おかげさまで",
+    "romaji": "okagesamade",
+    "level": 1
+  },
+  {
+    "id": 5371,
+    "word": "決まり悪い",
+    "meaning": "feeling awkward; being ashamed",
+    "furigana": "きまりわるい",
+    "romaji": "kimariwarui",
+    "level": 1
+  },
+  {
+    "id": 5402,
+    "word": "ヶ月",
+    "meaning": "#NAME?",
+    "furigana": "かげつ",
+    "romaji": "kagetsu",
+    "level": 1
+  },
+  {
+    "id": 5419,
+    "word": "納まる",
+    "meaning": "to be obtained; to end; to settle into; to fit into; to be settled; to be paid; to be delivered",
+    "furigana": "おさまる",
+    "romaji": "osamaru",
+    "level": 1
+  },
+  {
+    "id": 5442,
+    "word": "膨脹",
+    "meaning": "expansion; swelling; increase; growth",
+    "furigana": "ぼうちょう",
+    "romaji": "bōchō",
+    "level": 1
+  },
+  {
+    "id": 5547,
+    "word": "ウェートレス",
+    "meaning": "waitress",
+    "furigana": "",
+    "romaji": "wētoresu",
+    "level": 1
+  },
+  {
+    "id": 5550,
+    "word": "果ない",
+    "meaning": "fleeting; transient; short-lived; momentary; vain; fickle; miserable; empty; ephemeral",
+    "furigana": "はかない",
+    "romaji": "hakanai",
+    "level": 1
+  },
+  {
+    "id": 5562,
+    "word": "並み",
+    "meaning": "average; medium; common; ordinary",
+    "furigana": "なみ",
+    "romaji": "nami",
+    "level": 1
+  },
+  {
+    "id": 5590,
+    "word": "生温い",
+    "meaning": "lukewarm; halfhearted",
+    "furigana": "なまぬるい",
+    "romaji": "namanurui",
+    "level": 1
+  },
+  {
+    "id": 5594,
+    "word": "嘗める",
+    "meaning": "to lick; to taste; to experience; to make fun of; to make light of; to put down; to treat with contempt",
+    "furigana": "なめる",
+    "romaji": "nameru",
+    "level": 1
+  },
+  {
+    "id": 5660,
+    "word": "届け",
+    "meaning": "report; notification; registration",
+    "furigana": "とどけ",
+    "romaji": "todoke",
+    "level": 1
+  },
+  {
+    "id": 5663,
+    "word": "造る",
+    "meaning": "to make; to create; to manufacture; to draw up; to write; to compose; to build; to coin; to cultivate; to org",
+    "furigana": "つくる",
+    "romaji": "tsukuru",
+    "level": 1
+  },
+  {
+    "id": 5670,
+    "word": "屡",
+    "meaning": "often; again and again; frequently",
+    "furigana": "しばしば",
+    "romaji": "shibashiba",
+    "level": 1
+  },
+  {
+    "id": 5747,
+    "word": "寄こす",
+    "meaning": "to send; to forward",
+    "furigana": "よこす",
+    "romaji": "yokosu",
+    "level": 1
+  },
+  {
+    "id": 5749,
+    "word": "我がまま",
+    "meaning": "selfishness; egoism; wilfulness; disobedience; whim",
+    "furigana": "わがまま",
+    "romaji": "wagamama",
+    "level": 1
+  },
+  {
+    "id": 5772,
+    "word": "宛",
+    "meaning": "addressed to",
+    "furigana": "あて",
+    "romaji": "ate",
+    "level": 1
+  },
+  {
+    "id": 5781,
+    "word": "御負け",
+    "meaning": "1.  a discount; a prize; 2.  something additional; bonus; an extra; 3.  an exaggeration",
+    "furigana": "おまけ",
+    "romaji": "omake",
+    "level": 1
+  },
+  {
+    "id": 5791,
+    "word": "受け取り",
+    "meaning": "receipt",
+    "furigana": "うけとり",
+    "romaji": "uketori",
+    "level": 1
+  },
+  {
+    "id": 5797,
+    "word": "而も",
+    "meaning": "moreover; furthermore; nevertheless; and yet",
+    "furigana": "しかも",
+    "romaji": "shikamo",
+    "level": 1
+  },
+  {
+    "id": 5802,
+    "word": "結び付く",
+    "meaning": "to be connected or related; to join together",
+    "furigana": "むすびつく",
+    "romaji": "musubitsuku",
+    "level": 1
+  },
+  {
+    "id": 5832,
+    "word": "目盛",
+    "meaning": "scale; gradations",
+    "furigana": "めもり",
+    "romaji": "memori",
+    "level": 1
+  },
+  {
+    "id": 5837,
+    "word": "余所見",
+    "meaning": "looking away; looking aside",
+    "furigana": "よそみ",
+    "romaji": "yosomi",
+    "level": 1
+  },
+  {
+    "id": 5864,
+    "word": "あくどい",
+    "meaning": "1.  gaudy; showy; excessive; 2.  vicious",
+    "furigana": "",
+    "romaji": "akudoi",
+    "level": 1
+  },
+  {
+    "id": 5882,
+    "word": "代わる",
+    "meaning": "to take the place of; to relieve; to be substituted for; to be exchanged; to change places with; to take",
+    "furigana": "かわる",
+    "romaji": "kawaru",
+    "level": 1
+  },
+  {
+    "id": 5916,
+    "word": "俄か",
+    "meaning": "sudden; abrupt; unexpected; improvised; offhand",
+    "furigana": "にわか",
+    "romaji": "niwaka",
+    "level": 1
+  },
+  {
+    "id": 5937,
+    "word": "見積り",
+    "meaning": "estimation; quotation",
+    "furigana": "みつもり",
+    "romaji": "mitsumori",
+    "level": 1
+  },
+  {
+    "id": 5945,
+    "word": "心掛ける",
+    "meaning": "to bear in mind; to aim to do",
+    "furigana": "こころがける",
+    "romaji": "kokorogakeru",
+    "level": 1
+  },
+  {
+    "id": 6072,
+    "word": "雫",
+    "meaning": "drop (of water)",
+    "furigana": "しずく",
+    "romaji": "shizuku",
+    "level": 1
+  },
+  {
+    "id": 6089,
+    "word": "煌々と",
+    "meaning": "brilliantly; brightly",
+    "furigana": "こうこうと",
+    "romaji": "kōkōto",
+    "level": 1
+  },
+  {
+    "id": 6092,
+    "word": "可哀想",
+    "meaning": "poor; pitiable; pathetic",
+    "furigana": "かわいそう",
+    "romaji": "kawaisō",
+    "level": 1
+  },
+  {
+    "id": 6124,
+    "word": "トランジスター",
+    "meaning": "transistor",
+    "furigana": "",
+    "romaji": "toranjisutā",
+    "level": 1
+  },
+  {
+    "id": 6131,
+    "word": "損なう",
+    "meaning": "to harm; to hurt; to injure; to damage; to fail in doing",
+    "furigana": "そこなう",
+    "romaji": "sokonau",
+    "level": 1
+  },
+  {
+    "id": 6184,
+    "word": "見すぼらしい",
+    "meaning": "shabby; seedy",
+    "furigana": "みすぼらしい",
+    "romaji": "misuborashii",
+    "level": 1
+  },
+  {
+    "id": 6189,
+    "word": "焚火",
+    "meaning": "(open) fire",
+    "furigana": "たきび",
+    "romaji": "takibi",
+    "level": 1
+  },
+  {
+    "id": 6244,
+    "word": "有様",
+    "meaning": "state; condition; circumstances; the way things are or should be; truth",
+    "furigana": "ありさま",
+    "romaji": "arisama",
+    "level": 1
+  },
+  {
+    "id": 6247,
+    "word": "厭々",
+    "meaning": "unwillingly; grudgingly; shaking head in refusal (to children)",
+    "furigana": "いやいや",
+    "romaji": "iyaiya",
+    "level": 1
+  },
+  {
+    "id": 6252,
+    "word": "凡ゆる",
+    "meaning": "all; every",
+    "furigana": "あらゆる",
+    "romaji": "arayuru",
+    "level": 1
+  },
+  {
+    "id": 6257,
+    "word": "篭る",
+    "meaning": "to seclude oneself; to be confined in; to be implied; to be stuffy",
+    "furigana": "こもる",
+    "romaji": "komoru",
+    "level": 1
+  },
+  {
+    "id": 6291,
+    "word": "その外",
+    "meaning": "besides; in addition; the rest",
+    "furigana": "そのほか",
+    "romaji": "sonohoka",
+    "level": 1
+  },
+  {
+    "id": 6297,
+    "word": "日頃",
+    "meaning": "normally; habitually",
+    "furigana": "ひごろ",
+    "romaji": "higoro",
+    "level": 1
+  },
+  {
+    "id": 6337,
+    "word": "手掛ける",
+    "meaning": "to handle; to manage; to work with; to rear; to look after; to have experience with",
+    "furigana": "てがける",
+    "romaji": "tegakeru",
+    "level": 1
+  },
+  {
+    "id": 6349,
+    "word": "にも拘らず",
+    "meaning": "in spite of; nevertheless",
+    "furigana": "にもかかわらず",
+    "romaji": "nimokakawarazu",
+    "level": 1
+  },
+  {
+    "id": 6365,
+    "word": "籤引",
+    "meaning": "lottery; drawn lot",
+    "furigana": "くじびき",
+    "romaji": "kujibiki",
+    "level": 1
+  },
+  {
+    "id": 6373,
+    "word": "こだわる",
+    "meaning": "to fuss over; to be particular about; to be concerned about",
+    "furigana": "",
+    "romaji": "kodawaru",
+    "level": 1
+  },
+  {
+    "id": 6381,
+    "word": "さっと",
+    "meaning": "quickly; suddenly",
+    "furigana": "",
+    "romaji": "satto",
+    "level": 1
+  },
+  {
+    "id": 6394,
+    "word": "花びら",
+    "meaning": "(flower) petal",
+    "furigana": "はなびら",
+    "romaji": "hanabira",
+    "level": 1
+  },
+  {
+    "id": 6397,
+    "word": "焦げ茶",
+    "meaning": "black tea",
+    "furigana": "こげちゃ",
+    "romaji": "kogecha",
+    "level": 1
+  },
+  {
+    "id": 6412,
+    "word": "出合う",
+    "meaning": "to meet by chance; to come across; to happen to encounter; to hold a rendezvous; to have a date",
+    "furigana": "であう",
+    "romaji": "deau",
+    "level": 1
+  },
+  {
+    "id": 6414,
+    "word": "やり遂げる",
+    "meaning": "to accomplish",
+    "furigana": "やりとげる",
+    "romaji": "yaritogeru",
+    "level": 1
+  },
+  {
+    "id": 6422,
+    "word": "歯磨",
+    "meaning": "dentifrice; toothpaste",
+    "furigana": "はみがき",
+    "romaji": "hamigaki",
+    "level": 1
+  },
+  {
+    "id": 6426,
+    "word": "捻じれる",
+    "meaning": "to twist; to wrench; to screw",
+    "furigana": "ねじれる",
+    "romaji": "nejireru",
+    "level": 1
+  },
+  {
+    "id": 6472,
+    "word": "目蓋",
+    "meaning": "eyelid",
+    "furigana": "まぶた",
+    "romaji": "mabuta",
+    "level": 1
+  },
+  {
+    "id": 6477,
+    "word": "塵取り",
+    "meaning": "dustpan",
+    "furigana": "ちりとり",
+    "romaji": "chiritori",
+    "level": 1
+  },
+  {
+    "id": 6492,
+    "word": "見舞",
+    "meaning": "enquiry; expression of sympathy; expression of concern",
+    "furigana": "みまい",
+    "romaji": "mimai",
+    "level": 1
+  },
+  {
+    "id": 6504,
+    "word": "御免ください",
+    "meaning": "May I come in?",
+    "furigana": "ごめんください",
+    "romaji": "gomenkudasai",
+    "level": 1
+  },
+  {
+    "id": 6536,
+    "word": "於",
+    "meaning": "at; in; on",
+    "furigana": "お",
+    "romaji": "o",
+    "level": 1
+  },
+  {
+    "id": 6541,
+    "word": "巨",
+    "meaning": "big; large; great",
+    "furigana": "こ",
+    "romaji": "ko",
+    "level": 1
+  },
+  {
+    "id": 6563,
+    "word": "通りかかる",
+    "meaning": "to happen to pass by",
+    "furigana": "とおりかかる",
+    "romaji": "tōrikakaru",
+    "level": 1
+  },
+  {
+    "id": 6565,
+    "word": "結び付き",
+    "meaning": "connection; relation",
+    "furigana": "むすびつき",
+    "romaji": "musubitsuki",
+    "level": 1
+  },
+  {
+    "id": 6588,
+    "word": "もろに",
+    "meaning": "completely; all the way",
+    "furigana": "",
+    "romaji": "moroni",
+    "level": 1
+  },
+  {
+    "id": 6590,
+    "word": "為来り",
+    "meaning": "customs",
+    "furigana": "しきたり",
+    "romaji": "shikitari",
+    "level": 1
+  },
+  {
+    "id": 6596,
+    "word": "申出",
+    "meaning": "proposal; request; claim; report; notice",
+    "furigana": "もうしで",
+    "romaji": "mōshide",
+    "level": 1
+  },
+  {
+    "id": 6629,
+    "word": "依って",
+    "meaning": "therefore; consequently; accordingly; because of",
+    "furigana": "よって",
+    "romaji": "yotte",
+    "level": 1
+  },
+  {
+    "id": 6634,
+    "word": "倣",
+    "meaning": "imitate; follow; emulate",
+    "furigana": "ほう",
+    "romaji": "hō",
+    "level": 1
+  },
+  {
+    "id": 6650,
+    "word": "働",
+    "meaning": "work; labor",
+    "furigana": "どう",
+    "romaji": "dō",
+    "level": 1
+  },
+  {
+    "id": 6722,
+    "word": "贋物",
+    "meaning": "imitation; counterfeit; forgery; sham",
+    "furigana": "がんぶつ",
+    "romaji": "ganbutsu",
+    "level": 1
+  },
+  {
+    "id": 6742,
+    "word": "真ん丸い",
+    "meaning": "perfectly circular",
+    "furigana": "まんまるい",
+    "romaji": "manmarui",
+    "level": 1
+  },
+  {
+    "id": 6745,
+    "word": "其れ程",
+    "meaning": "to that degree; extent",
+    "furigana": "それほど",
+    "romaji": "sorehodo",
+    "level": 1
+  },
+  {
+    "id": 6766,
+    "word": "愛でたい",
+    "meaning": "auspicious",
+    "furigana": "めでたい",
+    "romaji": "medetai",
+    "level": 1
+  },
+  {
+    "id": 6794,
+    "word": "或る",
+    "meaning": "a certain...; some...",
+    "furigana": "ある",
+    "romaji": "aru",
+    "level": 1
+  },
+  {
+    "id": 6838,
+    "word": "見せ物",
+    "meaning": "show; exhibition",
+    "furigana": "みせもの",
+    "romaji": "misemono",
+    "level": 1
+  },
+  {
+    "id": 6900,
+    "word": "傷付く",
+    "meaning": "to be hurt; to be wounded; to get injured",
+    "furigana": "きずつく",
+    "romaji": "kizutsuku",
+    "level": 1
+  },
+  {
+    "id": 6904,
+    "word": "お八",
+    "meaning": "1.  (uk) between meal snack; afternoon refreshment; afternoon tea; 2.  mid-day snack",
+    "furigana": "おやつ",
+    "romaji": "oyatsu",
+    "level": 1
+  },
+  {
+    "id": 6925,
+    "word": "御手洗い",
+    "meaning": "toilet; restroom; lavatory; bathroom (US)",
+    "furigana": "おてあらい",
+    "romaji": "otearai",
+    "level": 1
+  },
+  {
+    "id": 6940,
+    "word": "擦れ違い",
+    "meaning": "chance encounter",
+    "furigana": "すれちがい",
+    "romaji": "surechigai",
+    "level": 1
+  },
+  {
+    "id": 6966,
+    "word": "一人でに",
+    "meaning": "by itself; automatically; naturally",
+    "furigana": "ひとりでに",
+    "romaji": "hitorideni",
+    "level": 1
+  },
+  {
+    "id": 6968,
+    "word": "明々後日",
+    "meaning": "two days after tomorrow",
+    "furigana": "しあさって",
+    "romaji": "shiasatte",
+    "level": 1
+  },
+  {
+    "id": 6996,
+    "word": "貴い",
+    "meaning": "precious; valuable; priceless; noble; exalted; sacred",
+    "furigana": "たっとい",
+    "romaji": "tattoi",
+    "level": 1
+  },
+  {
+    "id": 6997,
+    "word": "於いて",
+    "meaning": "at; in; on",
+    "furigana": "おいて",
+    "romaji": "oite",
+    "level": 1
+  },
+  {
+    "id": 7002,
+    "word": "捻子",
+    "meaning": "screw; helix; spiral",
+    "furigana": "ねじ",
+    "romaji": "neji",
+    "level": 1
+  },
+  {
+    "id": 7025,
+    "word": "規範",
+    "meaning": "model; standard; pattern; norm; criterion; example",
+    "furigana": "きはん",
+    "romaji": "kihan",
+    "level": 1
+  },
+  {
+    "id": 7038,
+    "word": "仕舞",
+    "meaning": "end; termination; informal (Noh play)",
+    "furigana": "しまい",
+    "romaji": "shimai",
+    "level": 1
+  },
+  {
+    "id": 7047,
+    "word": "藍褸",
+    "meaning": "rag; scrap; tattered clothes; fault (esp. in a pretense); defect; run-down or junky",
+    "furigana": "ぼろ",
+    "romaji": "boro",
+    "level": 1
+  },
+  {
+    "id": 7081,
+    "word": "物置き",
+    "meaning": "storeroom",
+    "furigana": "ものおき",
+    "romaji": "monōki",
+    "level": 1
+  },
+  {
+    "id": 7094,
+    "word": "擽ぐったい",
+    "meaning": "ticklish",
+    "furigana": "くすぐったい",
+    "romaji": "kusuguttai",
+    "level": 1
+  },
+  {
+    "id": 7128,
+    "word": "戸締り",
+    "meaning": "closing up; fastening the doors",
+    "furigana": "とじまり",
+    "romaji": "tojimari",
+    "level": 1
+  },
+  {
+    "id": 7132,
+    "word": "ジーパン",
+    "meaning": "jeans (lit: jeans pants); dungarees",
+    "furigana": "",
+    "romaji": "jīpan",
+    "level": 1
+  },
+  {
+    "id": 7142,
+    "word": "始めまして",
+    "meaning": "How do you do?; I am glad to meet you",
+    "furigana": "はじめまして",
+    "romaji": "hajimemashite",
+    "level": 1
+  },
+  {
+    "id": 7168,
+    "word": "腿",
+    "meaning": "thigh; femur",
+    "furigana": "もも",
+    "romaji": "momo",
+    "level": 1
+  },
+  {
+    "id": 7172,
+    "word": "僅",
+    "meaning": "a little; small quantity",
+    "furigana": "きん",
+    "romaji": "kin",
+    "level": 1
+  },
+  {
+    "id": 7195,
+    "word": "恰度",
+    "meaning": "just; right; exactly",
+    "furigana": "ちょうど",
+    "romaji": "chōdo",
+    "level": 1
+  },
+  {
+    "id": 7210,
+    "word": "百科辞典",
+    "meaning": "encyclopedia",
+    "furigana": "ひゃっかじてん",
+    "romaji": "hyakkajiten",
+    "level": 1
+  },
+  {
+    "id": 7215,
+    "word": "吊り革",
+    "meaning": "strap",
+    "furigana": "つりかわ",
+    "romaji": "tsurikawa",
+    "level": 1
+  },
+  {
+    "id": 7237,
+    "word": "ご座います",
+    "meaning": "to be (polite); to exist",
+    "furigana": "ございます",
+    "romaji": "gozaimasu",
+    "level": 1
+  },
+  {
+    "id": 7241,
+    "word": "荷造り",
+    "meaning": "packing; baling; crating",
+    "furigana": "にづくり",
+    "romaji": "nizukuri",
+    "level": 1
+  },
+  {
+    "id": 7249,
+    "word": "伐",
+    "meaning": "strike; attack; punish",
+    "furigana": "ばつ",
+    "romaji": "batsu",
+    "level": 1
+  },
+  {
+    "id": 7257,
+    "word": "兼ねて",
+    "meaning": "simultaneously",
+    "furigana": "かねて",
+    "romaji": "kanete",
+    "level": 1
+  },
+  {
+    "id": 7274,
+    "word": "係り",
+    "meaning": "official; duty; person in charge",
+    "furigana": "かかり",
+    "romaji": "kakari",
+    "level": 1
+  },
+  {
+    "id": 7298,
+    "word": "逆上る",
+    "meaning": "to go back; to go upstream; to make retroactive",
+    "furigana": "さかのぼる",
+    "romaji": "sakanoboru",
+    "level": 1
+  },
+  {
+    "id": 7300,
+    "word": "建前",
+    "meaning": "face; official stance; public position or attitude (as opposed to private thoughts)",
+    "furigana": "たてまえ",
+    "romaji": "tatemae",
+    "level": 1
+  },
+  {
+    "id": 7319,
+    "word": "いやに",
+    "meaning": "awfully; terribly",
+    "furigana": "",
+    "romaji": "iyani",
+    "level": 1
+  },
+  {
+    "id": 7362,
+    "word": "跨がる",
+    "meaning": "to extend over or into; to straddle",
+    "furigana": "またがる",
+    "romaji": "matagaru",
+    "level": 1
+  },
+  {
+    "id": 7377,
+    "word": "何時の間にか",
+    "meaning": "before one knows; unnoticed; unawares",
+    "furigana": "いつのまにか",
+    "romaji": "itsunomanika",
+    "level": 1
+  },
+  {
+    "id": 7381,
+    "word": "好い",
+    "meaning": "good",
+    "furigana": "よい",
+    "romaji": "yoi",
+    "level": 1
+  },
+  {
+    "id": 7389,
+    "word": "馴らす",
+    "meaning": "to domesticate; to tame",
+    "furigana": "ならす",
+    "romaji": "narasu",
+    "level": 1
+  },
+  {
+    "id": 7407,
+    "word": "割引き",
+    "meaning": "discount; reduction; rebate; tenths discounted",
+    "furigana": "わりびき",
+    "romaji": "waribiki",
+    "level": 1
+  },
+  {
+    "id": 7420,
+    "word": "濠",
+    "meaning": "moat",
+    "furigana": "ごう",
+    "romaji": "gō",
+    "level": 1
+  },
+  {
+    "id": 7458,
+    "word": "えい",
+    "meaning": "ray (fish)",
+    "furigana": "",
+    "romaji": "ei",
+    "level": 1
+  },
+  {
+    "id": 7465,
+    "word": "遣い",
+    "meaning": "mission; simple task; doing",
+    "furigana": "つかい",
+    "romaji": "tsukai",
+    "level": 1
+  },
+  {
+    "id": 7471,
+    "word": "転転",
+    "meaning": "rolling about; moving from place to place; being passed around repeatedly",
+    "furigana": "てんてん",
+    "romaji": "tenten",
+    "level": 1
+  },
+  {
+    "id": 7499,
+    "word": "依",
+    "meaning": "depending on",
+    "furigana": "い",
+    "romaji": "i",
+    "level": 1
+  },
+  {
+    "id": 7506,
+    "word": "オーケー",
+    "meaning": "OK",
+    "furigana": "",
+    "romaji": "ōkē",
+    "level": 1
+  },
+  {
+    "id": 7538,
+    "word": "不山戯る",
+    "meaning": "to romp; to gambol; to frolic; to joke; to make fun of; to flirt",
+    "furigana": "ふざける",
+    "romaji": "fuzakeru",
+    "level": 1
+  },
+  {
+    "id": 7543,
+    "word": "しいんと",
+    "meaning": "silent (as the grave); (deathly) quiet",
+    "furigana": "",
+    "romaji": "shiinto",
+    "level": 1
+  },
+  {
+    "id": 7545,
+    "word": "空ろ",
+    "meaning": "blank; cavity; hollow; empty (space)",
+    "furigana": "うつろ",
+    "romaji": "utsuro",
+    "level": 1
+  },
+  {
+    "id": 7547,
+    "word": "此れ等",
+    "meaning": "these",
+    "furigana": "これら",
+    "romaji": "korera",
+    "level": 1
+  },
+  {
+    "id": 7557,
+    "word": "滅茶苦茶",
+    "meaning": "absurd; unreasonable; excessive; messed up; spoiled; wreaked",
+    "furigana": "めちゃくちゃ",
+    "romaji": "mechakucha",
+    "level": 1
+  },
+  {
+    "id": 7569,
+    "word": "なんだかんだ",
+    "meaning": "something or other",
+    "furigana": "",
+    "romaji": "nandakanda",
+    "level": 1
+  },
+  {
+    "id": 7581,
+    "word": "尊ぶ",
+    "meaning": "to value; to prize; to esteem",
+    "furigana": "たっとぶ",
+    "romaji": "tattobu",
+    "level": 1
+  },
+  {
+    "id": 7599,
+    "word": "屎尿",
+    "meaning": "excreta; raw sewage; human waste; night soil",
+    "furigana": "しにょう",
+    "romaji": "shinyō",
+    "level": 1
+  },
+  {
+    "id": 7613,
+    "word": "戴きます",
+    "meaning": "expression of gratitude before meals",
+    "furigana": "いただきます",
+    "romaji": "itadakimasu",
+    "level": 1
+  },
+  {
+    "id": 7616,
+    "word": "お洒落",
+    "meaning": "smartly dressed; someone smartly dressed; fashion-conscious",
+    "furigana": "おしゃれ",
+    "romaji": "oshare",
+    "level": 1
+  },
+  {
+    "id": 7654,
+    "word": "下品",
+    "meaning": "inferior article",
+    "furigana": "かひん",
+    "romaji": "kahin",
+    "level": 1
+  },
+  {
+    "id": 7664,
+    "word": "絶つ",
+    "meaning": "to sever; to cut off; to suppress; to abstain (from)",
+    "furigana": "たつ",
+    "romaji": "tatsu",
+    "level": 1
+  },
+  {
+    "id": 7666,
+    "word": "伜",
+    "meaning": "son; my son",
+    "furigana": "せがれ",
+    "romaji": "segare",
+    "level": 1
+  },
+  {
+    "id": 7679,
+    "word": "辿り着く",
+    "meaning": "to grope along to; to struggle on to; to arrive somewhere after a struggle",
+    "furigana": "たどりつく",
+    "romaji": "tadoritsuku",
+    "level": 1
+  },
+  {
+    "id": 7682,
+    "word": "其れ故",
+    "meaning": "therefore; for that reason; so",
+    "furigana": "それゆえ",
+    "romaji": "soreyue",
+    "level": 1
+  },
+  {
+    "id": 7685,
+    "word": "ご苦労様",
+    "meaning": "Thank you very much for your....",
+    "furigana": "ごくろうさま",
+    "romaji": "gokurōsama",
+    "level": 1
+  },
+  {
+    "id": 7691,
+    "word": "しまった",
+    "meaning": "Damn it!",
+    "furigana": "",
+    "romaji": "shimatta",
+    "level": 1
+  },
+  {
+    "id": 7716,
+    "word": "傾",
+    "meaning": "lean; incline",
+    "furigana": "けい",
+    "romaji": "kei",
+    "level": 1
+  },
+  {
+    "id": 7806,
+    "word": "思い付き",
+    "meaning": "plan; idea; suggestion",
+    "furigana": "おもいつき",
+    "romaji": "omoitsuki",
+    "level": 1
+  },
+  {
+    "id": 7846,
+    "word": "錆び",
+    "meaning": "rust (colour)",
+    "furigana": "さび",
+    "romaji": "sabi",
+    "level": 1
+  },
+  {
+    "id": 7880,
+    "word": "止むを得ない",
+    "meaning": "cannot be helped; unavoidable",
+    "furigana": "やむをえない",
+    "romaji": "yamuoenai",
+    "level": 1
+  },
+  {
+    "id": 7908,
+    "word": "厭やらしい",
+    "meaning": "detestable; disagreeable",
+    "furigana": "いやらしい",
+    "romaji": "iyarashii",
+    "level": 1
+  },
+  {
+    "id": 7917,
+    "word": "濫用",
+    "meaning": "abuse; misuse; misappropriation; using to excess",
+    "furigana": "らんよう",
+    "romaji": "ran'yō",
+    "level": 1
+  },
+  {
+    "id": 7935,
+    "word": "傲る",
+    "meaning": "to be proud",
+    "furigana": "おごる",
+    "romaji": "ogoru",
+    "level": 1
+  },
+  {
+    "id": 7965,
+    "word": "泌み泌み",
+    "meaning": "keenly; deeply; heartily",
+    "furigana": "しみじみ",
+    "romaji": "shimijimi",
+    "level": 1
+  },
+  {
+    "id": 8007,
+    "word": "物体ない",
+    "meaning": "too good; more than one deserves; wasteful; sacrilegious; unworthy of",
+    "furigana": "もったいない",
+    "romaji": "mottainai",
+    "level": 1
+  },
+  {
+    "id": 8014,
+    "word": "火燵",
+    "meaning": "table with heater; (orig) charcoal brazier in a floor well",
+    "furigana": "こたつ",
+    "romaji": "kotatsu",
+    "level": 1
+  },
+  {
+    "id": 8021,
+    "word": "跡切れる",
+    "meaning": "to pause; to be interrupted",
+    "furigana": "とぎれる",
+    "romaji": "togireru",
+    "level": 1
+  },
+  {
+    "id": 8027,
+    "word": "有難う",
+    "meaning": "Thank you",
+    "furigana": "ありがとう",
+    "romaji": "arigatō",
+    "level": 1
+  },
+  {
+    "id": 8033,
+    "word": "保障",
+    "meaning": "guarantee; security; assurance; pledge; warranty",
+    "furigana": "ほしょう",
+    "romaji": "hoshō",
+    "level": 1
+  },
+  {
+    "id": 8046,
+    "word": "体付き",
+    "meaning": "body build; figure",
+    "furigana": "からだつき",
+    "romaji": "karadatsuki",
+    "level": 1
+  },
+  {
+    "id": 8048,
+    "word": "いく",
+    "meaning": "to come; to orgasm",
+    "furigana": "",
+    "romaji": "iku",
+    "level": 1
+  },
+  {
+    "id": 8081,
+    "word": "左程",
+    "meaning": "(not) very; (not) much",
+    "furigana": "さほど",
+    "romaji": "sahodo",
+    "level": 1
+  },
+  {
+    "id": 8100,
+    "word": "可成",
+    "meaning": "considerably; fairly; quite",
+    "furigana": "かなり",
+    "romaji": "kanari",
+    "level": 1
+  },
+  {
+    "id": 8115,
+    "word": "久し振り",
+    "meaning": "after a long time",
+    "furigana": "ひさしぶり",
+    "romaji": "hisashiburi",
+    "level": 1
+  },
+  {
+    "id": 8122,
+    "word": "噛る",
+    "meaning": "to chew; to bite (at); to gnaw; to nibble; to munch; to crunch; to have a smattering of",
+    "furigana": "かじる",
+    "romaji": "kajiru",
+    "level": 1
+  },
+  {
+    "id": 8128,
+    "word": "歎",
+    "meaning": "grief; sigh; lamentation",
+    "furigana": "たん",
+    "romaji": "tan",
+    "level": 1
+  },
+  {
+    "id": 8171,
+    "word": "まごつく",
+    "meaning": "to be confused; to be flustered",
+    "furigana": "",
+    "romaji": "magotsuku",
+    "level": 1
+  },
+  {
+    "id": 8180,
+    "word": "見掛ける",
+    "meaning": "to (happen to) see; to notice; to catch sight of",
+    "furigana": "みかける",
+    "romaji": "mikakeru",
+    "level": 1
+  },
+  {
+    "id": 8192,
+    "word": "現われ",
+    "meaning": "embodiment; materialization",
+    "furigana": "あらわれ",
+    "romaji": "araware",
+    "level": 1
+  },
+  {
+    "id": 8218,
+    "word": "散蒔く",
+    "meaning": "to disseminate; to scatter; to give money freely",
+    "furigana": "ばらまく",
+    "romaji": "baramaku",
+    "level": 1
+  },
+  {
+    "id": 8236,
+    "word": "近付く",
+    "meaning": "to approach; to get near; to get acquainted with; to get closer",
+    "furigana": "ちかづく",
+    "romaji": "chikazuku",
+    "level": 1
+  },
+  {
+    "id": 8243,
+    "word": "目覚しい",
+    "meaning": "brilliant; splendid; striking; remarkable",
+    "furigana": "めざましい",
+    "romaji": "mezamashii",
+    "level": 1
+  },
+  {
+    "id": 8276,
+    "word": "佐",
+    "meaning": "help",
+    "furigana": "さ",
+    "romaji": "sa",
+    "level": 1
+  },
+  {
+    "id": 8290,
+    "word": "手引き",
+    "meaning": "guidance; guide; introduction",
+    "furigana": "てびき",
+    "romaji": "tebiki",
+    "level": 1
+  },
+  {
+    "id": 8313,
+    "word": "矢鱈に",
+    "meaning": "randomly; recklessly; blindly",
+    "furigana": "やたらに",
+    "romaji": "yatarani",
+    "level": 1
+  },
+  {
+    "id": 8319,
+    "word": "ぐらい",
+    "meaning": "approximately",
+    "furigana": "",
+    "romaji": "gurai",
+    "level": 1
+  },
+  {
+    "id": 8326,
+    "word": "束の間",
+    "meaning": "moment; brief time; brief; transient",
+    "furigana": "つかのま",
+    "romaji": "tsukanoma",
+    "level": 1
+  },
+  {
+    "id": 8342,
+    "word": "位地",
+    "meaning": "place; situation; position; location",
+    "furigana": "いち",
+    "romaji": "ichi",
+    "level": 1
+  },
+  {
+    "id": 8358,
+    "word": "填める",
+    "meaning": "to get in; to insert; to put on; to make love",
+    "furigana": "はめる",
+    "romaji": "hameru",
+    "level": 1
+  },
+  {
+    "id": 8379,
+    "word": "真に",
+    "meaning": "truly; actually; really",
+    "furigana": "まことに",
+    "romaji": "makotoni",
+    "level": 1
+  },
+  {
+    "id": 3093,
+    "word": "でたらめ",
+    "meaning": "(1) irresponsible utterance, nonsense, nonsensical, (2) random",
+    "furigana": "",
+    "romaji": "detarame",
+    "level": 2
+  },
+  {
+    "id": 3106,
+    "word": "売行き",
+    "meaning": "sales",
+    "furigana": "うれゆき",
+    "romaji": "ureyuki",
+    "level": 2
+  },
+  {
+    "id": 3110,
+    "word": "ぜひとも",
+    "meaning": "by all means (with sense of not taking no for an answer)",
+    "furigana": "",
+    "romaji": "zehitomo",
+    "level": 2
+  },
+  {
+    "id": 3115,
+    "word": "軟らかい",
+    "meaning": "soft, tender, limp",
+    "furigana": "やわらかい",
+    "romaji": "yawarakai",
+    "level": 2
+  },
+  {
+    "id": 3116,
+    "word": "呼び掛ける",
+    "meaning": "to call out to, to accost, to address (crowd), to appeal",
+    "furigana": "よびかける",
+    "romaji": "yobikakeru",
+    "level": 2
+  },
+  {
+    "id": 3119,
+    "word": "殖える",
+    "meaning": "to increase, to multiply",
+    "furigana": "ふえる",
+    "romaji": "fueru",
+    "level": 2
+  },
+  {
+    "id": 3130,
+    "word": "ふざける",
+    "meaning": "to romp, to gambol, to frolic, to joke",
+    "furigana": "",
+    "romaji": "fuzakeru",
+    "level": 2
+  },
+  {
+    "id": 3132,
+    "word": "先々週",
+    "meaning": "",
+    "furigana": "せんせんしゅう",
+    "romaji": "sensenshū",
+    "level": 2
+  },
+  {
+    "id": 3145,
+    "word": "おかず",
+    "meaning": "side dish, accompaniment for rice dishes",
+    "furigana": "",
+    "romaji": "okazu",
+    "level": 2
+  },
+  {
+    "id": 3165,
+    "word": "そのうえ",
+    "meaning": "in addition, furthermore",
+    "furigana": "",
+    "romaji": "sonōe",
+    "level": 2
+  },
+  {
+    "id": 3175,
+    "word": "ゆでる",
+    "meaning": "to boil",
+    "furigana": "",
+    "romaji": "yuderu",
+    "level": 2
+  },
+  {
+    "id": 3177,
+    "word": "ごぞんじですか",
+    "meaning": "",
+    "furigana": "",
+    "romaji": "gozonjidesuka",
+    "level": 2
+  },
+  {
+    "id": 3187,
+    "word": "やっつける",
+    "meaning": "to attack (an enemy), to beat, to do away with, to finish off",
+    "furigana": "",
+    "romaji": "yattsukeru",
+    "level": 2
+  },
+  {
+    "id": 3193,
+    "word": "蘇る",
+    "meaning": "to be resurrected, to be revived, to be resuscitated, to be rehabilitated",
+    "furigana": "よみがえる",
+    "romaji": "yomigaeru",
+    "level": 2
+  },
+  {
+    "id": 3197,
+    "word": "思いっ切り",
+    "meaning": "",
+    "furigana": "おもいっきり",
+    "romaji": "omoikkiri",
+    "level": 2
+  },
+  {
+    "id": 3200,
+    "word": "堅い",
+    "meaning": "hard (esp. wood), steadfast, honorable, stuffy writing",
+    "furigana": "かたい",
+    "romaji": "katai",
+    "level": 2
+  },
+  {
+    "id": 3204,
+    "word": "ひとまず",
+    "meaning": "for the present, once, in outline",
+    "furigana": "",
+    "romaji": "hitomazu",
+    "level": 2
+  },
+  {
+    "id": 3224,
+    "word": "くれぐれも",
+    "meaning": "repeatedly, sincerely, earnestly",
+    "furigana": "",
+    "romaji": "kureguremo",
+    "level": 2
+  },
+  {
+    "id": 3226,
+    "word": "おととし",
+    "meaning": "year before last",
+    "furigana": "",
+    "romaji": "ototoshi",
+    "level": 2
+  },
+  {
+    "id": 3228,
+    "word": "納める",
+    "meaning": "to obtain, to reap, to pay, to supply, to accept",
+    "furigana": "おさめる",
+    "romaji": "osameru",
+    "level": 2
+  },
+  {
+    "id": 3232,
+    "word": "おきのどくに",
+    "meaning": "",
+    "furigana": "",
+    "romaji": "okinodokuni",
+    "level": 2
+  },
+  {
+    "id": 3234,
+    "word": "そうして",
+    "meaning": "and, like that",
+    "furigana": "",
+    "romaji": "sōshite",
+    "level": 2
+  },
+  {
+    "id": 3237,
+    "word": "こんばんは",
+    "meaning": "good evening",
+    "furigana": "",
+    "romaji": "konbanha",
+    "level": 2
+  },
+  {
+    "id": 3239,
+    "word": "炒る",
+    "meaning": "",
+    "furigana": "いる",
+    "romaji": "iru",
+    "level": 2
+  },
+  {
+    "id": 3249,
+    "word": "叔母さん",
+    "meaning": "(1) aunt, (2) middle-aged lady",
+    "furigana": "おばさん",
+    "romaji": "obasan",
+    "level": 2
+  },
+  {
+    "id": 3256,
+    "word": "なんとも",
+    "meaning": "nothing (with neg. verb), quite, not a bit",
+    "furigana": "",
+    "romaji": "nantomo",
+    "level": 2
+  },
+  {
+    "id": 3262,
+    "word": "知合い",
+    "meaning": "acquaintance",
+    "furigana": "しりあい",
+    "romaji": "shiriai",
+    "level": 2
+  },
+  {
+    "id": 3263,
+    "word": "近付ける",
+    "meaning": "to bring near, to put close, to let come near, to associate with",
+    "furigana": "ちかづける",
+    "romaji": "chikazukeru",
+    "level": 2
+  },
+  {
+    "id": 3265,
+    "word": "呑気",
+    "meaning": "carefree, optimistic, careless, reckless, heedless",
+    "furigana": "のんき",
+    "romaji": "nonki",
+    "level": 2
+  },
+  {
+    "id": 3271,
+    "word": "たんす",
+    "meaning": "chest of drawers",
+    "furigana": "",
+    "romaji": "tansu",
+    "level": 2
+  },
+  {
+    "id": 3273,
+    "word": "あいまい",
+    "meaning": "vague, ambiguous",
+    "furigana": "",
+    "romaji": "aimai",
+    "level": 2
+  },
+  {
+    "id": 3275,
+    "word": "あひら",
+    "meaning": "",
+    "furigana": "あひら",
+    "romaji": "ahira",
+    "level": 2
+  },
+  {
+    "id": 3282,
+    "word": "しいんと",
+    "meaning": "silent (as the grave), (deathly) quiet",
+    "furigana": "（する）",
+    "romaji": "(suru)",
+    "level": 2
+  },
+  {
+    "id": 3287,
+    "word": "すくなくとも",
+    "meaning": "at least",
+    "furigana": "",
+    "romaji": "sukunakutomo",
+    "level": 2
+  },
+  {
+    "id": 3289,
+    "word": "そのほか",
+    "meaning": "otherwise",
+    "furigana": "",
+    "romaji": "sonohoka",
+    "level": 2
+  },
+  {
+    "id": 3291,
+    "word": "ぶらさげる",
+    "meaning": "to hang, to suspend, to dangle, to swing",
+    "furigana": "",
+    "romaji": "burasageru",
+    "level": 2
+  },
+  {
+    "id": 3295,
+    "word": "あてはまる",
+    "meaning": "to be applicable, to come under (a category), to fulfill",
+    "furigana": "",
+    "romaji": "atehamaru",
+    "level": 2
+  },
+  {
+    "id": 3297,
+    "word": "くどい",
+    "meaning": "verbose, importunate, heavy (taste)",
+    "furigana": "",
+    "romaji": "kudoi",
+    "level": 2
+  },
+  {
+    "id": 3300,
+    "word": "人差指",
+    "meaning": "index finger",
+    "furigana": "ひとさしゆび",
+    "romaji": "hitosashiyubi",
+    "level": 2
+  },
+  {
+    "id": 3303,
+    "word": "あれこれ",
+    "meaning": "one thing or another, this and that, this or that",
+    "furigana": "",
+    "romaji": "arekore",
+    "level": 2
+  },
+  {
+    "id": 3313,
+    "word": "アイデア / アイディア",
+    "meaning": "idea",
+    "furigana": "",
+    "romaji": "aidea / aidia",
+    "level": 2
+  },
+  {
+    "id": 3314,
+    "word": "みっともない",
+    "meaning": "shameful, indecent",
+    "furigana": "",
+    "romaji": "mittomonai",
+    "level": 2
+  },
+  {
+    "id": 3315,
+    "word": "暖める",
+    "meaning": "to warm, to heat",
+    "furigana": "あたためる",
+    "romaji": "atatameru",
+    "level": 2
+  },
+  {
+    "id": 3323,
+    "word": "やたらに",
+    "meaning": "randomly, recklessly, blindly",
+    "furigana": "",
+    "romaji": "yatarani",
+    "level": 2
+  },
+  {
+    "id": 3329,
+    "word": "跳ぶ",
+    "meaning": "to jump, to fly, to leap",
+    "furigana": "とぶ",
+    "romaji": "tobu",
+    "level": 2
+  },
+  {
+    "id": 3334,
+    "word": "おげんきで",
+    "meaning": "",
+    "furigana": "",
+    "romaji": "ogenkide",
+    "level": 2
+  },
+  {
+    "id": 3341,
+    "word": "交ぜる",
+    "meaning": "to be mixed, to be blended with",
+    "furigana": "まぜる",
+    "romaji": "mazeru",
+    "level": 2
+  },
+  {
+    "id": 3362,
+    "word": "引算",
+    "meaning": "subtraction",
+    "furigana": "ひきざん",
+    "romaji": "hikizan",
+    "level": 2
+  },
+  {
+    "id": 3367,
+    "word": "中味",
+    "meaning": "contents, interior, substance, filling, (sword) blade",
+    "furigana": "なかみ",
+    "romaji": "nakami",
+    "level": 2
+  },
+  {
+    "id": 3375,
+    "word": "おととい",
+    "meaning": "day before yesterday",
+    "furigana": "",
+    "romaji": "ototoi",
+    "level": 2
+  },
+  {
+    "id": 3394,
+    "word": "下品",
+    "meaning": "vulgarity, meanness, indecency, coarseness",
+    "furigana": "げひん",
+    "romaji": "gehin",
+    "level": 2
+  },
+  {
+    "id": 3398,
+    "word": "めまい",
+    "meaning": "dizziness, giddiness",
+    "furigana": "",
+    "romaji": "memai",
+    "level": 2
+  },
+  {
+    "id": 3420,
+    "word": "どなる",
+    "meaning": "to shout, to yell",
+    "furigana": "",
+    "romaji": "donaru",
+    "level": 2
+  },
+  {
+    "id": 3441,
+    "word": "ひゃっかじてん",
+    "meaning": "encyclopedia",
+    "furigana": "",
+    "romaji": "hyakkajiten",
+    "level": 2
+  },
+  {
+    "id": 3447,
+    "word": "なぐる",
+    "meaning": "to strike, to hit",
+    "furigana": "",
+    "romaji": "naguru",
+    "level": 2
+  },
+  {
+    "id": 3452,
+    "word": "かしこまりました",
+    "meaning": "certainly!",
+    "furigana": "",
+    "romaji": "kashikomarimashita",
+    "level": 2
+  },
+  {
+    "id": 3458,
+    "word": "かわいがる",
+    "meaning": "to love, to be affectionate",
+    "furigana": "",
+    "romaji": "kawaigaru",
+    "level": 2
+  },
+  {
+    "id": 3461,
+    "word": "ウエートレス",
+    "meaning": "waitress",
+    "furigana": "",
+    "romaji": "uētoresu",
+    "level": 2
+  },
+  {
+    "id": 3462,
+    "word": "浮ぶ",
+    "meaning": "to float, to rise to surface, to come to mind",
+    "furigana": "うかぶ",
+    "romaji": "ukabu",
+    "level": 2
+  },
+  {
+    "id": 3463,
+    "word": "御無沙汰",
+    "meaning": "not writing or contacting for a while",
+    "furigana": "ごぶさた",
+    "romaji": "gobusata",
+    "level": 2
+  },
+  {
+    "id": 3476,
+    "word": "先程",
+    "meaning": "some time ago",
+    "furigana": "さきほど",
+    "romaji": "sakihodo",
+    "level": 2
+  },
+  {
+    "id": 3489,
+    "word": "へそ",
+    "meaning": "navel, belly-button",
+    "furigana": "",
+    "romaji": "heso",
+    "level": 2
+  },
+  {
+    "id": 3492,
+    "word": "混ざる",
+    "meaning": "to be mixed, to be blended with, to associate with, to mingle with, to join",
+    "furigana": "まざる",
+    "romaji": "mazaru",
+    "level": 2
+  },
+  {
+    "id": 3499,
+    "word": "棄てる",
+    "meaning": "",
+    "furigana": "すてる",
+    "romaji": "suteru",
+    "level": 2
+  },
+  {
+    "id": 3500,
+    "word": "しっぽ",
+    "meaning": "tail (animal)",
+    "furigana": "",
+    "romaji": "shippo",
+    "level": 2
+  },
+  {
+    "id": 3508,
+    "word": "増やす",
+    "meaning": "to increase, to add to, to augment",
+    "furigana": "ふやす",
+    "romaji": "fuyasu",
+    "level": 2
+  },
+  {
+    "id": 3511,
+    "word": "個所",
+    "meaning": "passage, place, point, part",
+    "furigana": "かしょ",
+    "romaji": "kasho",
+    "level": 2
+  },
+  {
+    "id": 3512,
+    "word": "作る / 造る",
+    "meaning": "to make, to create",
+    "furigana": "つくる",
+    "romaji": "tsukuru",
+    "level": 2
+  },
+  {
+    "id": 3529,
+    "word": "陽射",
+    "meaning": "sunlight, rays of the sun",
+    "furigana": "ひざし",
+    "romaji": "hizashi",
+    "level": 2
+  },
+  {
+    "id": 3535,
+    "word": "うどん",
+    "meaning": "noodles (Japanese)",
+    "furigana": "",
+    "romaji": "udon",
+    "level": 2
+  },
+  {
+    "id": 3539,
+    "word": "そのため",
+    "meaning": "hence, for that reason",
+    "furigana": "",
+    "romaji": "sonotame",
+    "level": 2
+  },
+  {
+    "id": 3547,
+    "word": "押える",
+    "meaning": "to stop, to restrain, to seize, to repress, to suppress, to press down",
+    "furigana": "おさえる",
+    "romaji": "osaeru",
+    "level": 2
+  },
+  {
+    "id": 3549,
+    "word": "滑れる",
+    "meaning": "",
+    "furigana": "ずれる",
+    "romaji": "zureru",
+    "level": 2
+  },
+  {
+    "id": 3558,
+    "word": "おとなしい",
+    "meaning": "obedient, docile, quiet",
+    "furigana": "",
+    "romaji": "otonashii",
+    "level": 2
+  },
+  {
+    "id": 3565,
+    "word": "おまたせしました",
+    "meaning": "Sorry to have kept you waiting",
+    "furigana": "",
+    "romaji": "omataseshimashita",
+    "level": 2
+  },
+  {
+    "id": 3566,
+    "word": "ごめんください",
+    "meaning": "May I come in?",
+    "furigana": "",
+    "romaji": "gomenkudasai",
+    "level": 2
+  },
+  {
+    "id": 3567,
+    "word": "向う",
+    "meaning": "(v5u) to face, to go towards",
+    "furigana": "むかう",
+    "romaji": "mukau",
+    "level": 2
+  },
+  {
+    "id": 3568,
+    "word": "延ばす",
+    "meaning": "to lengthen, to stretch, to reach out, to grow (beard)",
+    "furigana": "のばす",
+    "romaji": "nobasu",
+    "level": 2
+  },
+  {
+    "id": 3574,
+    "word": "そういえば",
+    "meaning": "which reminds me ..",
+    "furigana": "",
+    "romaji": "sōieba",
+    "level": 2
+  },
+  {
+    "id": 3580,
+    "word": "田ぼ",
+    "meaning": "paddy field, farm",
+    "furigana": "たんぼ",
+    "romaji": "tanbo",
+    "level": 2
+  },
+  {
+    "id": 3581,
+    "word": "やむをえない",
+    "meaning": "cannot be helped, unavoidable",
+    "furigana": "",
+    "romaji": "yamuoenai",
+    "level": 2
+  },
+  {
+    "id": 3582,
+    "word": "捜す",
+    "meaning": "to search, to seek, to look for",
+    "furigana": "さがす",
+    "romaji": "sagasu",
+    "level": 2
+  },
+  {
+    "id": 3588,
+    "word": "あぶる",
+    "meaning": "to scorch",
+    "furigana": "",
+    "romaji": "aburu",
+    "level": 2
+  },
+  {
+    "id": 3594,
+    "word": "くっつく",
+    "meaning": "to adhere to, to keep close to",
+    "furigana": "",
+    "romaji": "kuttsuku",
+    "level": 2
+  },
+  {
+    "id": 3599,
+    "word": "なにしろ",
+    "meaning": "at any rate, anyhow, anyway, in any case",
+    "furigana": "",
+    "romaji": "nanishiro",
+    "level": 2
+  },
+  {
+    "id": 3604,
+    "word": "しあさって",
+    "meaning": "two days after tomorrow",
+    "furigana": "",
+    "romaji": "shiasatte",
+    "level": 2
+  },
+  {
+    "id": 3605,
+    "word": "はじめまして",
+    "meaning": "How do you do?, I am glad to meet you",
+    "furigana": "",
+    "romaji": "hajimemashite",
+    "level": 2
+  },
+  {
+    "id": 3606,
+    "word": "言い付ける",
+    "meaning": "to tell, to tell on (someone), to order",
+    "furigana": "いいつける",
+    "romaji": "iitsukeru",
+    "level": 2
+  },
+  {
+    "id": 3608,
+    "word": "捕える",
+    "meaning": "to seize, to grasp, to capture, to arrest",
+    "furigana": "とらえる",
+    "romaji": "toraeru",
+    "level": 2
+  },
+  {
+    "id": 3610,
+    "word": "かるた",
+    "meaning": "(n) playing cards (pt: carta)",
+    "furigana": "",
+    "romaji": "karuta",
+    "level": 2
+  },
+  {
+    "id": 3615,
+    "word": "落し物",
+    "meaning": "lost property",
+    "furigana": "おとしもの",
+    "romaji": "otoshimono",
+    "level": 2
+  },
+  {
+    "id": 3618,
+    "word": "くっつける",
+    "meaning": "to attach",
+    "furigana": "",
+    "romaji": "kuttsukeru",
+    "level": 2
+  },
+  {
+    "id": 3619,
+    "word": "引受る",
+    "meaning": "to undertake, to take up, to take over",
+    "furigana": "ひきうける",
+    "romaji": "hikiukeru",
+    "level": 2
+  },
+  {
+    "id": 3637,
+    "word": "さわやか",
+    "meaning": "fresh, refreshing, invigorating",
+    "furigana": "",
+    "romaji": "sawayaka",
+    "level": 2
+  },
+  {
+    "id": 3639,
+    "word": "ごちそうさま",
+    "meaning": "feast",
+    "furigana": "",
+    "romaji": "gochisōsama",
+    "level": 2
+  },
+  {
+    "id": 3653,
+    "word": "湯飲み",
+    "meaning": "teacup",
+    "furigana": "ゆのみ",
+    "romaji": "yunomi",
+    "level": 2
+  },
+  {
+    "id": 3655,
+    "word": "ひとりでに",
+    "meaning": "by itself, automatically, naturally",
+    "furigana": "",
+    "romaji": "hitorideni",
+    "level": 2
+  },
+  {
+    "id": 3656,
+    "word": "器械",
+    "meaning": "instrument",
+    "furigana": "きかい",
+    "romaji": "kikai",
+    "level": 2
+  },
+  {
+    "id": 3677,
+    "word": "瓶詰",
+    "meaning": "bottling, bottled",
+    "furigana": "びんづめ",
+    "romaji": "binzume",
+    "level": 2
+  },
+  {
+    "id": 3701,
+    "word": "やっぱり",
+    "meaning": "also, as I thought, still, in spite of, absolutely, of course",
+    "furigana": "",
+    "romaji": "yappari",
+    "level": 2
+  },
+  {
+    "id": 3704,
+    "word": "引っ繰り返す",
+    "meaning": "to turn over, to overturn, to knock over, to upset, to turn inside out",
+    "furigana": "ひっくりかえす",
+    "romaji": "hikkurikaesu",
+    "level": 2
+  },
+  {
+    "id": 3711,
+    "word": "あかんぼう",
+    "meaning": "baby",
+    "furigana": "",
+    "romaji": "akanbō",
+    "level": 2
+  },
+  {
+    "id": 3715,
+    "word": "いってらっしゃい",
+    "meaning": "",
+    "furigana": "",
+    "romaji": "itterasshai",
+    "level": 2
+  },
+  {
+    "id": 3723,
+    "word": "おさきに",
+    "meaning": "before, ahead, previously",
+    "furigana": "",
+    "romaji": "osakini",
+    "level": 2
+  },
+  {
+    "id": 3728,
+    "word": "しびれる",
+    "meaning": "to become numb, to go to sleep (i.e., a limb)",
+    "furigana": "",
+    "romaji": "shibireru",
+    "level": 2
+  },
+  {
+    "id": 3737,
+    "word": "出合い",
+    "meaning": "an encounter",
+    "furigana": "であい",
+    "romaji": "deai",
+    "level": 2
+  },
+  {
+    "id": 3746,
+    "word": "ほどく",
+    "meaning": "to unfasten",
+    "furigana": "",
+    "romaji": "hodoku",
+    "level": 2
+  },
+  {
+    "id": 3750,
+    "word": "超す",
+    "meaning": "to cross, to pass, to tide over",
+    "furigana": "こす",
+    "romaji": "kosu",
+    "level": 2
+  },
+  {
+    "id": 3751,
+    "word": "どきどき",
+    "meaning": "throb, beat (fast)",
+    "furigana": "",
+    "romaji": "dokidoki",
+    "level": 2
+  },
+  {
+    "id": 3757,
+    "word": "しぼむ",
+    "meaning": "to wither, to fade (away), to shrivel, to wilt",
+    "furigana": "",
+    "romaji": "shibomu",
+    "level": 2
+  },
+  {
+    "id": 3762,
+    "word": "書取",
+    "meaning": "dictation",
+    "furigana": "かきとり",
+    "romaji": "kakitori",
+    "level": 2
+  },
+  {
+    "id": 3770,
+    "word": "附属",
+    "meaning": "attached, belonging, affiliated",
+    "furigana": "ふぞく",
+    "romaji": "fuzoku",
+    "level": 2
+  },
+  {
+    "id": 3771,
+    "word": "そのころ",
+    "meaning": "",
+    "furigana": "",
+    "romaji": "sonokoro",
+    "level": 2
+  },
+  {
+    "id": 3778,
+    "word": "かじる",
+    "meaning": "to chew, to bite (at), to gnaw, to nibble",
+    "furigana": "",
+    "romaji": "kajiru",
+    "level": 2
+  },
+  {
+    "id": 3782,
+    "word": "遭う",
+    "meaning": "to meet, to encounter (undesirable nuance)",
+    "furigana": "あう",
+    "romaji": "au",
+    "level": 2
+  },
+  {
+    "id": 3802,
+    "word": "暖まる",
+    "meaning": "to warm up, to get warm",
+    "furigana": "あたたまる",
+    "romaji": "atatamaru",
+    "level": 2
+  },
+  {
+    "id": 3803,
+    "word": "あわてる",
+    "meaning": "to become confused",
+    "furigana": "",
+    "romaji": "awateru",
+    "level": 2
+  },
+  {
+    "id": 3805,
+    "word": "打合せ",
+    "meaning": "business meeting, previous arrangement, appointment",
+    "furigana": "うちあわせ",
+    "romaji": "uchiawase",
+    "level": 2
+  },
+  {
+    "id": 3808,
+    "word": "ゴム",
+    "meaning": "gum, rubber, eraser",
+    "furigana": "",
+    "romaji": "gomu",
+    "level": 2
+  },
+  {
+    "id": 3824,
+    "word": "あてはめる",
+    "meaning": "to apply, to adapt",
+    "furigana": "",
+    "romaji": "atehameru",
+    "level": 2
+  },
+  {
+    "id": 3829,
+    "word": "だいいち",
+    "meaning": "first, foremost, # 1",
+    "furigana": "（副）",
+    "romaji": "()",
+    "level": 2
+  },
+  {
+    "id": 3836,
+    "word": "付合う",
+    "meaning": "to associate with, to keep company with, to get on with",
+    "furigana": "つきあう",
+    "romaji": "tsukiau",
+    "level": 2
+  },
+  {
+    "id": 3840,
+    "word": "庖丁",
+    "meaning": "kitchen knife, carving knife",
+    "furigana": "ほうちょう",
+    "romaji": "hōchō",
+    "level": 2
+  },
+  {
+    "id": 3850,
+    "word": "おめでたい",
+    "meaning": "happy event, matter for congratulation, auspicious event, pregnancy",
+    "furigana": "",
+    "romaji": "omedetai",
+    "level": 2
+  },
+  {
+    "id": 3868,
+    "word": "めでたい",
+    "meaning": "happy, simple soul, propitious, joyous",
+    "furigana": "",
+    "romaji": "medetai",
+    "level": 2
+  },
+  {
+    "id": 3869,
+    "word": "おまちください",
+    "meaning": "Please wait a moment",
+    "furigana": "",
+    "romaji": "omachikudasai",
+    "level": 2
+  },
+  {
+    "id": 3870,
+    "word": "卒直",
+    "meaning": "frankness, candour, openheartedness",
+    "furigana": "そっちょく",
+    "romaji": "sotchoku",
+    "level": 2
+  },
+  {
+    "id": 3874,
+    "word": "おまちどおさま",
+    "meaning": "Sorry to have kept you waiting",
+    "furigana": "",
+    "romaji": "omachidōsama",
+    "level": 2
+  },
+  {
+    "id": 3879,
+    "word": "わりあいに",
+    "meaning": "comparatively",
+    "furigana": "",
+    "romaji": "wariaini",
+    "level": 2
+  },
+  {
+    "id": 3883,
+    "word": "さきおととい",
+    "meaning": "two days before yesterday",
+    "furigana": "",
+    "romaji": "sakiototoi",
+    "level": 2
+  },
+  {
+    "id": 3890,
+    "word": "慶び",
+    "meaning": "(n) (a) joy, (a) delight, rapture, pleasure, gratification, rejoicing, congratulations, felicitations",
+    "furigana": "よろこび",
+    "romaji": "yorokobi",
+    "level": 2
+  },
+  {
+    "id": 3892,
+    "word": "オーバーコート",
+    "meaning": "",
+    "furigana": "",
+    "romaji": "ōbākōto",
+    "level": 2
+  },
+  {
+    "id": 3909,
+    "word": "量る",
+    "meaning": "to measure, to weigh, to survey",
+    "furigana": "はかる",
+    "romaji": "hakaru",
+    "level": 2
+  },
+  {
+    "id": 3910,
+    "word": "のこぎり",
+    "meaning": "saw",
+    "furigana": "",
+    "romaji": "nokogiri",
+    "level": 2
+  },
+  {
+    "id": 3925,
+    "word": "しょうがない",
+    "meaning": "",
+    "furigana": "",
+    "romaji": "shōganai",
+    "level": 2
+  },
+  {
+    "id": 3926,
+    "word": "超える",
+    "meaning": "to exceed, to cross over, to cross",
+    "furigana": "こえる",
+    "romaji": "koeru",
+    "level": 2
+  },
+  {
+    "id": 3932,
+    "word": "おじゃまします",
+    "meaning": "Excuse me for disturbing you",
+    "furigana": "",
+    "romaji": "ojamashimasu",
+    "level": 2
+  },
+  {
+    "id": 3937,
+    "word": "あわただしい",
+    "meaning": "busy, hurried, confused, flurried",
+    "furigana": "",
+    "romaji": "awatadashii",
+    "level": 2
+  },
+  {
+    "id": 3939,
+    "word": "さっさと",
+    "meaning": "quickly",
+    "furigana": "",
+    "romaji": "sassato",
+    "level": 2
+  },
+  {
+    "id": 3947,
+    "word": "リポート",
+    "meaning": "report, paper",
+    "furigana": "",
+    "romaji": "ripōto",
+    "level": 2
+  },
+  {
+    "id": 3957,
+    "word": "そうっと",
+    "meaning": "",
+    "furigana": "",
+    "romaji": "sōtto",
+    "level": 2
+  },
+  {
+    "id": 3970,
+    "word": "すまない",
+    "meaning": "sorry (phrase)",
+    "furigana": "",
+    "romaji": "sumanai",
+    "level": 2
+  },
+  {
+    "id": 3973,
+    "word": "こぼれる",
+    "meaning": "to overflow, to spill",
+    "furigana": "",
+    "romaji": "koboreru",
+    "level": 2
+  },
+  {
+    "id": 3979,
+    "word": "あげる (=やる)",
+    "meaning": "to do for",
+    "furigana": "",
+    "romaji": "ageru yaru",
+    "level": 2
+  },
+  {
+    "id": 3991,
+    "word": "おやつ",
+    "meaning": "(1) between meal snack, afternoon refreshment",
+    "furigana": "",
+    "romaji": "oyatsu",
+    "level": 2
+  },
+  {
+    "id": 3996,
+    "word": "あきれる",
+    "meaning": "to be amazed, to be shocked",
+    "furigana": "",
+    "romaji": "akireru",
+    "level": 2
+  },
+  {
+    "id": 3997,
+    "word": "へる",
+    "meaning": "to decrease (in size or number), to diminish, to abate",
+    "furigana": "",
+    "romaji": "heru",
+    "level": 2
+  },
+  {
+    "id": 3999,
+    "word": "目覚し",
+    "meaning": "(abbr) alarm-clock",
+    "furigana": "めざまし",
+    "romaji": "mezamashi",
+    "level": 2
+  },
+  {
+    "id": 4006,
+    "word": "とっくに",
+    "meaning": "long ago, already, a long time ago",
+    "furigana": "",
+    "romaji": "tokkuni",
+    "level": 2
+  },
+  {
+    "id": 4038,
+    "word": "ふわふわ",
+    "meaning": "light, soft",
+    "furigana": "",
+    "romaji": "fuwafuwa",
+    "level": 2
+  },
+  {
+    "id": 4042,
+    "word": "追い掛ける",
+    "meaning": "to chase or run after someone, to run down, to pursue",
+    "furigana": "おいかける",
+    "romaji": "oikakeru",
+    "level": 2
+  },
+  {
+    "id": 4043,
+    "word": "いっていらっしゃい",
+    "meaning": "",
+    "furigana": "",
+    "romaji": "itteirasshai",
+    "level": 2
+  },
+  {
+    "id": 4047,
+    "word": "だます",
+    "meaning": "to trick, to cheat, to deceive",
+    "furigana": "",
+    "romaji": "damasu",
+    "level": 2
+  },
+  {
+    "id": 4050,
+    "word": "始めに",
+    "meaning": "to begin with, first of all",
+    "furigana": "はじめに",
+    "romaji": "hajimeni",
+    "level": 2
+  },
+  {
+    "id": 4052,
+    "word": "ねじ",
+    "meaning": "(a) screw",
+    "furigana": "",
+    "romaji": "neji",
+    "level": 2
+  },
+  {
+    "id": 4056,
+    "word": "引出す",
+    "meaning": "to pull out, to take out, to draw out, to withdraw",
+    "furigana": "ひきだす",
+    "romaji": "hikidasu",
+    "level": 2
+  },
+  {
+    "id": 4059,
+    "word": "馴れる",
+    "meaning": "to become domesticated, to become tame",
+    "furigana": "なれる",
+    "romaji": "nareru",
+    "level": 2
+  },
+  {
+    "id": 4062,
+    "word": "割算",
+    "meaning": "division (math)",
+    "furigana": "わりざん",
+    "romaji": "warizan",
+    "level": 2
+  },
+  {
+    "id": 4063,
+    "word": "ごくろうさま",
+    "meaning": "Thank you very much for your....",
+    "furigana": "",
+    "romaji": "gokurōsama",
+    "level": 2
+  },
+  {
+    "id": 4078,
+    "word": "なんとなく",
+    "meaning": "somehow or other, for some reason or another",
+    "furigana": "",
+    "romaji": "nantonaku",
+    "level": 2
+  },
+  {
+    "id": 4081,
+    "word": "羽根",
+    "meaning": "shuttlecock",
+    "furigana": "はね",
+    "romaji": "hane",
+    "level": 2
+  },
+  {
+    "id": 4085,
+    "word": "いちいち",
+    "meaning": "one by one, separately",
+    "furigana": "",
+    "romaji": "ichiichi",
+    "level": 2
+  },
+  {
+    "id": 4089,
+    "word": "交替",
+    "meaning": "alternation, change, relief, relay, shift",
+    "furigana": "こうたい",
+    "romaji": "kōtai",
+    "level": 2
+  },
+  {
+    "id": 4093,
+    "word": "ずらす",
+    "meaning": "to put off, to delay",
+    "furigana": "",
+    "romaji": "zurasu",
+    "level": 2
+  },
+  {
+    "id": 4116,
+    "word": "ぴたり",
+    "meaning": "",
+    "furigana": "",
+    "romaji": "pitari",
+    "level": 2
+  },
+  {
+    "id": 4119,
+    "word": "すっぱい",
+    "meaning": "sour, acid",
+    "furigana": "",
+    "romaji": "suppai",
+    "level": 2
+  },
+  {
+    "id": 4124,
+    "word": "清む",
+    "meaning": "",
+    "furigana": "すむ",
+    "romaji": "sumu",
+    "level": 2
+  },
+  {
+    "id": 4136,
+    "word": "謎謎",
+    "meaning": "riddle, puzzle, enigma",
+    "furigana": "なぞなぞ",
+    "romaji": "nazonazo",
+    "level": 2
+  },
+  {
+    "id": 4153,
+    "word": "見掛け",
+    "meaning": "outward appearance",
+    "furigana": "みかけ",
+    "romaji": "mikake",
+    "level": 2
+  },
+  {
+    "id": 4157,
+    "word": "出入口",
+    "meaning": "exit and entrance",
+    "furigana": "でいりぐち",
+    "romaji": "deiriguchi",
+    "level": 2
+  },
+  {
+    "id": 4162,
+    "word": "売上",
+    "meaning": "amount sold, proceeds",
+    "furigana": "うりあげ",
+    "romaji": "uriage",
+    "level": 2
+  },
+  {
+    "id": 4163,
+    "word": "おかけください",
+    "meaning": "",
+    "furigana": "",
+    "romaji": "okakekudasai",
+    "level": 2
+  },
+  {
+    "id": 4174,
+    "word": "果して",
+    "meaning": "as was expected, really",
+    "furigana": "はたして",
+    "romaji": "hatashite",
+    "level": 2
+  },
+  {
+    "id": 4183,
+    "word": "ええと",
+    "meaning": "let me see, well, er....",
+    "furigana": "",
+    "romaji": "eeto",
+    "level": 2
+  },
+  {
+    "id": 4196,
+    "word": "かゆい",
+    "meaning": "itchy, itching",
+    "furigana": "",
+    "romaji": "kayui",
+    "level": 2
+  },
+  {
+    "id": 4208,
+    "word": "明き",
+    "meaning": "room, time to spare, emptiness",
+    "furigana": "あき",
+    "romaji": "aki",
+    "level": 2
+  },
+  {
+    "id": 4212,
+    "word": "ダイヤグラム",
+    "meaning": "diagram",
+    "furigana": "",
+    "romaji": "daiyaguramu",
+    "level": 2
+  },
+  {
+    "id": 4220,
+    "word": "もたれる",
+    "meaning": "to lean against, to lean on, to recline on, to lie heavy (on the stomach)",
+    "furigana": "",
+    "romaji": "motareru",
+    "level": 2
+  },
+  {
+    "id": 4221,
+    "word": "みじめ",
+    "meaning": "(arch) sad, pitiful, wretched",
+    "furigana": "",
+    "romaji": "mijime",
+    "level": 2
+  },
+  {
+    "id": 4226,
+    "word": "着ける",
+    "meaning": "(1) to attach, to join, to add, to append",
+    "furigana": "つける",
+    "romaji": "tsukeru",
+    "level": 2
+  },
+  {
+    "id": 4244,
+    "word": "寝間着",
+    "meaning": "sleep-wear, nightclothes, pyjamas, nightgown, nightdress",
+    "furigana": "ねまき",
+    "romaji": "nemaki",
+    "level": 2
+  },
+  {
+    "id": 4256,
+    "word": "溜息",
+    "meaning": "a sigh",
+    "furigana": "ためいき",
+    "romaji": "tameiki",
+    "level": 2
+  },
+  {
+    "id": 4258,
+    "word": "あくび",
+    "meaning": "yawn",
+    "furigana": "",
+    "romaji": "akubi",
+    "level": 2
+  },
+  {
+    "id": 4263,
+    "word": "割と",
+    "meaning": "relatively, comparitively",
+    "furigana": "わりと",
+    "romaji": "warito",
+    "level": 2
+  },
+  {
+    "id": 4264,
+    "word": "あたりまえ",
+    "meaning": "usual, common, ordinary",
+    "furigana": "",
+    "romaji": "atarimae",
+    "level": 2
+  },
+  {
+    "id": 4267,
+    "word": "ばね",
+    "meaning": "spring (e.g. coil, leaf)",
+    "furigana": "",
+    "romaji": "bane",
+    "level": 2
+  },
+  {
+    "id": 4276,
+    "word": "こないだ",
+    "meaning": "the other day, lately, recently",
+    "furigana": "",
+    "romaji": "konaida",
+    "level": 2
+  },
+  {
+    "id": 4288,
+    "word": "さようなら",
+    "meaning": "good-bye",
+    "furigana": "",
+    "romaji": "sayōnara",
+    "level": 2
+  },
+  {
+    "id": 4293,
+    "word": "ぶつける",
+    "meaning": "to knock, to run into, to nail on, to strike hard, to hit and attack",
+    "furigana": "",
+    "romaji": "butsukeru",
+    "level": 2
+  },
+  {
+    "id": 4294,
+    "word": "めちゃくちゃ",
+    "meaning": "absurd, unreasonable, excessive, messed up, spoiled, wreaked",
+    "furigana": "",
+    "romaji": "mechakucha",
+    "level": 2
+  },
+  {
+    "id": 4301,
+    "word": "寝巻",
+    "meaning": "sleep-wear, nightclothes, pyjamas, nightgown, nightdress",
+    "furigana": "ねまき",
+    "romaji": "nemaki",
+    "level": 2
+  },
+  {
+    "id": 4310,
+    "word": "分る",
+    "meaning": "to be understood",
+    "furigana": "わかる",
+    "romaji": "wakaru",
+    "level": 2
+  },
+  {
+    "id": 4323,
+    "word": "おやすみ",
+    "meaning": "(1) holiday, absence, rest, (2) (exp) Good night",
+    "furigana": "",
+    "romaji": "oyasumi",
+    "level": 2
+  },
+  {
+    "id": 4327,
+    "word": "こらえる",
+    "meaning": "to bear, to stand, to endure, to put up with",
+    "furigana": "",
+    "romaji": "koraeru",
+    "level": 2
+  },
+  {
+    "id": 4328,
+    "word": "からかう",
+    "meaning": "to ridicule, to tease, to banter with, to make fun of",
+    "furigana": "",
+    "romaji": "karakau",
+    "level": 2
+  },
+  {
+    "id": 4330,
+    "word": "載せる",
+    "meaning": "to place on (something), to take on board, to give a ride",
+    "furigana": "のせる",
+    "romaji": "noseru",
+    "level": 2
+  },
+  {
+    "id": 4338,
+    "word": "ちぎる",
+    "meaning": "to cut up fine, to pick (fruit)",
+    "furigana": "",
+    "romaji": "chigiru",
+    "level": 2
+  },
+  {
+    "id": 4339,
+    "word": "おはよう",
+    "meaning": "(abbr) Good morning",
+    "furigana": "",
+    "romaji": "ohayō",
+    "level": 2
+  },
+  {
+    "id": 4340,
+    "word": "Ͼ立",
+    "meaning": "confrontation, opposition, antagonism",
+    "furigana": "たいりつ",
+    "romaji": "tairitsu",
+    "level": 2
+  },
+  {
+    "id": 4350,
+    "word": "測る",
+    "meaning": "to measure, to weigh, to survey",
+    "furigana": "はかる",
+    "romaji": "hakaru",
+    "level": 2
+  },
+  {
+    "id": 4353,
+    "word": "くだらない",
+    "meaning": "good-for-nothing, stupid, trivial, worthless",
+    "furigana": "",
+    "romaji": "kudaranai",
+    "level": 2
+  },
+  {
+    "id": 4354,
+    "word": "引分け",
+    "meaning": "a draw (in competition), tie game",
+    "furigana": "ひきわけ",
+    "romaji": "hikiwake",
+    "level": 2
+  },
+  {
+    "id": 4362,
+    "word": "見付かる",
+    "meaning": "to be found, to be discovered",
+    "furigana": "みつかる",
+    "romaji": "mitsukaru",
+    "level": 2
+  },
+  {
+    "id": 4368,
+    "word": "じゅうたん",
+    "meaning": "carpet",
+    "furigana": "（カーペット）",
+    "romaji": "(kāpetto)",
+    "level": 2
+  },
+  {
+    "id": 4373,
+    "word": "引越し",
+    "meaning": "moving (dwelling etc.), changing residence",
+    "furigana": "ひっこし",
+    "romaji": "hikkoshi",
+    "level": 2
+  },
+  {
+    "id": 4377,
+    "word": "いきなり",
+    "meaning": "(uk) abruptly, suddenly, all of a sudden, without warning",
+    "furigana": "",
+    "romaji": "ikinari",
+    "level": 2
+  },
+  {
+    "id": 4378,
+    "word": "務める",
+    "meaning": "(1) to serve, to fill a post, to serve under, to work (for)",
+    "furigana": "つとめる",
+    "romaji": "tsutomeru",
+    "level": 2
+  },
+  {
+    "id": 4379,
+    "word": "くたびれる",
+    "meaning": "to get tired, to wear out",
+    "furigana": "",
+    "romaji": "kutabireru",
+    "level": 2
+  },
+  {
+    "id": 4383,
+    "word": "やかましい",
+    "meaning": "(1) noisy, (2) strict, fussy",
+    "furigana": "",
+    "romaji": "yakamashii",
+    "level": 2
+  },
+  {
+    "id": 4397,
+    "word": "にこにこ",
+    "meaning": "",
+    "furigana": "",
+    "romaji": "nikoniko",
+    "level": 2
+  },
+  {
+    "id": 4402,
+    "word": "くるむ",
+    "meaning": "to be engulfed in, to be enveloped by, to wrap up",
+    "furigana": "",
+    "romaji": "kurumu",
+    "level": 2
+  },
+  {
+    "id": 4407,
+    "word": "こうして",
+    "meaning": "thus",
+    "furigana": "こうして",
+    "romaji": "kōshite",
+    "level": 2
+  },
+  {
+    "id": 4411,
+    "word": "おだいじに",
+    "meaning": "Take care of yourself",
+    "furigana": "",
+    "romaji": "odaijini",
+    "level": 2
+  },
+  {
+    "id": 4416,
+    "word": "適確",
+    "meaning": "precise, accurate",
+    "furigana": "てきかく",
+    "romaji": "tekikaku",
+    "level": 2
+  },
+  {
+    "id": 4417,
+    "word": "おおざっぱ",
+    "meaning": "rough (not precise), broad, sketchy",
+    "furigana": "",
+    "romaji": "ōzappa",
+    "level": 2
+  },
+  {
+    "id": 4430,
+    "word": "茶碗",
+    "meaning": "rice bowl, tea cup, teacup",
+    "furigana": "ちゃわん",
+    "romaji": "chawan",
+    "level": 2
+  },
+  {
+    "id": 4436,
+    "word": "まぶた",
+    "meaning": "eyelids",
+    "furigana": "",
+    "romaji": "mabuta",
+    "level": 2
+  },
+  {
+    "id": 4449,
+    "word": "規準",
+    "meaning": "standard, basis, criteria, norm",
+    "furigana": "きじゅん",
+    "romaji": "kijun",
+    "level": 2
+  },
+  {
+    "id": 4450,
+    "word": "ずうずうしい",
+    "meaning": "impudent, shameless",
+    "furigana": "",
+    "romaji": "zūzūshii",
+    "level": 2
+  },
+  {
+    "id": 4458,
+    "word": "くしゃみ",
+    "meaning": "sneeze",
+    "furigana": "",
+    "romaji": "kushami",
+    "level": 2
+  },
+  {
+    "id": 4462,
+    "word": "またぐ",
+    "meaning": "to straddle",
+    "furigana": "",
+    "romaji": "matagu",
+    "level": 2
+  },
+  {
+    "id": 4465,
+    "word": "片寄る",
+    "meaning": "to be one-sided, to incline, to be partial",
+    "furigana": "かたよる",
+    "romaji": "katayoru",
+    "level": 2
+  },
+  {
+    "id": 4467,
+    "word": "受取",
+    "meaning": "receipt",
+    "furigana": "うけとり",
+    "romaji": "uketori",
+    "level": 2
+  },
+  {
+    "id": 4471,
+    "word": "おくさん",
+    "meaning": "(hon) wife, your wife, madam",
+    "furigana": "",
+    "romaji": "okusan",
+    "level": 2
+  },
+  {
+    "id": 4479,
+    "word": "ついで",
+    "meaning": "opportunity, occasion",
+    "furigana": "",
+    "romaji": "tsuide",
+    "level": 2
+  },
+  {
+    "id": 4491,
+    "word": "だらしない",
+    "meaning": "slovenly, loose, a slut",
+    "furigana": "",
+    "romaji": "darashinai",
+    "level": 2
+  },
+  {
+    "id": 4506,
+    "word": "面倒臭い",
+    "meaning": "bother to do, tiresome",
+    "furigana": "めんどうくさい",
+    "romaji": "mendōkusai",
+    "level": 2
+  },
+  {
+    "id": 4508,
+    "word": "はめる",
+    "meaning": "(col) to get in, to insert, to put on, to make love",
+    "furigana": "",
+    "romaji": "hameru",
+    "level": 2
+  },
+  {
+    "id": 4516,
+    "word": "すれちがう",
+    "meaning": "to pass by one another, to disagree",
+    "furigana": "",
+    "romaji": "surechigau",
+    "level": 2
+  },
+  {
+    "id": 4526,
+    "word": "まぶしい",
+    "meaning": "dazzling, radiant",
+    "furigana": "",
+    "romaji": "mabushii",
+    "level": 2
+  },
+  {
+    "id": 4527,
+    "word": "一段と",
+    "meaning": "greater, more, further, still more",
+    "furigana": "いちだんと",
+    "romaji": "ichidanto",
+    "level": 2
+  },
+  {
+    "id": 4532,
+    "word": "話合い",
+    "meaning": "discussion, conference",
+    "furigana": "はなしあい",
+    "romaji": "hanashiai",
+    "level": 2
+  },
+  {
+    "id": 4534,
+    "word": "振舞う",
+    "meaning": "to behave, to conduct oneself, to entertain (vt)",
+    "furigana": "ふるまう",
+    "romaji": "furumau",
+    "level": 2
+  },
+  {
+    "id": 4544,
+    "word": "おかげさまで",
+    "meaning": "Thanks to god, thanks to you",
+    "furigana": "",
+    "romaji": "okagesamade",
+    "level": 2
+  },
+  {
+    "id": 4548,
+    "word": "よこす",
+    "meaning": "(1) to send, to forward, (2) to hand over (e.g. money)",
+    "furigana": "",
+    "romaji": "yokosu",
+    "level": 2
+  },
+  {
+    "id": 4549,
+    "word": "編物",
+    "meaning": "knitting, web",
+    "furigana": "あみもの",
+    "romaji": "amimono",
+    "level": 2
+  },
+  {
+    "id": 4556,
+    "word": "いってまいります",
+    "meaning": "",
+    "furigana": "",
+    "romaji": "ittemairimasu",
+    "level": 2
+  },
+  {
+    "id": 4558,
+    "word": "代える",
+    "meaning": "to exchange, to interchange, to substitute, to replace",
+    "furigana": "かえる",
+    "romaji": "kaeru",
+    "level": 2
+  },
+  {
+    "id": 4578,
+    "word": "ずうっと",
+    "meaning": "",
+    "furigana": "",
+    "romaji": "zūtto",
+    "level": 2
+  },
+  {
+    "id": 4596,
+    "word": "具える",
+    "meaning": "to be furnished with",
+    "furigana": "そなえる",
+    "romaji": "sonaeru",
+    "level": 2
+  },
+  {
+    "id": 4597,
+    "word": "あらすじ",
+    "meaning": "outline, summary",
+    "furigana": "",
+    "romaji": "arasuji",
+    "level": 2
+  },
+  {
+    "id": 4599,
+    "word": "円い",
+    "meaning": "round, circular, spherical",
+    "furigana": "まるい",
+    "romaji": "marui",
+    "level": 2
+  },
+  {
+    "id": 4605,
+    "word": "剥す",
+    "meaning": "(v5s) to tear off, to peel off, to rip off",
+    "furigana": "はがす",
+    "romaji": "hagasu",
+    "level": 2
+  },
+  {
+    "id": 4622,
+    "word": "あちらこちら",
+    "meaning": "here and there",
+    "furigana": "",
+    "romaji": "achirakochira",
+    "level": 2
+  },
+  {
+    "id": 4623,
+    "word": "物差し",
+    "meaning": "ruler, measure",
+    "furigana": "ものさし",
+    "romaji": "monosashi",
+    "level": 2
+  },
+  {
+    "id": 4624,
+    "word": "じゃんけん",
+    "meaning": "(n) rock-scissors-paper game",
+    "furigana": "",
+    "romaji": "janken",
+    "level": 2
+  },
+  {
+    "id": 4636,
+    "word": "こぼす",
+    "meaning": "to spill",
+    "furigana": "",
+    "romaji": "kobosu",
+    "level": 2
+  },
+  {
+    "id": 4646,
+    "word": "つまずく",
+    "meaning": "to stumble, to trip",
+    "furigana": "",
+    "romaji": "tsumazuku",
+    "level": 2
+  },
+  {
+    "id": 4655,
+    "word": "もしかしたら",
+    "meaning": "perhaps, maybe, by some chance",
+    "furigana": "",
+    "romaji": "moshikashitara",
+    "level": 2
+  },
+  {
+    "id": 4657,
+    "word": "ぺん",
+    "meaning": "pen",
+    "furigana": "",
+    "romaji": "pen",
+    "level": 2
+  },
+  {
+    "id": 4668,
+    "word": "延びる",
+    "meaning": "to be prolonged",
+    "furigana": "のびる",
+    "romaji": "nobiru",
+    "level": 2
+  },
+  {
+    "id": 4671,
+    "word": "代る",
+    "meaning": "(v5r, vi) to take the place of, to relieve, to be substituted for",
+    "furigana": "かわる",
+    "romaji": "kawaru",
+    "level": 2
+  },
+  {
+    "id": 4674,
+    "word": "ぶつかる",
+    "meaning": "to strike, to collide with",
+    "furigana": "",
+    "romaji": "butsukaru",
+    "level": 2
+  },
+  {
+    "id": 4677,
+    "word": "締切",
+    "meaning": "closing, cut-off, end, deadline, Closed, No Entrance",
+    "furigana": "しめきり",
+    "romaji": "shimekiri",
+    "level": 2
+  },
+  {
+    "id": 4679,
+    "word": "固い",
+    "meaning": "stubborn, firm (not viscous or easily moved)",
+    "furigana": "かたい",
+    "romaji": "katai",
+    "level": 2
+  },
+  {
+    "id": 4693,
+    "word": "あふれる",
+    "meaning": "to flood, to overflow, to brim over",
+    "furigana": "",
+    "romaji": "afureru",
+    "level": 2
+  },
+  {
+    "id": 4696,
+    "word": "御馳走",
+    "meaning": "feast, treating (someone)",
+    "furigana": "ごちそう",
+    "romaji": "gochisō",
+    "level": 2
+  },
+  {
+    "id": 4698,
+    "word": "乗換",
+    "meaning": "(n) transfer (trains, buses, etc.)",
+    "furigana": "のりかえ",
+    "romaji": "norikae",
+    "level": 2
+  },
+  {
+    "id": 4704,
+    "word": "吊す",
+    "meaning": "to hang",
+    "furigana": "つるす",
+    "romaji": "tsurusu",
+    "level": 2
+  },
+  {
+    "id": 4707,
+    "word": "話中",
+    "meaning": "while talking, the line is busy",
+    "furigana": "はなしちゅう",
+    "romaji": "hanashichū",
+    "level": 2
+  },
+  {
+    "id": 4708,
+    "word": "ローマじ",
+    "meaning": "romanization, Roman letters",
+    "furigana": "",
+    "romaji": "rōmaji",
+    "level": 2
+  },
+  {
+    "id": 4714,
+    "word": "御辞儀",
+    "meaning": "bow",
+    "furigana": "おじぎ",
+    "romaji": "ojigi",
+    "level": 2
+  },
+  {
+    "id": 4723,
+    "word": "留まる",
+    "meaning": "(1) to be fixed, (2) to abide, to stay (in the one place)",
+    "furigana": "とどまる",
+    "romaji": "todomaru",
+    "level": 2
+  },
+  {
+    "id": 4729,
+    "word": "こしらえる",
+    "meaning": "to make, to manufacture",
+    "furigana": "",
+    "romaji": "koshiraeru",
+    "level": 2
+  },
+  {
+    "id": 4737,
+    "word": "たちまち",
+    "meaning": "at once, in a moment, suddenly, all at once",
+    "furigana": "",
+    "romaji": "tachimachi",
+    "level": 2
+  },
+  {
+    "id": 4739,
+    "word": "落着く",
+    "meaning": "to calm down, to settle down",
+    "furigana": "おちつく",
+    "romaji": "ochitsuku",
+    "level": 2
+  },
+  {
+    "id": 4746,
+    "word": "おねがいします",
+    "meaning": "please",
+    "furigana": "",
+    "romaji": "onegaishimasu",
+    "level": 2
+  },
+  {
+    "id": 4752,
+    "word": "もしかすると",
+    "meaning": "perhaps, maybe, by some chance",
+    "furigana": "",
+    "romaji": "moshikasuruto",
+    "level": 2
+  },
+  {
+    "id": 4766,
+    "word": "しゃっくり",
+    "meaning": "hiccough, hiccup",
+    "furigana": "",
+    "romaji": "shakkuri",
+    "level": 2
+  },
+  {
+    "id": 4774,
+    "word": "間も無く",
+    "meaning": "soon, before long, in a short time",
+    "furigana": "まもなく",
+    "romaji": "mamonaku",
+    "level": 2
+  },
+  {
+    "id": 4780,
+    "word": "ためらう",
+    "meaning": "to hesitate",
+    "furigana": "",
+    "romaji": "tamerau",
+    "level": 2
+  },
+  {
+    "id": 4788,
+    "word": "いつのまにか",
+    "meaning": "before one knows, unnoticed, unawares",
+    "furigana": "",
+    "romaji": "itsunomanika",
+    "level": 2
+  },
+  {
+    "id": 4792,
+    "word": "しみじみ",
+    "meaning": "keenly, deeply, heartily",
+    "furigana": "",
+    "romaji": "shimijimi",
+    "level": 2
+  },
+  {
+    "id": 4796,
+    "word": "永い",
+    "meaning": "long, lengthy",
+    "furigana": "ながい",
+    "romaji": "nagai",
+    "level": 2
+  },
+  {
+    "id": 4805,
+    "word": "どうぞよろしく",
+    "meaning": "pleased to meet you",
+    "furigana": "",
+    "romaji": "dōzoyoroshiku",
+    "level": 2
+  },
+  {
+    "id": 4808,
+    "word": "ばからしい",
+    "meaning": "absurd",
+    "furigana": "",
+    "romaji": "bakarashii",
+    "level": 2
+  },
+  {
+    "id": 4816,
+    "word": "叔父さん",
+    "meaning": "middle-aged gentleman, uncle",
+    "furigana": "おじさん",
+    "romaji": "ojisan",
+    "level": 2
+  },
+  {
+    "id": 4817,
+    "word": "ともかく",
+    "meaning": "anyhow, anyway, somehow or other, generally speaking, in any case",
+    "furigana": "",
+    "romaji": "tomokaku",
+    "level": 2
+  },
+  {
+    "id": 4819,
+    "word": "もったいない",
+    "meaning": "too good, more than one deserves, wasteful, sacrilegious, unworthy of",
+    "furigana": "",
+    "romaji": "mottainai",
+    "level": 2
+  },
+  {
+    "id": 4823,
+    "word": "塵紙",
+    "meaning": "tissue paper, toilet paper",
+    "furigana": "ちりがみ",
+    "romaji": "chirigami",
+    "level": 2
+  },
+  {
+    "id": 4827,
+    "word": "話し掛ける",
+    "meaning": "to accost a person, to talk (to someone)",
+    "furigana": "はなしかける",
+    "romaji": "hanashikakeru",
+    "level": 2
+  },
+  {
+    "id": 4832,
+    "word": "いよいよ",
+    "meaning": "more and more, all the more, increasingly, at last, beyond doubt",
+    "furigana": "",
+    "romaji": "iyoiyo",
+    "level": 2
+  },
+  {
+    "id": 4836,
+    "word": "討つ",
+    "meaning": "to attack, to avenge",
+    "furigana": "うつ",
+    "romaji": "utsu",
+    "level": 2
+  },
+  {
+    "id": 4847,
+    "word": "きっかけ",
+    "meaning": "chance, start, cue, excuse",
+    "furigana": "",
+    "romaji": "kikkake",
+    "level": 2
+  },
+  {
+    "id": 4855,
+    "word": "組合せ",
+    "meaning": "combination",
+    "furigana": "くみあわせ",
+    "romaji": "kumiawase",
+    "level": 2
+  },
+  {
+    "id": 4864,
+    "word": "引返す",
+    "meaning": "to repeat, to send back, to bring back",
+    "furigana": "ひきかえす",
+    "romaji": "hikikaesu",
+    "level": 2
+  },
+  {
+    "id": 4877,
+    "word": "あいかわらず",
+    "meaning": "as ever, as usual, the same",
+    "furigana": "",
+    "romaji": "aikawarazu",
+    "level": 2
+  },
+  {
+    "id": 4888,
+    "word": "おどかす",
+    "meaning": "to threaten, to coerce",
+    "furigana": "",
+    "romaji": "odokasu",
+    "level": 2
+  },
+  {
+    "id": 4897,
+    "word": "浸ける",
+    "meaning": "to dip in, to soak",
+    "furigana": "つける",
+    "romaji": "tsukeru",
+    "level": 2
+  },
+  {
+    "id": 4898,
+    "word": "レクリェーション",
+    "meaning": "recreation",
+    "furigana": "",
+    "romaji": "rekuryēshon",
+    "level": 2
+  },
+  {
+    "id": 4899,
+    "word": "慶ぶ",
+    "meaning": "",
+    "furigana": "よろこぶ",
+    "romaji": "yorokobu",
+    "level": 2
+  },
+  {
+    "id": 4904,
+    "word": "おしゃれ",
+    "meaning": "smartly dressed, someone smartly dressed, fashion-conscious",
+    "furigana": "",
+    "romaji": "oshare",
+    "level": 2
+  },
+  {
+    "id": 4910,
+    "word": "小父さん",
+    "meaning": "middle-aged gentleman, uncle",
+    "furigana": "おじさん",
+    "romaji": "ojisan",
+    "level": 2
+  },
+  {
+    "id": 4914,
+    "word": "手頃",
+    "meaning": "moderate, handy",
+    "furigana": "てごろ",
+    "romaji": "tegoro",
+    "level": 2
+  },
+  {
+    "id": 4919,
+    "word": "けれど / けれども",
+    "meaning": "but, however",
+    "furigana": "",
+    "romaji": "keredo / keredomo",
+    "level": 2
+  },
+  {
+    "id": 4920,
+    "word": "思い掛けない",
+    "meaning": "unexpected, casual",
+    "furigana": "おもいがけない",
+    "romaji": "omoigakenai",
+    "level": 2
+  },
+  {
+    "id": 1334,
+    "word": "ちょうだい",
+    "meaning": "(1) please do for me (preceded by -te), (2) reception, being given, get",
+    "furigana": "",
+    "romaji": "chōdai",
+    "level": 3
+  },
+  {
+    "id": 1365,
+    "word": "わがまま",
+    "meaning": "selfishness, egoism, wilfulness, disobedience, whim",
+    "furigana": "",
+    "romaji": "wagamama",
+    "level": 3
+  },
+  {
+    "id": 1372,
+    "word": "いえ",
+    "meaning": "TODO same as いいえ?",
+    "furigana": "いえ",
+    "romaji": "ie",
+    "level": 3
+  },
+  {
+    "id": 1382,
+    "word": "いわゆる",
+    "meaning": "the so-called, so to speak",
+    "furigana": "",
+    "romaji": "iwayuru",
+    "level": 3
+  },
+  {
+    "id": 1383,
+    "word": "すてき",
+    "meaning": "lovely, dreamy, beautiful, great",
+    "furigana": "",
+    "romaji": "suteki",
+    "level": 3
+  },
+  {
+    "id": 1391,
+    "word": "なお",
+    "meaning": "straight, mischief, ordinary, common",
+    "furigana": "",
+    "romaji": "nao",
+    "level": 3
+  },
+  {
+    "id": 1400,
+    "word": "ここ",
+    "meaning": "here",
+    "furigana": "ここ",
+    "romaji": "koko",
+    "level": 3
+  },
+  {
+    "id": 1419,
+    "word": "たびたび",
+    "meaning": "often, repeatedly, frequently",
+    "furigana": "",
+    "romaji": "tabitabi",
+    "level": 3
+  },
+  {
+    "id": 1427,
+    "word": "まさに",
+    "meaning": "correctly, surely",
+    "furigana": "",
+    "romaji": "masani",
+    "level": 3
+  },
+  {
+    "id": 1433,
+    "word": "うなる",
+    "meaning": "to groan, to moan",
+    "furigana": "",
+    "romaji": "unaru",
+    "level": 3
+  },
+  {
+    "id": 1460,
+    "word": "いらいら",
+    "meaning": "getting nervous, irritation",
+    "furigana": "",
+    "romaji": "iraira",
+    "level": 3
+  },
+  {
+    "id": 1467,
+    "word": "それと",
+    "meaning": "",
+    "furigana": "",
+    "romaji": "soreto",
+    "level": 3
+  },
+  {
+    "id": 1475,
+    "word": "ヨーロッパ",
+    "meaning": "Europe",
+    "furigana": "",
+    "romaji": "yōroppa",
+    "level": 3
+  },
+  {
+    "id": 1484,
+    "word": "釣",
+    "meaning": "",
+    "furigana": "つり",
+    "romaji": "tsuri",
+    "level": 3
+  },
+  {
+    "id": 1527,
+    "word": "この",
+    "meaning": "this",
+    "furigana": "この",
+    "romaji": "kono",
+    "level": 3
+  },
+  {
+    "id": 1541,
+    "word": "あと",
+    "meaning": "(1) trace, tracks, (2) remains, ruins, (3) scar",
+    "furigana": "",
+    "romaji": "ato",
+    "level": 3
+  },
+  {
+    "id": 1569,
+    "word": "しかも",
+    "meaning": "moreover, furthermore, nevertheless, and yet",
+    "furigana": "",
+    "romaji": "shikamo",
+    "level": 3
+  },
+  {
+    "id": 1589,
+    "word": "あらゆる",
+    "meaning": "all, every",
+    "furigana": "",
+    "romaji": "arayuru",
+    "level": 3
+  },
+  {
+    "id": 1595,
+    "word": "どれ",
+    "meaning": "well, now, let me see, which (of three or more)",
+    "furigana": "どれ",
+    "romaji": "dore",
+    "level": 3
+  },
+  {
+    "id": 1606,
+    "word": "支払",
+    "meaning": "payment",
+    "furigana": "しはらい",
+    "romaji": "shiharai",
+    "level": 3
+  },
+  {
+    "id": 1609,
+    "word": "どうしても",
+    "meaning": "by all means, at any cost, no matter what",
+    "furigana": "",
+    "romaji": "dōshitemo",
+    "level": 3
+  },
+  {
+    "id": 1621,
+    "word": "降ろす",
+    "meaning": "to take down, to launch, to drop",
+    "furigana": "おろす",
+    "romaji": "orosu",
+    "level": 3
+  },
+  {
+    "id": 1627,
+    "word": "唯",
+    "meaning": "free of charge, mere, sole, only, usual, common",
+    "furigana": "ただ",
+    "romaji": "tada",
+    "level": 3
+  },
+  {
+    "id": 1697,
+    "word": "うるさい",
+    "meaning": "noisy, loud, fussy",
+    "furigana": "",
+    "romaji": "urusai",
+    "level": 3
+  },
+  {
+    "id": 1702,
+    "word": "ところで",
+    "meaning": "by the way, even if, no matter what",
+    "furigana": "",
+    "romaji": "tokorode",
+    "level": 3
+  },
+  {
+    "id": 1732,
+    "word": "ソファー",
+    "meaning": "sofa, couch",
+    "furigana": "",
+    "romaji": "sofā",
+    "level": 3
+  },
+  {
+    "id": 1753,
+    "word": "あんまり",
+    "meaning": "not very, not much, remainder, rest",
+    "furigana": "",
+    "romaji": "anmari",
+    "level": 3
+  },
+  {
+    "id": 1754,
+    "word": "いち",
+    "meaning": "market, fair",
+    "furigana": "",
+    "romaji": "ichi",
+    "level": 3
+  },
+  {
+    "id": 1805,
+    "word": "できれば",
+    "meaning": "",
+    "furigana": "",
+    "romaji": "dekireba",
+    "level": 3
+  },
+  {
+    "id": 1814,
+    "word": "たまらない",
+    "meaning": "intolerable, unbearable, unendurable",
+    "furigana": "",
+    "romaji": "tamaranai",
+    "level": 3
+  },
+  {
+    "id": 1825,
+    "word": "独り",
+    "meaning": "alone, unmarried",
+    "furigana": "ひとり",
+    "romaji": "hitori",
+    "level": 3
+  },
+  {
+    "id": 1842,
+    "word": "じっと",
+    "meaning": "fixedly, firmly, patiently, quietly",
+    "furigana": "",
+    "romaji": "jitto",
+    "level": 3
+  },
+  {
+    "id": 1850,
+    "word": "おしゃべり",
+    "meaning": "chattering, talk, idle talk",
+    "furigana": "",
+    "romaji": "oshaberi",
+    "level": 3
+  },
+  {
+    "id": 1853,
+    "word": "いつか",
+    "meaning": "sometime, someday, one day",
+    "furigana": "",
+    "romaji": "itsuka",
+    "level": 3
+  },
+  {
+    "id": 1868,
+    "word": "なぜなら",
+    "meaning": "because",
+    "furigana": "",
+    "romaji": "nazenara",
+    "level": 3
+  },
+  {
+    "id": 1871,
+    "word": "うがい",
+    "meaning": "gargle, rinse mouth",
+    "furigana": "",
+    "romaji": "ugai",
+    "level": 3
+  },
+  {
+    "id": 1885,
+    "word": "濠",
+    "meaning": "moat",
+    "furigana": "ほり",
+    "romaji": "hori",
+    "level": 3
+  },
+  {
+    "id": 1905,
+    "word": "あるいは",
+    "meaning": "or, possibly",
+    "furigana": "",
+    "romaji": "aruiha",
+    "level": 3
+  },
+  {
+    "id": 1906,
+    "word": "いつでも",
+    "meaning": "(at) any time, always, at all times, never (neg)",
+    "furigana": "",
+    "romaji": "itsudemo",
+    "level": 3
+  },
+  {
+    "id": 1908,
+    "word": "いつまでも",
+    "meaning": "forever, for good, eternally, as long as one likes, indefinitely",
+    "furigana": "",
+    "romaji": "itsumademo",
+    "level": 3
+  },
+  {
+    "id": 1936,
+    "word": "やがて",
+    "meaning": "before long, soon, at length",
+    "furigana": "",
+    "romaji": "yagate",
+    "level": 3
+  },
+  {
+    "id": 1943,
+    "word": "人込み",
+    "meaning": "crowd of people",
+    "furigana": "ひとごみ",
+    "romaji": "hitogomi",
+    "level": 3
+  },
+  {
+    "id": 1978,
+    "word": "できる",
+    "meaning": "to be able to, to be ready, to occur",
+    "furigana": "（可能。出現。発生）",
+    "romaji": "(..)",
+    "level": 3
+  },
+  {
+    "id": 1985,
+    "word": "およそ",
+    "meaning": "about, roughly, as a rule, approximately",
+    "furigana": "",
+    "romaji": "oyoso",
+    "level": 3
+  },
+  {
+    "id": 1994,
+    "word": "務め",
+    "meaning": "(1) service, duty, (2) Buddhist religious services",
+    "furigana": "つとめ",
+    "romaji": "tsutome",
+    "level": 3
+  },
+  {
+    "id": 2005,
+    "word": "よい",
+    "meaning": "good, nice, pleasant, ok",
+    "furigana": "",
+    "romaji": "yoi",
+    "level": 3
+  },
+  {
+    "id": 2031,
+    "word": "まるで",
+    "meaning": "quite, entirely, completely",
+    "furigana": "",
+    "romaji": "marude",
+    "level": 3
+  },
+  {
+    "id": 2038,
+    "word": "しまい",
+    "meaning": "sisters",
+    "furigana": "（終わり）",
+    "romaji": "(wari)",
+    "level": 3
+  },
+  {
+    "id": 2042,
+    "word": "しまった",
+    "meaning": "Damn it!",
+    "furigana": "（感）",
+    "romaji": "()",
+    "level": 3
+  },
+  {
+    "id": 2058,
+    "word": "お目に掛かる",
+    "meaning": "",
+    "furigana": "おめにかかる",
+    "romaji": "omenikakaru",
+    "level": 3
+  },
+  {
+    "id": 2066,
+    "word": "そこで",
+    "meaning": "so (conj), accordingly, now, then, thereupon",
+    "furigana": "",
+    "romaji": "sokode",
+    "level": 3
+  },
+  {
+    "id": 2101,
+    "word": "しゃべる",
+    "meaning": "to talk, to chat, to chatter",
+    "furigana": "",
+    "romaji": "shaberu",
+    "level": 3
+  },
+  {
+    "id": 2131,
+    "word": "向かい",
+    "meaning": "facing, opposite, across the street, other side",
+    "furigana": "むかい",
+    "romaji": "mukai",
+    "level": 3
+  },
+  {
+    "id": 2179,
+    "word": "昇る",
+    "meaning": "to arise, to ascend, to go up",
+    "furigana": "のぼる",
+    "romaji": "noboru",
+    "level": 3
+  },
+  {
+    "id": 2200,
+    "word": "おまえ",
+    "meaning": "(fam) you (sing), presence (of a high personage)",
+    "furigana": "",
+    "romaji": "omae",
+    "level": 3
+  },
+  {
+    "id": 2216,
+    "word": "いたずら",
+    "meaning": "tease, prank, trick, practical joke",
+    "furigana": "",
+    "romaji": "itazura",
+    "level": 3
+  },
+  {
+    "id": 2218,
+    "word": "それとも",
+    "meaning": "or, or else",
+    "furigana": "",
+    "romaji": "soretomo",
+    "level": 3
+  },
+  {
+    "id": 2237,
+    "word": "いつも",
+    "meaning": "always, usually, every time, never (with neg. verb)",
+    "furigana": "いつも",
+    "romaji": "itsumo",
+    "level": 3
+  },
+  {
+    "id": 2257,
+    "word": "そこ",
+    "meaning": "bottom, sole",
+    "furigana": "そこ",
+    "romaji": "soko",
+    "level": 3
+  },
+  {
+    "id": 2277,
+    "word": "したがって",
+    "meaning": "therefore, consequently, in accordance with",
+    "furigana": "したがって",
+    "romaji": "shitagatte",
+    "level": 3
+  },
+  {
+    "id": 2278,
+    "word": "なにも",
+    "meaning": "nothing",
+    "furigana": "",
+    "romaji": "nanimo",
+    "level": 3
+  },
+  {
+    "id": 2288,
+    "word": "それでも",
+    "meaning": "but (still), and yet, nevertheless, even so, notwithstanding",
+    "furigana": "",
+    "romaji": "soredemo",
+    "level": 3
+  },
+  {
+    "id": 2290,
+    "word": "もしも",
+    "meaning": "if",
+    "furigana": "",
+    "romaji": "moshimo",
+    "level": 3
+  },
+  {
+    "id": 2298,
+    "word": "よろしく",
+    "meaning": "well, properly, suitably, best regards, please remember me",
+    "furigana": "（感）",
+    "romaji": "()",
+    "level": 3
+  },
+  {
+    "id": 2301,
+    "word": "ますます",
+    "meaning": "increasingly, more and more",
+    "furigana": "",
+    "romaji": "masumasu",
+    "level": 3
+  },
+  {
+    "id": 2325,
+    "word": "うまい",
+    "meaning": "delicious",
+    "furigana": "うまい",
+    "romaji": "umai",
+    "level": 3
+  },
+  {
+    "id": 2327,
+    "word": "有る",
+    "meaning": "to be, to have",
+    "furigana": "ある",
+    "romaji": "aru",
+    "level": 3
+  },
+  {
+    "id": 2335,
+    "word": "かわいらしい",
+    "meaning": "lovely, sweet",
+    "furigana": "",
+    "romaji": "kawairashii",
+    "level": 3
+  },
+  {
+    "id": 2382,
+    "word": "明ける",
+    "meaning": "to dawn, to become daylight",
+    "furigana": "あける",
+    "romaji": "akeru",
+    "level": 3
+  },
+  {
+    "id": 2393,
+    "word": "まさか",
+    "meaning": "by no means",
+    "furigana": "",
+    "romaji": "masaka",
+    "level": 3
+  },
+  {
+    "id": 2394,
+    "word": "追い付く",
+    "meaning": "to overtake, to catch up (with)",
+    "furigana": "おいつく",
+    "romaji": "oitsuku",
+    "level": 3
+  },
+  {
+    "id": 2409,
+    "word": "あした",
+    "meaning": "tomorrow",
+    "furigana": "",
+    "romaji": "ashita",
+    "level": 3
+  },
+  {
+    "id": 2430,
+    "word": "なかなか",
+    "meaning": "very, considerably, easily",
+    "furigana": "",
+    "romaji": "nakanaka",
+    "level": 3
+  },
+  {
+    "id": 2440,
+    "word": "ありがとう",
+    "meaning": "(conj, exp, int) Thank you",
+    "furigana": "",
+    "romaji": "arigatō",
+    "level": 3
+  },
+  {
+    "id": 2452,
+    "word": "これら",
+    "meaning": "these",
+    "furigana": "",
+    "romaji": "korera",
+    "level": 3
+  },
+  {
+    "id": 2453,
+    "word": "すごい",
+    "meaning": "terrible, dreadful, terrific, amazing, great",
+    "furigana": "",
+    "romaji": "sugoi",
+    "level": 3
+  },
+  {
+    "id": 2486,
+    "word": "そして",
+    "meaning": "and",
+    "furigana": "",
+    "romaji": "soshite",
+    "level": 3
+  },
+  {
+    "id": 2494,
+    "word": "やはり",
+    "meaning": "also, as I thought, still, in spite of, absolutely, of course",
+    "furigana": "",
+    "romaji": "yahari",
+    "level": 3
+  },
+  {
+    "id": 2497,
+    "word": "かわいそう",
+    "meaning": "poor, pitiable, pathetic",
+    "furigana": "",
+    "romaji": "kawaisō",
+    "level": 3
+  },
+  {
+    "id": 2512,
+    "word": "かなり",
+    "meaning": "considerably, fairly, quite",
+    "furigana": "",
+    "romaji": "kanari",
+    "level": 3
+  },
+  {
+    "id": 2526,
+    "word": "おめでとう",
+    "meaning": "Congratulations!, an auspicious occasion!",
+    "furigana": "",
+    "romaji": "omedetō",
+    "level": 3
+  },
+  {
+    "id": 2533,
+    "word": "いずれ",
+    "meaning": "where, which, who",
+    "furigana": "",
+    "romaji": "izure",
+    "level": 3
+  },
+  {
+    "id": 2535,
+    "word": "あちこち",
+    "meaning": "here and there",
+    "furigana": "",
+    "romaji": "achikochi",
+    "level": 3
+  },
+  {
+    "id": 2538,
+    "word": "いけない",
+    "meaning": "must not do, bad, wrong, not good",
+    "furigana": "",
+    "romaji": "ikenai",
+    "level": 3
+  },
+  {
+    "id": 2566,
+    "word": "しまう",
+    "meaning": "to finish, to close, to do something completely",
+    "furigana": "（終わる）",
+    "romaji": "(waru)",
+    "level": 3
+  },
+  {
+    "id": 2567,
+    "word": "こんにちは",
+    "meaning": "hello, good day (daytime greeting, id)",
+    "furigana": "",
+    "romaji": "konnichiha",
+    "level": 3
+  },
+  {
+    "id": 2568,
+    "word": "つまり",
+    "meaning": "in short, in brief, in other words",
+    "furigana": "",
+    "romaji": "tsumari",
+    "level": 3
+  },
+  {
+    "id": 2573,
+    "word": "それぞれ",
+    "meaning": "each, every, either, respectively, severally",
+    "furigana": "",
+    "romaji": "sorezore",
+    "level": 3
+  },
+  {
+    "id": 2575,
+    "word": "とにかく",
+    "meaning": "anyhow, at any rate, anyway, somehow or other, generally speaking, in any case",
+    "furigana": "",
+    "romaji": "tonikaku",
+    "level": 3
+  },
+  {
+    "id": 2577,
+    "word": "どこか",
+    "meaning": "somewhere, anywhere",
+    "furigana": "",
+    "romaji": "dokoka",
+    "level": 3
+  },
+  {
+    "id": 2600,
+    "word": "年寄",
+    "meaning": "old people, the aged",
+    "furigana": "としより",
+    "romaji": "toshiyori",
+    "level": 3
+  },
+  {
+    "id": 2618,
+    "word": "おじいさん",
+    "meaning": "grandfather, male senior-citizen",
+    "furigana": "",
+    "romaji": "ojiisan",
+    "level": 3
+  },
+  {
+    "id": 2623,
+    "word": "替える",
+    "meaning": "to exchange, to interchange, to substitute, to replace",
+    "furigana": "かえる",
+    "romaji": "kaeru",
+    "level": 3
+  },
+  {
+    "id": 2635,
+    "word": "ほぼ",
+    "meaning": "almost, roughly, approximately",
+    "furigana": "",
+    "romaji": "hobo",
+    "level": 3
+  },
+  {
+    "id": 2636,
+    "word": "ただ",
+    "meaning": "free of charge, mere, only",
+    "furigana": "",
+    "romaji": "tada",
+    "level": 3
+  },
+  {
+    "id": 2666,
+    "word": "ごめんなさい",
+    "meaning": "I beg your pardon, excuse me",
+    "furigana": "",
+    "romaji": "gomennasai",
+    "level": 3
+  },
+  {
+    "id": 2675,
+    "word": "ふと",
+    "meaning": "suddenly, casually, accidentally, incidentally, unexpectedly, unintentionally",
+    "furigana": "（副）",
+    "romaji": "()",
+    "level": 3
+  },
+  {
+    "id": 2694,
+    "word": "その",
+    "meaning": "the, that",
+    "furigana": "その",
+    "romaji": "sono",
+    "level": 3
+  },
+  {
+    "id": 2695,
+    "word": "あいにく",
+    "meaning": "unfortunately, Sorry, but....",
+    "furigana": "",
+    "romaji": "ainiku",
+    "level": 3
+  },
+  {
+    "id": 2713,
+    "word": "わざと",
+    "meaning": "on purpose",
+    "furigana": "",
+    "romaji": "wazato",
+    "level": 3
+  },
+  {
+    "id": 2729,
+    "word": "コンピューター",
+    "meaning": "computer",
+    "furigana": "",
+    "romaji": "konpyūtā",
+    "level": 3
+  },
+  {
+    "id": 2740,
+    "word": "かもしれない",
+    "meaning": "may, might, perhaps, may be, possibly",
+    "furigana": "",
+    "romaji": "kamoshirenai",
+    "level": 3
+  },
+  {
+    "id": 2743,
+    "word": "おそらく",
+    "meaning": "perhaps",
+    "furigana": "",
+    "romaji": "osoraku",
+    "level": 3
+  },
+  {
+    "id": 2763,
+    "word": "すなわち",
+    "meaning": "that is, namely, i.e.",
+    "furigana": "",
+    "romaji": "sunawachi",
+    "level": 3
+  },
+  {
+    "id": 2814,
+    "word": "曇",
+    "meaning": "cloudiness, cloudy weather, shadow",
+    "furigana": "くもり",
+    "romaji": "kumori",
+    "level": 3
+  },
+  {
+    "id": 2842,
+    "word": "ところが",
+    "meaning": "however, while, even if",
+    "furigana": "",
+    "romaji": "tokoroga",
+    "level": 3
+  },
+  {
+    "id": 2883,
+    "word": "よると",
+    "meaning": "according to",
+    "furigana": "",
+    "romaji": "yoruto",
+    "level": 3
+  },
+  {
+    "id": 2899,
+    "word": "さて",
+    "meaning": "well, now, then",
+    "furigana": "",
+    "romaji": "sate",
+    "level": 3
+  },
+  {
+    "id": 2900,
+    "word": "たとえ",
+    "meaning": "simile, metaphor, allegory",
+    "furigana": "",
+    "romaji": "tatoe",
+    "level": 3
+  },
+  {
+    "id": 2937,
+    "word": "はさみ",
+    "meaning": "scissors",
+    "furigana": "",
+    "romaji": "hasami",
+    "level": 3
+  },
+  {
+    "id": 2945,
+    "word": "びっくり",
+    "meaning": "be surprised, be amazed, be frightened, astonishment",
+    "furigana": "",
+    "romaji": "bikkuri",
+    "level": 3
+  },
+  {
+    "id": 2985,
+    "word": "すみません",
+    "meaning": "sorry, excuse me",
+    "furigana": "（感）",
+    "romaji": "()",
+    "level": 3
+  },
+  {
+    "id": 3000,
+    "word": "ウイスキー",
+    "meaning": "whisky",
+    "furigana": "",
+    "romaji": "uisukī",
+    "level": 3
+  },
+  {
+    "id": 3027,
+    "word": "そのまま",
+    "meaning": "without change, as it is (i.e. now)",
+    "furigana": "",
+    "romaji": "sonomama",
+    "level": 3
+  },
+  {
+    "id": 3041,
+    "word": "しきりに",
+    "meaning": "frequently, repeatedly, incessantly, eagerly",
+    "furigana": "",
+    "romaji": "shikirini",
+    "level": 3
+  },
+  {
+    "id": 3074,
+    "word": "いただきます",
+    "meaning": "expression of gratitude before meals",
+    "furigana": "",
+    "romaji": "itadakimasu",
+    "level": 3
+  },
+  {
+    "id": 3081,
+    "word": "とんでもない",
+    "meaning": "unexpected, offensive, What a thing to say!, No way!",
+    "furigana": "",
+    "romaji": "tondemonai",
+    "level": 3
+  },
+  {
+    "id": 3083,
+    "word": "そのうち",
+    "meaning": "eventually, sooner or later, of the previously mentioned",
+    "furigana": "",
+    "romaji": "sonōchi",
+    "level": 3
+  },
+  {
+    "id": 674,
+    "word": "すく",
+    "meaning": "to become empty",
+    "furigana": "",
+    "romaji": "suku",
+    "level": 4
+  },
+  {
+    "id": 680,
+    "word": "アメリカ",
+    "meaning": "America",
+    "furigana": "",
+    "romaji": "amerika",
+    "level": 4
+  },
+  {
+    "id": 683,
+    "word": "これから",
+    "meaning": "after this",
+    "furigana": "",
+    "romaji": "korekara",
+    "level": 4
+  },
+  {
+    "id": 688,
+    "word": "真中",
+    "meaning": "middle",
+    "furigana": "まんなか",
+    "romaji": "mannaka",
+    "level": 4
+  },
+  {
+    "id": 703,
+    "word": "規則",
+    "meaning": "regulations",
+    "furigana": "きそく",
+    "romaji": "kisoku",
+    "level": 4
+  },
+  {
+    "id": 704,
+    "word": "もうすぐ",
+    "meaning": "soon",
+    "furigana": "",
+    "romaji": "mōsugu",
+    "level": 4
+  },
+  {
+    "id": 719,
+    "word": "それほど",
+    "meaning": "to that extent",
+    "furigana": "",
+    "romaji": "sorehodo",
+    "level": 4
+  },
+  {
+    "id": 720,
+    "word": "うまい",
+    "meaning": "delicious",
+    "furigana": "",
+    "romaji": "umai",
+    "level": 4
+  },
+  {
+    "id": 721,
+    "word": "ずいぶん",
+    "meaning": "extremely",
+    "furigana": "",
+    "romaji": "zuibun",
+    "level": 4
+  },
+  {
+    "id": 722,
+    "word": "お・金持ち",
+    "meaning": "rich man",
+    "furigana": "かねもち / おかねもち",
+    "romaji": "kanemochi / okanemochi",
+    "level": 4
+  },
+  {
+    "id": 729,
+    "word": "くれる",
+    "meaning": "to give",
+    "furigana": "",
+    "romaji": "kureru",
+    "level": 4
+  },
+  {
+    "id": 737,
+    "word": "このあいだ",
+    "meaning": "the other day, recently",
+    "furigana": "",
+    "romaji": "konoaida",
+    "level": 4
+  },
+  {
+    "id": 742,
+    "word": "ぶどう",
+    "meaning": "grapes",
+    "furigana": "",
+    "romaji": "budō",
+    "level": 4
+  },
+  {
+    "id": 743,
+    "word": "直す",
+    "meaning": "to fix, to repair",
+    "furigana": "なおす",
+    "romaji": "naosu",
+    "level": 4
+  },
+  {
+    "id": 746,
+    "word": "うそ",
+    "meaning": "a lie",
+    "furigana": "",
+    "romaji": "uso",
+    "level": 4
+  },
+  {
+    "id": 762,
+    "word": "かっこう",
+    "meaning": "appearance",
+    "furigana": "",
+    "romaji": "kakkō",
+    "level": 4
+  },
+  {
+    "id": 770,
+    "word": "たいてい",
+    "meaning": "usually",
+    "furigana": "",
+    "romaji": "taitei",
+    "level": 4
+  },
+  {
+    "id": 776,
+    "word": "しかる",
+    "meaning": "a particular",
+    "furigana": "",
+    "romaji": "shikaru",
+    "level": 4
+  },
+  {
+    "id": 781,
+    "word": "なるほど",
+    "meaning": "now I understand",
+    "furigana": "",
+    "romaji": "naruhodo",
+    "level": 4
+  },
+  {
+    "id": 790,
+    "word": "しっかり",
+    "meaning": "firmly, steadily",
+    "furigana": "",
+    "romaji": "shikkari",
+    "level": 4
+  },
+  {
+    "id": 792,
+    "word": "すり",
+    "meaning": "pickpocket",
+    "furigana": "",
+    "romaji": "suri",
+    "level": 4
+  },
+  {
+    "id": 798,
+    "word": "さ来月",
+    "meaning": "the month after next",
+    "furigana": "さらいげつ",
+    "romaji": "saraigetsu",
+    "level": 4
+  },
+  {
+    "id": 813,
+    "word": "見つける",
+    "meaning": "to discover",
+    "furigana": "みつける",
+    "romaji": "mitsukeru",
+    "level": 4
+  },
+  {
+    "id": 819,
+    "word": "たまに",
+    "meaning": "occasionally",
+    "furigana": "",
+    "romaji": "tamani",
+    "level": 4
+  },
+  {
+    "id": 821,
+    "word": "いっぱい",
+    "meaning": "full",
+    "furigana": "",
+    "romaji": "ippai",
+    "level": 4
+  },
+  {
+    "id": 836,
+    "word": "おつり",
+    "meaning": "change from purchase, balance",
+    "furigana": "",
+    "romaji": "otsuri",
+    "level": 4
+  },
+  {
+    "id": 845,
+    "word": "いただく",
+    "meaning": "(humble) to receive",
+    "furigana": "",
+    "romaji": "itadaku",
+    "level": 4
+  },
+  {
+    "id": 848,
+    "word": "ひげ",
+    "meaning": "beard",
+    "furigana": "",
+    "romaji": "hige",
+    "level": 4
+  },
+  {
+    "id": 850,
+    "word": "よろしい",
+    "meaning": "(respectful) OK, all right",
+    "furigana": "",
+    "romaji": "yoroshii",
+    "level": 4
+  },
+  {
+    "id": 860,
+    "word": "まず",
+    "meaning": "first of all",
+    "furigana": "",
+    "romaji": "mazu",
+    "level": 4
+  },
+  {
+    "id": 867,
+    "word": "できるだけ",
+    "meaning": "as much as possible",
+    "furigana": "",
+    "romaji": "dekirudake",
+    "level": 4
+  },
+  {
+    "id": 876,
+    "word": "アフリカ",
+    "meaning": "Africa",
+    "furigana": "",
+    "romaji": "afurika",
+    "level": 4
+  },
+  {
+    "id": 882,
+    "word": "落る",
+    "meaning": "to fall or drop",
+    "furigana": "おちる",
+    "romaji": "ochiru",
+    "level": 4
+  },
+  {
+    "id": 889,
+    "word": "ほど",
+    "meaning": "extent",
+    "furigana": "",
+    "romaji": "hodo",
+    "level": 4
+  },
+  {
+    "id": 893,
+    "word": "ぜひ",
+    "meaning": "without fail",
+    "furigana": "",
+    "romaji": "zehi",
+    "level": 4
+  },
+  {
+    "id": 894,
+    "word": "すばらしい",
+    "meaning": "wonderful",
+    "furigana": "",
+    "romaji": "subarashii",
+    "level": 4
+  },
+  {
+    "id": 896,
+    "word": "ねっしん",
+    "meaning": "enthusiasm",
+    "furigana": "",
+    "romaji": "nesshin",
+    "level": 4
+  },
+  {
+    "id": 899,
+    "word": "ぬれる",
+    "meaning": "to get wet",
+    "furigana": "",
+    "romaji": "nureru",
+    "level": 4
+  },
+  {
+    "id": 903,
+    "word": "おっしゃる",
+    "meaning": "(respectful) to say",
+    "furigana": "",
+    "romaji": "ossharu",
+    "level": 4
+  },
+  {
+    "id": 908,
+    "word": "あかちゃん",
+    "meaning": "infant",
+    "furigana": "",
+    "romaji": "akachan",
+    "level": 4
+  },
+  {
+    "id": 911,
+    "word": "うれしい",
+    "meaning": "glad",
+    "furigana": "",
+    "romaji": "ureshii",
+    "level": 4
+  },
+  {
+    "id": 919,
+    "word": "ごみ",
+    "meaning": "rubbish",
+    "furigana": "",
+    "romaji": "gomi",
+    "level": 4
+  },
+  {
+    "id": 921,
+    "word": "チェック・する",
+    "meaning": "to check",
+    "furigana": "",
+    "romaji": "chekku-suru",
+    "level": 4
+  },
+  {
+    "id": 922,
+    "word": "御主人",
+    "meaning": "(honorable) your husband",
+    "furigana": "ごしゅじん",
+    "romaji": "goshujin",
+    "level": 4
+  },
+  {
+    "id": 924,
+    "word": "ごちそう",
+    "meaning": "a feast",
+    "furigana": "",
+    "romaji": "gochisō",
+    "level": 4
+  },
+  {
+    "id": 925,
+    "word": "起す",
+    "meaning": "to wake",
+    "furigana": "おこす",
+    "romaji": "okosu",
+    "level": 4
+  },
+  {
+    "id": 933,
+    "word": "とこや",
+    "meaning": "barber",
+    "furigana": "",
+    "romaji": "tokoya",
+    "level": 4
+  },
+  {
+    "id": 936,
+    "word": "のど",
+    "meaning": "throat",
+    "furigana": "",
+    "romaji": "nodo",
+    "level": 4
+  },
+  {
+    "id": 939,
+    "word": "コンピュータ / コンピューター",
+    "meaning": "computer",
+    "furigana": "",
+    "romaji": "konpyūta / konpyūtā",
+    "level": 4
+  },
+  {
+    "id": 945,
+    "word": "ちっとも",
+    "meaning": "not at all (used with a negative verb)",
+    "furigana": "",
+    "romaji": "chittomo",
+    "level": 4
+  },
+  {
+    "id": 946,
+    "word": "おかげ",
+    "meaning": "owing to",
+    "furigana": "",
+    "romaji": "okage",
+    "level": 4
+  },
+  {
+    "id": 960,
+    "word": "おかしい",
+    "meaning": "strange or funny",
+    "furigana": "",
+    "romaji": "okashii",
+    "level": 4
+  },
+  {
+    "id": 967,
+    "word": "楽む",
+    "meaning": "to enjoy oneself",
+    "furigana": "たのしむ",
+    "romaji": "tanoshimu",
+    "level": 4
+  },
+  {
+    "id": 971,
+    "word": "なるべく",
+    "meaning": "as much as possible",
+    "furigana": "",
+    "romaji": "narubeku",
+    "level": 4
+  },
+  {
+    "id": 989,
+    "word": "もらう",
+    "meaning": "to receive",
+    "furigana": "",
+    "romaji": "morau",
+    "level": 4
+  },
+  {
+    "id": 993,
+    "word": "いじめる",
+    "meaning": "to tease",
+    "furigana": "",
+    "romaji": "ijimeru",
+    "level": 4
+  },
+  {
+    "id": 996,
+    "word": "おいでになる",
+    "meaning": "(respectful) to be",
+    "furigana": "",
+    "romaji": "oideninaru",
+    "level": 4
+  },
+  {
+    "id": 997,
+    "word": "うち",
+    "meaning": "within",
+    "furigana": "",
+    "romaji": "uchi",
+    "level": 4
+  },
+  {
+    "id": 998,
+    "word": "それで",
+    "meaning": "because of that",
+    "furigana": "",
+    "romaji": "sorede",
+    "level": 4
+  },
+  {
+    "id": 1012,
+    "word": "やはり / やっぱり",
+    "meaning": "as I thought, absolutely",
+    "furigana": "",
+    "romaji": "yahari / yappari",
+    "level": 4
+  },
+  {
+    "id": 1023,
+    "word": "はず",
+    "meaning": "it should be so",
+    "furigana": "",
+    "romaji": "hazu",
+    "level": 4
+  },
+  {
+    "id": 1027,
+    "word": "しばらく",
+    "meaning": "little while",
+    "furigana": "",
+    "romaji": "shibaraku",
+    "level": 4
+  },
+  {
+    "id": 1038,
+    "word": "つもり",
+    "meaning": "intention",
+    "furigana": "",
+    "romaji": "tsumori",
+    "level": 4
+  },
+  {
+    "id": 1045,
+    "word": "ねだん",
+    "meaning": "price",
+    "furigana": "",
+    "romaji": "nedan",
+    "level": 4
+  },
+  {
+    "id": 1056,
+    "word": "このごろ",
+    "meaning": "these days, nowadays",
+    "furigana": "",
+    "romaji": "konogoro",
+    "level": 4
+  },
+  {
+    "id": 1062,
+    "word": "さ来週",
+    "meaning": "the week after next",
+    "furigana": "さらいしゅう",
+    "romaji": "saraishū",
+    "level": 4
+  },
+  {
+    "id": 1073,
+    "word": "ガラス",
+    "meaning": "a glass pane",
+    "furigana": "",
+    "romaji": "garasu",
+    "level": 4
+  },
+  {
+    "id": 1077,
+    "word": "あげる",
+    "meaning": "to give",
+    "furigana": "",
+    "romaji": "ageru",
+    "level": 4
+  },
+  {
+    "id": 1081,
+    "word": "ガス",
+    "meaning": "petrol",
+    "furigana": "",
+    "romaji": "gasu",
+    "level": 4
+  },
+  {
+    "id": 1096,
+    "word": "とうとう",
+    "meaning": "finally, after all",
+    "furigana": "",
+    "romaji": "tōtō",
+    "level": 4
+  },
+  {
+    "id": 1100,
+    "word": "おもちゃ",
+    "meaning": "toy",
+    "furigana": "",
+    "romaji": "omocha",
+    "level": 4
+  },
+  {
+    "id": 1102,
+    "word": "もちろん",
+    "meaning": "of course",
+    "furigana": "",
+    "romaji": "mochiron",
+    "level": 4
+  },
+  {
+    "id": 1128,
+    "word": "びっくり・する",
+    "meaning": "to be surprised",
+    "furigana": "",
+    "romaji": "bikkuri-suru",
+    "level": 4
+  },
+  {
+    "id": 1141,
+    "word": "下りる",
+    "meaning": "to get off",
+    "furigana": "おりる",
+    "romaji": "oriru",
+    "level": 4
+  },
+  {
+    "id": 1146,
+    "word": "中々",
+    "meaning": "considerably",
+    "furigana": "なかなか",
+    "romaji": "nakanaka",
+    "level": 4
+  },
+  {
+    "id": 1157,
+    "word": "舟",
+    "meaning": "ship",
+    "furigana": "ふね",
+    "romaji": "fune",
+    "level": 4
+  },
+  {
+    "id": 1158,
+    "word": "または",
+    "meaning": "or, otherwise",
+    "furigana": "",
+    "romaji": "mataha",
+    "level": 4
+  },
+  {
+    "id": 1163,
+    "word": "もっとも",
+    "meaning": "extremely",
+    "furigana": "",
+    "romaji": "mottomo",
+    "level": 4
+  },
+  {
+    "id": 1164,
+    "word": "かまう",
+    "meaning": "to mind",
+    "furigana": "",
+    "romaji": "kamau",
+    "level": 4
+  },
+  {
+    "id": 1166,
+    "word": "落す",
+    "meaning": "to drop",
+    "furigana": "おとす",
+    "romaji": "otosu",
+    "level": 4
+  },
+  {
+    "id": 1167,
+    "word": "まじめ",
+    "meaning": "serious",
+    "furigana": "",
+    "romaji": "majime",
+    "level": 4
+  },
+  {
+    "id": 1169,
+    "word": "におい",
+    "meaning": "a smell",
+    "furigana": "",
+    "romaji": "nioi",
+    "level": 4
+  },
+  {
+    "id": 1173,
+    "word": "答",
+    "meaning": "response",
+    "furigana": "こたえ",
+    "romaji": "kotae",
+    "level": 4
+  },
+  {
+    "id": 1179,
+    "word": "うかがう",
+    "meaning": "to visit",
+    "furigana": "",
+    "romaji": "ukagau",
+    "level": 4
+  },
+  {
+    "id": 1180,
+    "word": "ほとんど",
+    "meaning": "mostly",
+    "furigana": "",
+    "romaji": "hotondo",
+    "level": 4
+  },
+  {
+    "id": 1182,
+    "word": "つき",
+    "meaning": "moon",
+    "furigana": "",
+    "romaji": "tsuki",
+    "level": 4
+  },
+  {
+    "id": 1188,
+    "word": "だめ",
+    "meaning": "no good",
+    "furigana": "",
+    "romaji": "dame",
+    "level": 4
+  },
+  {
+    "id": 1189,
+    "word": "けれど / けれども",
+    "meaning": "however",
+    "furigana": "",
+    "romaji": "keredo / keredomo",
+    "level": 4
+  },
+  {
+    "id": 1194,
+    "word": "それに",
+    "meaning": "moreover",
+    "furigana": "",
+    "romaji": "soreni",
+    "level": 4
+  },
+  {
+    "id": 1197,
+    "word": "堅 / 硬/固い",
+    "meaning": "hard",
+    "furigana": "かたい",
+    "romaji": "katai",
+    "level": 4
+  },
+  {
+    "id": 1204,
+    "word": "こう",
+    "meaning": "this way",
+    "furigana": "",
+    "romaji": "kō",
+    "level": 4
+  },
+  {
+    "id": 1208,
+    "word": "きっと",
+    "meaning": "surely",
+    "furigana": "",
+    "romaji": "kitto",
+    "level": 4
+  },
+  {
+    "id": 1223,
+    "word": "レポート / リポート",
+    "meaning": "report",
+    "furigana": "",
+    "romaji": "repōto / ripōto",
+    "level": 4
+  },
+  {
+    "id": 1232,
+    "word": "けが・する",
+    "meaning": "to injure",
+    "furigana": "",
+    "romaji": "kega-suru",
+    "level": 4
+  },
+  {
+    "id": 1236,
+    "word": "ぜんぜん",
+    "meaning": "not entirely (used in a negative sentence)",
+    "furigana": "",
+    "romaji": "zenzen",
+    "level": 4
+  },
+  {
+    "id": 1238,
+    "word": "ひどい",
+    "meaning": "awful",
+    "furigana": "",
+    "romaji": "hidoi",
+    "level": 4
+  },
+  {
+    "id": 1247,
+    "word": "なさる",
+    "meaning": "(respectful) to do",
+    "furigana": "",
+    "romaji": "nasaru",
+    "level": 4
+  },
+  {
+    "id": 1269,
+    "word": "けんか・する",
+    "meaning": "to quarrel",
+    "furigana": "",
+    "romaji": "kenka-suru",
+    "level": 4
+  },
+  {
+    "id": 1272,
+    "word": "あいさつ・する",
+    "meaning": "to greet",
+    "furigana": "",
+    "romaji": "aisatsu-suru",
+    "level": 4
+  },
+  {
+    "id": 1274,
+    "word": "ごらんになる",
+    "meaning": "(respectful) to see",
+    "furigana": "",
+    "romaji": "goranninaru",
+    "level": 4
+  },
+  {
+    "id": 1278,
+    "word": "あ",
+    "meaning": "Ah",
+    "furigana": "",
+    "romaji": "a",
+    "level": 4
+  },
+  {
+    "id": 1280,
+    "word": "じゃま",
+    "meaning": "hindrance, intrusion",
+    "furigana": "",
+    "romaji": "jama",
+    "level": 4
+  },
+  {
+    "id": 1292,
+    "word": "ほめる",
+    "meaning": "to praise",
+    "furigana": "",
+    "romaji": "homeru",
+    "level": 4
+  },
+  {
+    "id": 1294,
+    "word": "くださる",
+    "meaning": "(respectful) to give",
+    "furigana": "",
+    "romaji": "kudasaru",
+    "level": 4
+  },
+  {
+    "id": 21,
+    "word": "はし",
+    "meaning": "chopsticks",
+    "furigana": "",
+    "romaji": "hashi",
+    "level": 5
+  },
+  {
+    "id": 30,
+    "word": "たいへん",
+    "meaning": "very",
+    "furigana": "",
+    "romaji": "taihen",
+    "level": 5
+  },
+  {
+    "id": 36,
+    "word": "あびる",
+    "meaning": "to bathe, to shower",
+    "furigana": "",
+    "romaji": "abiru",
+    "level": 5
+  },
+  {
+    "id": 65,
+    "word": "登る",
+    "meaning": "to climb",
+    "furigana": "のぼる",
+    "romaji": "noboru",
+    "level": 5
+  },
+  {
+    "id": 69,
+    "word": "速い",
+    "meaning": "quick",
+    "furigana": "はやい",
+    "romaji": "hayai",
+    "level": 5
+  },
+  {
+    "id": 77,
+    "word": "こっち",
+    "meaning": "this person or way",
+    "furigana": "",
+    "romaji": "kotchi",
+    "level": 5
+  },
+  {
+    "id": 81,
+    "word": "いい / よい",
+    "meaning": "good",
+    "furigana": "",
+    "romaji": "ii / yoi",
+    "level": 5
+  },
+  {
+    "id": 91,
+    "word": "どっち",
+    "meaning": "which",
+    "furigana": "",
+    "romaji": "dotchi",
+    "level": 5
+  },
+  {
+    "id": 92,
+    "word": "そば",
+    "meaning": "near, beside",
+    "furigana": "",
+    "romaji": "soba",
+    "level": 5
+  },
+  {
+    "id": 94,
+    "word": "どうして",
+    "meaning": "for what reason",
+    "furigana": "",
+    "romaji": "dōshite",
+    "level": 5
+  },
+  {
+    "id": 102,
+    "word": "カレー",
+    "meaning": "curry",
+    "furigana": "",
+    "romaji": "karē",
+    "level": 5
+  },
+  {
+    "id": 111,
+    "word": "いつも",
+    "meaning": "always",
+    "furigana": "",
+    "romaji": "itsumo",
+    "level": 5
+  },
+  {
+    "id": 115,
+    "word": "まっすぐ",
+    "meaning": "straight ahead, direct",
+    "furigana": "",
+    "romaji": "massugu",
+    "level": 5
+  },
+  {
+    "id": 126,
+    "word": "ページ",
+    "meaning": "page",
+    "furigana": "",
+    "romaji": "pēji",
+    "level": 5
+  },
+  {
+    "id": 132,
+    "word": "たぶん",
+    "meaning": "probably",
+    "furigana": "",
+    "romaji": "tabun",
+    "level": 5
+  },
+  {
+    "id": 139,
+    "word": "きれい",
+    "meaning": "pretty, clean",
+    "furigana": "",
+    "romaji": "kirei",
+    "level": 5
+  },
+  {
+    "id": 150,
+    "word": "ほか",
+    "meaning": "other, the rest",
+    "furigana": "",
+    "romaji": "hoka",
+    "level": 5
+  },
+  {
+    "id": 151,
+    "word": "ちゃわん",
+    "meaning": "rice bowl",
+    "furigana": "",
+    "romaji": "chawan",
+    "level": 5
+  },
+  {
+    "id": 160,
+    "word": "朝御飯",
+    "meaning": "breakfast",
+    "furigana": "あさごはん",
+    "romaji": "asagohan",
+    "level": 5
+  },
+  {
+    "id": 163,
+    "word": "キロ / キログラム",
+    "meaning": "kilogram",
+    "furigana": "",
+    "romaji": "kiro / kiroguramu",
+    "level": 5
+  },
+  {
+    "id": 173,
+    "word": "なぜ",
+    "meaning": "why",
+    "furigana": "",
+    "romaji": "naze",
+    "level": 5
+  },
+  {
+    "id": 175,
+    "word": "いいえ",
+    "meaning": "no",
+    "furigana": "",
+    "romaji": "iie",
+    "level": 5
+  },
+  {
+    "id": 179,
+    "word": "ふろ",
+    "meaning": "bath",
+    "furigana": "",
+    "romaji": "furo",
+    "level": 5
+  },
+  {
+    "id": 183,
+    "word": "かわいい",
+    "meaning": "cute",
+    "furigana": "",
+    "romaji": "kawaii",
+    "level": 5
+  },
+  {
+    "id": 186,
+    "word": "いちばん",
+    "meaning": "best, first",
+    "furigana": "",
+    "romaji": "ichiban",
+    "level": 5
+  },
+  {
+    "id": 194,
+    "word": "ラジカセ / ラジオカセット",
+    "meaning": "radio cassette player",
+    "furigana": "",
+    "romaji": "rajikase / rajiokasetto",
+    "level": 5
+  },
+  {
+    "id": 195,
+    "word": "つける",
+    "meaning": "to turn on",
+    "furigana": "",
+    "romaji": "tsukeru",
+    "level": 5
+  },
+  {
+    "id": 196,
+    "word": "さ来年",
+    "meaning": "year after next",
+    "furigana": "さらいねん",
+    "romaji": "sarainen",
+    "level": 5
+  },
+  {
+    "id": 198,
+    "word": "いくら",
+    "meaning": "how much?",
+    "furigana": "",
+    "romaji": "ikura",
+    "level": 5
+  },
+  {
+    "id": 204,
+    "word": "そうして / そして",
+    "meaning": "and",
+    "furigana": "",
+    "romaji": "sōshite / soshite",
+    "level": 5
+  },
+  {
+    "id": 216,
+    "word": "おまわりさん",
+    "meaning": "friendly term for policeman",
+    "furigana": "",
+    "romaji": "omawarisan",
+    "level": 5
+  },
+  {
+    "id": 221,
+    "word": "どれ",
+    "meaning": "which (of three or more)",
+    "furigana": "",
+    "romaji": "dore",
+    "level": 5
+  },
+  {
+    "id": 227,
+    "word": "はく",
+    "meaning": "to wear, to put on trousers",
+    "furigana": "",
+    "romaji": "haku",
+    "level": 5
+  },
+  {
+    "id": 231,
+    "word": "また",
+    "meaning": "again, and",
+    "furigana": "",
+    "romaji": "mata",
+    "level": 5
+  },
+  {
+    "id": 233,
+    "word": "とても",
+    "meaning": "very",
+    "furigana": "",
+    "romaji": "totemo",
+    "level": 5
+  },
+  {
+    "id": 245,
+    "word": "かける",
+    "meaning": "to call by phone",
+    "furigana": "",
+    "romaji": "kakeru",
+    "level": 5
+  },
+  {
+    "id": 250,
+    "word": "ゼロ",
+    "meaning": "zero",
+    "furigana": "",
+    "romaji": "zero",
+    "level": 5
+  },
+  {
+    "id": 251,
+    "word": "いろいろ",
+    "meaning": "various",
+    "furigana": "",
+    "romaji": "iroiro",
+    "level": 5
+  },
+  {
+    "id": 257,
+    "word": "そこ",
+    "meaning": "that place",
+    "furigana": "",
+    "romaji": "soko",
+    "level": 5
+  },
+  {
+    "id": 258,
+    "word": "終る",
+    "meaning": "to finish",
+    "furigana": "おわる",
+    "romaji": "owaru",
+    "level": 5
+  },
+  {
+    "id": 259,
+    "word": "どの",
+    "meaning": "which",
+    "furigana": "",
+    "romaji": "dono",
+    "level": 5
+  },
+  {
+    "id": 261,
+    "word": "それでは",
+    "meaning": "in that situation",
+    "furigana": "",
+    "romaji": "soredeha",
+    "level": 5
+  },
+  {
+    "id": 274,
+    "word": "ほんとう",
+    "meaning": "truth",
+    "furigana": "",
+    "romaji": "hontō",
+    "level": 5
+  },
+  {
+    "id": 278,
+    "word": "まずい",
+    "meaning": "unpleasant",
+    "furigana": "",
+    "romaji": "mazui",
+    "level": 5
+  },
+  {
+    "id": 283,
+    "word": "キロ / キロメートル",
+    "meaning": "kilometre",
+    "furigana": "",
+    "romaji": "kiro / kiromētoru",
+    "level": 5
+  },
+  {
+    "id": 286,
+    "word": "ゆっくりと",
+    "meaning": "slowly",
+    "furigana": "",
+    "romaji": "yukkurito",
+    "level": 5
+  },
+  {
+    "id": 301,
+    "word": "ください",
+    "meaning": "please",
+    "furigana": "",
+    "romaji": "kudasai",
+    "level": 5
+  },
+  {
+    "id": 312,
+    "word": "どちら",
+    "meaning": "which of two",
+    "furigana": "",
+    "romaji": "dochira",
+    "level": 5
+  },
+  {
+    "id": 322,
+    "word": "かぎ",
+    "meaning": "key",
+    "furigana": "",
+    "romaji": "kagi",
+    "level": 5
+  },
+  {
+    "id": 334,
+    "word": "昼御飯",
+    "meaning": "midday meal",
+    "furigana": "ひるごはん",
+    "romaji": "hirugohan",
+    "level": 5
+  },
+  {
+    "id": 345,
+    "word": "あなた",
+    "meaning": "you",
+    "furigana": "",
+    "romaji": "anata",
+    "level": 5
+  },
+  {
+    "id": 348,
+    "word": "とり肉",
+    "meaning": "chicken meat",
+    "furigana": "とりにく",
+    "romaji": "toriniku",
+    "level": 5
+  },
+  {
+    "id": 350,
+    "word": "あまり",
+    "meaning": "not very",
+    "furigana": "",
+    "romaji": "amari",
+    "level": 5
+  },
+  {
+    "id": 363,
+    "word": "おなか",
+    "meaning": "stomach",
+    "furigana": "",
+    "romaji": "onaka",
+    "level": 5
+  },
+  {
+    "id": 364,
+    "word": "どこ",
+    "meaning": "where",
+    "furigana": "",
+    "romaji": "doko",
+    "level": 5
+  },
+  {
+    "id": 374,
+    "word": "じゃ / じゃあ",
+    "meaning": "well then…",
+    "furigana": "",
+    "romaji": "ja / jaa",
+    "level": 5
+  },
+  {
+    "id": 380,
+    "word": "この",
+    "meaning": "this",
+    "furigana": "",
+    "romaji": "kono",
+    "level": 5
+  },
+  {
+    "id": 390,
+    "word": "りっぱ",
+    "meaning": "splendid",
+    "furigana": "",
+    "romaji": "rippa",
+    "level": 5
+  },
+  {
+    "id": 391,
+    "word": "つまらない",
+    "meaning": "boring",
+    "furigana": "",
+    "romaji": "tsumaranai",
+    "level": 5
+  },
+  {
+    "id": 392,
+    "word": "よく",
+    "meaning": "often, well",
+    "furigana": "",
+    "romaji": "yoku",
+    "level": 5
+  },
+  {
+    "id": 396,
+    "word": "みんな",
+    "meaning": "everyone",
+    "furigana": "",
+    "romaji": "minna",
+    "level": 5
+  },
+  {
+    "id": 401,
+    "word": "かかる",
+    "meaning": "to take time or money",
+    "furigana": "",
+    "romaji": "kakaru",
+    "level": 5
+  },
+  {
+    "id": 405,
+    "word": "あっち",
+    "meaning": "over there",
+    "furigana": "",
+    "romaji": "atchi",
+    "level": 5
+  },
+  {
+    "id": 409,
+    "word": "かばん",
+    "meaning": "bag, basket",
+    "furigana": "",
+    "romaji": "kaban",
+    "level": 5
+  },
+  {
+    "id": 416,
+    "word": "おばあさん",
+    "meaning": "grandmother, female senior-citizen",
+    "furigana": "",
+    "romaji": "obaasan",
+    "level": 5
+  },
+  {
+    "id": 418,
+    "word": "ワイシャツ",
+    "meaning": "business shirt",
+    "furigana": "",
+    "romaji": "waishatsu",
+    "level": 5
+  },
+  {
+    "id": 421,
+    "word": "すぐに",
+    "meaning": "instantly",
+    "furigana": "",
+    "romaji": "suguni",
+    "level": 5
+  },
+  {
+    "id": 423,
+    "word": "いつ",
+    "meaning": "when",
+    "furigana": "",
+    "romaji": "itsu",
+    "level": 5
+  },
+  {
+    "id": 426,
+    "word": "川 / 河",
+    "meaning": "river",
+    "furigana": "かわ",
+    "romaji": "kawa",
+    "level": 5
+  },
+  {
+    "id": 430,
+    "word": "など",
+    "meaning": "et cetera",
+    "furigana": "",
+    "romaji": "nado",
+    "level": 5
+  },
+  {
+    "id": 432,
+    "word": "やる",
+    "meaning": "to do",
+    "furigana": "",
+    "romaji": "yaru",
+    "level": 5
+  },
+  {
+    "id": 444,
+    "word": "いす",
+    "meaning": "chair",
+    "furigana": "",
+    "romaji": "isu",
+    "level": 5
+  },
+  {
+    "id": 450,
+    "word": "グラム",
+    "meaning": "gram",
+    "furigana": "",
+    "romaji": "guramu",
+    "level": 5
+  },
+  {
+    "id": 456,
+    "word": "しかし",
+    "meaning": "however",
+    "furigana": "",
+    "romaji": "shikashi",
+    "level": 5
+  },
+  {
+    "id": 462,
+    "word": "そっち",
+    "meaning": "over there",
+    "furigana": "",
+    "romaji": "sotchi",
+    "level": 5
+  },
+  {
+    "id": 463,
+    "word": "たて",
+    "meaning": "length, height",
+    "furigana": "",
+    "romaji": "tate",
+    "level": 5
+  },
+  {
+    "id": 465,
+    "word": "あの",
+    "meaning": "that over there",
+    "furigana": "",
+    "romaji": "ano",
+    "level": 5
+  },
+  {
+    "id": 478,
+    "word": "できる",
+    "meaning": "to be able to",
+    "furigana": "",
+    "romaji": "dekiru",
+    "level": 5
+  },
+  {
+    "id": 480,
+    "word": "する",
+    "meaning": "to do",
+    "furigana": "",
+    "romaji": "suru",
+    "level": 5
+  },
+  {
+    "id": 486,
+    "word": "ある",
+    "meaning": "to be, to have (used for inanimate objects)",
+    "furigana": "",
+    "romaji": "aru",
+    "level": 5
+  },
+  {
+    "id": 489,
+    "word": "いくつ",
+    "meaning": "how many?, how old?",
+    "furigana": "",
+    "romaji": "ikutsu",
+    "level": 5
+  },
+  {
+    "id": 493,
+    "word": "おいしい",
+    "meaning": "delicious",
+    "furigana": "",
+    "romaji": "oishii",
+    "level": 5
+  },
+  {
+    "id": 498,
+    "word": "おもしろい",
+    "meaning": "interesting",
+    "furigana": "",
+    "romaji": "omoshiroi",
+    "level": 5
+  },
+  {
+    "id": 532,
+    "word": "その",
+    "meaning": "that",
+    "furigana": "",
+    "romaji": "sono",
+    "level": 5
+  },
+  {
+    "id": 534,
+    "word": "ちょっと",
+    "meaning": "somewhat",
+    "furigana": "",
+    "romaji": "chotto",
+    "level": 5
+  },
+  {
+    "id": 538,
+    "word": "あさって",
+    "meaning": "day after tomorrow",
+    "furigana": "",
+    "romaji": "asatte",
+    "level": 5
+  },
+  {
+    "id": 544,
+    "word": "コピーする",
+    "meaning": "to copy",
+    "furigana": "",
+    "romaji": "kopīsuru",
+    "level": 5
+  },
+  {
+    "id": 547,
+    "word": "たくさん",
+    "meaning": "many",
+    "furigana": "",
+    "romaji": "takusan",
+    "level": 5
+  },
+  {
+    "id": 549,
+    "word": "見る  観る",
+    "meaning": "to see, to watch",
+    "furigana": "みる",
+    "romaji": "miru",
+    "level": 5
+  },
+  {
+    "id": 556,
+    "word": "ちょうど",
+    "meaning": "exactly",
+    "furigana": "",
+    "romaji": "chōdo",
+    "level": 5
+  },
+  {
+    "id": 560,
+    "word": "メートル",
+    "meaning": "metre",
+    "furigana": "",
+    "romaji": "mētoru",
+    "level": 5
+  },
+  {
+    "id": 567,
+    "word": "伯父 / 叔父",
+    "meaning": "grandfather, male senior citizen",
+    "furigana": "おじいさん",
+    "romaji": "ojiisan",
+    "level": 5
+  },
+  {
+    "id": 571,
+    "word": "ここ",
+    "meaning": "here",
+    "furigana": "",
+    "romaji": "koko",
+    "level": 5
+  },
+  {
+    "id": 575,
+    "word": "しょうゆ",
+    "meaning": "soy sauce",
+    "furigana": "",
+    "romaji": "shōyu",
+    "level": 5
+  },
+  {
+    "id": 598,
+    "word": "より、ほう",
+    "meaning": "Used for comparison.",
+    "furigana": "",
+    "romaji": "yori,hō",
+    "level": 5
+  },
+  {
+    "id": 601,
+    "word": "丸い / 円い",
+    "meaning": "round, circular",
+    "furigana": "まるい",
+    "romaji": "marui",
+    "level": 5
+  },
+  {
+    "id": 602,
+    "word": "曲る",
+    "meaning": "to turn, to bend",
+    "furigana": "まがる",
+    "romaji": "magaru",
+    "level": 5
+  },
+  {
+    "id": 609,
+    "word": "伯母さん / 叔母さん",
+    "meaning": "aunt",
+    "furigana": "おばさん",
+    "romaji": "obasan",
+    "level": 5
+  },
+  {
+    "id": 610,
+    "word": "それから",
+    "meaning": "after that",
+    "furigana": "",
+    "romaji": "sorekara",
+    "level": 5
+  },
+  {
+    "id": 611,
+    "word": "明い",
+    "meaning": "bright",
+    "furigana": "あかるい",
+    "romaji": "akarui",
+    "level": 5
+  },
+  {
+    "id": 613,
+    "word": "パーティー",
+    "meaning": "party",
+    "furigana": "",
+    "romaji": "pātī",
+    "level": 5
+  },
+  {
+    "id": 614,
+    "word": "あちら",
+    "meaning": "there",
+    "furigana": "",
+    "romaji": "achira",
+    "level": 5
+  },
+  {
+    "id": 620,
+    "word": "いかが",
+    "meaning": "how",
+    "furigana": "",
+    "romaji": "ikaga",
+    "level": 5
+  },
+  {
+    "id": 625,
+    "word": "あそこ",
+    "meaning": "over there",
+    "furigana": "",
+    "romaji": "asoko",
+    "level": 5
+  },
+  {
+    "id": 628,
+    "word": "まだ",
+    "meaning": "yet, still",
+    "furigana": "",
+    "romaji": "mada",
+    "level": 5
+  },
+  {
+    "id": 634,
+    "word": "どなた",
+    "meaning": "who",
+    "furigana": "",
+    "romaji": "donata",
+    "level": 5
+  },
+  {
+    "id": 638,
+    "word": "そちら",
+    "meaning": "over there",
+    "furigana": "",
+    "romaji": "sochira",
+    "level": 5
+  },
+  {
+    "id": 639,
+    "word": "出かける",
+    "meaning": "to go out",
+    "furigana": "でかける",
+    "romaji": "dekakeru",
+    "level": 5
+  },
+  {
+    "id": 650,
+    "word": "こちら",
+    "meaning": "this person or way",
+    "furigana": "",
+    "romaji": "kochira",
+    "level": 5
+  },
+  {
+    "id": 657,
+    "word": "貼る",
+    "meaning": "to stick",
+    "furigana": "はる",
+    "romaji": "haru",
+    "level": 5
+  },
+  {
+    "id": 658,
+    "word": "たばこ",
+    "meaning": "tobacco, cigarettes",
+    "furigana": "",
+    "romaji": "tabako",
+    "level": 5
+  },
+  {
+    "id": 661,
+    "word": "せっけん",
+    "meaning": "economy",
+    "furigana": "",
+    "romaji": "sekken",
+    "level": 5
+  },
+  {
+    "id": 662,
+    "word": "初め / 始め",
+    "meaning": "beginning",
+    "furigana": "はじめ",
+    "romaji": "hajime",
+    "level": 5
+  }
+]

@@ -1,0 +1,48 @@
+{{define "content"}}
+<div class="container">
+    <h1>Study</h1>
+    
+    {{if .NoWords}}
+        <!-- No words available to study -->
+        <div class="no-words-view" style="text-align: center; margin-top: 50px;">
+            <p style="font-size: 24px;">🎉 You're all caught up!</p>
+            <p style="font-size: 18px; margin-top: 20px;">No words are due for review right now.</p>
+            <p style="font-size: 16px; margin-top: 10px;">Come back later to continue studying.</p>
+        </div>
+    {{else}}
+        <div class="kanji-display">
+            <p style="font-size: 48px; font-weight: bold;">{{.KanjiWord}}</p>
+        </div>
+        
+        {{if .Answered}}
+            <!-- Answered View: Show the answer and rating buttons -->
+            <div class="answered-view">
+                <div class="answer-info" style="margin: 20px 0; padding: 20px; background: #f5f5f5; border-radius: 8px;">
+                    <p style="font-size: 20px; margin-bottom: 10px;"><strong>Furigana:</strong> {{.Furigana}}</p>
+                    <p style="font-size: 20px; margin-bottom: 10px;"><strong>Romaji:</strong> {{.Romaji}}</p>
+                    <p style="font-size: 18px;"><strong>Meaning:</strong> {{.Definitions}}</p>
+                </div>
+                
+                <div class="rating-buttons" style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+                    <button class="rating-btn" onclick="window.location.href='/study'" style="padding: 15px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; background-color: #ff4444; color: white;">No Idea (1)</button>
+                    <button class="rating-btn" onclick="window.location.href='/study'" style="padding: 15px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; background-color: #ff8844; color: white;">Forgot (2)</button>
+                    <button class="rating-btn" onclick="window.location.href='/study'" style="padding: 15px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; background-color: #ffbb44; color: white;">Figured it out (3)</button>
+                    <button class="rating-btn" onclick="window.location.href='/study'" style="padding: 15px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; background-color: #44bb44; color: white;">I know it (4)</button>
+                    <button class="rating-btn" onclick="window.location.href='/study'" style="padding: 15px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; background-color: #4444ff; color: white;">Burn it (5)</button>
+                </div>
+            </div>
+        {{else}}
+            <!-- Unanswered View: Show input form -->
+            <div class="unanswered-view">
+                <form action="/study" method="post">
+                    <input type="text" id="kanji-input" name="answer" placeholder="Enter romaji" oninput="romanjiToHiragana(this)" autocomplete="off" style="font-size: 24px; text-align: center; padding: 10px; width: 300px; border: 2px solid #ccc; border-radius: 5px;">
+                    <button type="submit" class="submit-btn" style="margin-top: 20px; padding: 15px 30px; font-size: 18px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">Submit Answer</button>
+                </form>
+            </div>
+        {{end}}
+    {{end}}
+</div>
+
+<script src="/static/js/romajiToHiragana.js"></script>
+{{end}}
+

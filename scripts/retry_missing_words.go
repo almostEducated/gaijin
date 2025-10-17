@@ -9,6 +9,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"os"
 	"time"
 
 	"gaijin/internal/database"
@@ -36,17 +37,35 @@ type JishoResponse struct {
 	} `json:"data"`
 }
 
-// JLPTVocab represents a row from the jlpt_vocabulary table
-type JLPTVocab struct {
-	ID       int
-	Word     string
-	Meaning  string
-	Furigana string
-	Romaji   string
-	Level    int
+// MissingWord represents a word from the missing_words.json file
+type MissingWord struct {
+	ID       int    `json:"id"`
+	Word     string `json:"word"`
+	Meaning  string `json:"meaning"`
+	Furigana string `json:"furigana"`
+	Romaji   string `json:"romaji"`
+	Level    int    `json:"level"`
 }
 
 func main() {
+	// Check if missing_words.json exists
+	if _, err := os.Stat("missing_words.json"); os.IsNotExist(err) {
+		log.Fatal("missing_words.json not found. Run find_missing_words.go first!")
+	}
+
+	// Read missing words from JSON
+	data, err := os.ReadFile("missing_words.json")
+	if err != nil {
+		log.Fatalf("Failed to read missing_words.json: %v", err)
+	}
+
+	var missingWords []MissingWord
+	if err := json.Unmarshal(data, &missingWords); err != nil {
+		log.Fatalf("Failed to parse JSON: %v", err)
+	}
+
+	log.Printf("Loaded %d missing words from missing_words.json", len(missingWords))
+
 	// Connect to database
 	db, err := database.ConnectDB()
 	if err != nil {
@@ -54,58 +73,33 @@ func main() {
 	}
 	defer db.Close()
 
-	log.Println("Starting migration from jlpt_vocabulary to words table with Jisho API enrichment...")
-
-	// Fetch all existing JLPT vocabulary
-	rows, err := db.Query(`
-		SELECT id, word, meaning, furigana, romaji, level 
-		FROM jlpt_vocabulary 
-		ORDER BY level, id
-	`)
-	if err != nil {
-		log.Fatalf("Failed to query jlpt_vocabulary: %v", err)
-	}
-	defer rows.Close()
-
-	var vocabList []JLPTVocab
-	for rows.Next() {
-		var v JLPTVocab
-		err := rows.Scan(&v.ID, &v.Word, &v.Meaning, &v.Furigana, &v.Romaji, &v.Level)
-		if err != nil {
-			log.Printf("Error scanning row: %v", err)
-			continue
-		}
-		vocabList = append(vocabList, v)
-	}
-
-	log.Printf("Found %d vocabulary words to migrate", len(vocabList))
-
-	// Skip already processed words (update this number as needed)
-	skipCount := 0
 	successCount := 0
 	errorCount := 0
+	skipCount := 0
 
-	// Process each vocabulary word
-	for i, vocab := range vocabList {
-		// Skip already processed
-		if i < skipCount {
+	// Process each missing word
+	for i, vocab := range missingWords {
+		// Skip first N words if needed (set this manually to resume after rate limiting)
+		if skipCount > 0 && i < skipCount {
 			continue
 		}
-		log.Printf("[%d/%d] Processing: %s (%s)", i+1, len(vocabList), vocab.Word, vocab.Furigana)
 
-		var wordID int
+		log.Printf("[%d/%d] Processing: %s (%s)", i+1, len(missingWords), vocab.Word, vocab.Furigana)
 
 		// Query Jisho API
 		jishoData, err := queryJishoAPI(vocab.Word)
 		if err != nil {
 			log.Printf("  ⚠️  Error querying Jisho API: %v", err)
 			errorCount++
+			// Longer wait on error (might be rate limited)
+			time.Sleep(2 * time.Second)
 			continue
 		}
 
 		if len(jishoData.Data) == 0 {
 			log.Printf("  ⚠️  No results from Jisho API - using JLPT fallback data")
 			// Use fallback: insert with original JLPT vocabulary data
+			var wordID int
 			err = db.DB.QueryRow(`
 				INSERT INTO words (word, furigana, romaji, level, definitions, parts_of_speech, created_at)
 				VALUES ($1, $2, $3, $4, $5, $6, NOW())
@@ -124,10 +118,11 @@ func main() {
 				log.Printf("  ✅ Success (fallback): using JLPT meaning")
 				successCount++
 			}
+			time.Sleep(500 * time.Millisecond)
 			continue
 		}
 
-		// Find the entry where slug exactly matches our word
+		// Find exact match
 		var entry *struct {
 			Slug     string   `json:"slug"`
 			IsCommon bool     `json:"is_common"`
@@ -144,9 +139,9 @@ func main() {
 			} `json:"senses"`
 		}
 
-		for i := range jishoData.Data {
-			if jishoData.Data[i].Slug == vocab.Word {
-				entry = &jishoData.Data[i]
+		for j := range jishoData.Data {
+			if jishoData.Data[j].Slug == vocab.Word {
+				entry = &jishoData.Data[j]
 				break
 			}
 		}
@@ -154,6 +149,7 @@ func main() {
 		if entry == nil {
 			log.Printf("  ⚠️  No exact match found (slug != %s) - using JLPT fallback data", vocab.Word)
 			// Use fallback: insert with original JLPT vocabulary data
+			var wordID int
 			err = db.DB.QueryRow(`
 				INSERT INTO words (word, furigana, romaji, level, definitions, parts_of_speech, created_at)
 				VALUES ($1, $2, $3, $4, $5, $6, NOW())
@@ -172,22 +168,20 @@ func main() {
 				log.Printf("  ✅ Success (fallback): using JLPT meaning")
 				successCount++
 			}
+			time.Sleep(500 * time.Millisecond)
 			continue
 		}
 
-		// Collect all definitions and parts of speech into semicolon-separated strings
+		// Collect definitions and parts of speech
 		var allDefinitions []string
 		var allPartsOfSpeech []string
 
 		for _, sense := range entry.Senses {
-			// Combine english definitions for this sense
 			for _, def := range sense.EnglishDefinitions {
 				allDefinitions = append(allDefinitions, def)
 			}
 
-			// Collect parts of speech for this sense
 			for _, pos := range sense.PartsOfSpeech {
-				// Avoid duplicates
 				found := false
 				for _, existing := range allPartsOfSpeech {
 					if existing == pos {
@@ -203,22 +197,23 @@ func main() {
 
 		// Join with semicolons
 		definitionsStr := ""
-		for i, def := range allDefinitions {
-			if i > 0 {
+		for j, def := range allDefinitions {
+			if j > 0 {
 				definitionsStr += "; "
 			}
 			definitionsStr += def
 		}
 
 		partsOfSpeechStr := ""
-		for i, pos := range allPartsOfSpeech {
-			if i > 0 {
+		for j, pos := range allPartsOfSpeech {
+			if j > 0 {
 				partsOfSpeechStr += "; "
 			}
 			partsOfSpeechStr += pos
 		}
 
-		// Insert into words table with definitions and parts of speech
+		// Insert into words table
+		var wordID int
 		err = db.DB.QueryRow(`
 			INSERT INTO words (word, furigana, romaji, level, definitions, parts_of_speech, created_at)
 			VALUES ($1, $2, $3, $4, $5, $6, NOW())
@@ -240,17 +235,16 @@ func main() {
 			len(allDefinitions), len(allPartsOfSpeech))
 		successCount++
 
-		// Rate limiting - be nice to Jisho API
-		time.Sleep(100 * time.Millisecond)
+		// Longer rate limiting - be extra nice to Jisho API (500ms = ~2 requests per second)
+		time.Sleep(500 * time.Millisecond)
 	}
 
-	log.Printf("\n=== Migration Complete ===")
+	log.Printf("\n=== Retry Complete ===")
 	log.Printf("✅ Success: %d words", successCount)
 	log.Printf("❌ Errors: %d words", errorCount)
 }
 
 func queryJishoAPI(word string) (*JishoResponse, error) {
-	// URL encode the word
 	keyword := url.QueryEscape(word)
 	apiURL := fmt.Sprintf("https://jisho.org/api/v1/search/words?keyword=%s", keyword)
 

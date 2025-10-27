@@ -1,25 +1,9 @@
 package handlers
 
 import (
-	"gaijin/internal/auth"
-	"gaijin/internal/database"
 	"html/template"
 	"net/http"
 )
-
-// PageHandler contains page-specific HTTP handlers
-type PageHandler struct {
-	db   *database.Database
-	auth *auth.Auth
-}
-
-// NewPageHandler creates a new PageHandler with dependencies
-func NewPageHandler(db *database.Database, auth *auth.Auth) *PageHandler {
-	return &PageHandler{
-		db:   db,
-		auth: auth,
-	}
-}
 
 var data = struct {
 	Title string
@@ -29,12 +13,14 @@ var data = struct {
 
 type StudyData struct {
 	Title       string
+	SRWordID    int
 	KanjiWord   string
 	Furigana    string
 	Romaji      string
 	Definitions string
 	Answered    bool
-	NoWords     bool // When user has no words due for review
+	NoWords     bool   // When user has no words due for review
+	StudyMode   string // "reading" or "meaning"
 }
 
 // MAYBE rename dashboard
@@ -106,53 +92,6 @@ func (h *PageHandler) HandleStudy(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	// Handle POST request (user submitted answer)
-	if r.Method == http.MethodPost {
-		// Parse form data
-		if err := r.ParseForm(); err != nil {
-			http.Error(w, "Failed to parse form", http.StatusBadRequest)
-			return
-		}
-
-		// TODO: Process the user's answer and check correctness
-		// For now, just show the answered view with the current word
-
-		// Get the next word to study
-		srWord, err := h.db.GetNextSRWord(userID)
-		if err != nil {
-			http.Error(w, "Failed to get study word: "+err.Error(), http.StatusInternalServerError)
-			return
-		}
-
-		tmpl, err := template.ParseFiles(
-			"templates/layout/base.html",
-			"templates/pages/study.html",
-		)
-		if err != nil {
-			http.Error(w, "Template error: "+err.Error(), http.StatusInternalServerError)
-			return
-		}
-
-		studyData := StudyData{
-			Title:       "Study",
-			KanjiWord:   srWord.Word.Word,
-			Furigana:    srWord.Word.Furigana,
-			Romaji:      srWord.Word.Romaji,
-			Definitions: srWord.Word.Definitions,
-			Answered:    true,
-			NoWords:     false,
-		}
-
-		w.Header().Set("Content-Type", "text/html; charset=utf-8")
-		err = tmpl.ExecuteTemplate(w, "base", studyData)
-		if err != nil {
-			http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
-			return
-		}
-		return
-	}
-
-	// Handle GET request (initial page load)
 	// Get the next word to study
 	srWord, err := h.db.GetNextSRWord(userID)
 	if err != nil {
@@ -172,8 +111,9 @@ func (h *PageHandler) HandleStudy(w http.ResponseWriter, r *http.Request) {
 	// Check if there are no words due for review
 	if srWord == nil {
 		studyData := StudyData{
-			Title:   "Study",
-			NoWords: true,
+			Title:     "Study",
+			NoWords:   true,
+			StudyMode: "",
 		}
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
 		err = tmpl.ExecuteTemplate(w, "base", studyData)
@@ -184,14 +124,24 @@ func (h *PageHandler) HandleStudy(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Map SR type to study mode
+	// "japanese pronunciation" -> "reading"
+	// "english meaning" -> "meaning"
+	studyMode := "reading"
+	if srWord.Type == "english meaning" {
+		studyMode = "meaning"
+	}
+
 	studyData := StudyData{
 		Title:       "Study",
+		SRWordID:    srWord.SRID,
 		KanjiWord:   srWord.Word.Word,
 		Furigana:    srWord.Word.Furigana,
 		Romaji:      srWord.Word.Romaji,
 		Definitions: srWord.Word.Definitions,
 		Answered:    false,
 		NoWords:     false,
+		StudyMode:   studyMode,
 	}
 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")

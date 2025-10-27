@@ -86,11 +86,13 @@ func (h *AuthHandler) HandleLogin(w http.ResponseWriter, r *http.Request) {
 			}
 
 			data := struct {
-				Title string
-				Error string
+				Title        string
+				Error        string
+				ShowRegister bool
 			}{
-				Title: "Login",
-				Error: "Invalid username or password",
+				Title:        "Login",
+				Error:        "Invalid username or password",
+				ShowRegister: false,
 			}
 			w.Header().Set("Content-Type", "text/html; charset=utf-8")
 			tmpl.ExecuteTemplate(w, "login", data)
@@ -104,11 +106,13 @@ func (h *AuthHandler) HandleLogin(w http.ResponseWriter, r *http.Request) {
 			}
 
 			data := struct {
-				Title string
-				Error string
+				Title        string
+				Error        string
+				ShowRegister bool
 			}{
-				Title: "Login",
-				Error: "Please enter both username and password",
+				Title:        "Login",
+				Error:        "Please enter both username and password",
+				ShowRegister: false,
 			}
 			w.Header().Set("Content-Type", "text/html; charset=utf-8")
 			tmpl.ExecuteTemplate(w, "login", data)
@@ -128,11 +132,13 @@ func (h *AuthHandler) HandleLogin(w http.ResponseWriter, r *http.Request) {
 		Error           string
 		RegisterError   string
 		RegisterSuccess string
+		ShowRegister    bool
 	}{
 		Title:           "Login",
 		Error:           "",
 		RegisterError:   "",
 		RegisterSuccess: "",
+		ShowRegister:    false,
 	}
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	tmpl.ExecuteTemplate(w, "login", data)
@@ -239,11 +245,13 @@ func (h *AuthHandler) showRegisterForm(w http.ResponseWriter, success, error str
 		Error           string
 		RegisterError   string
 		RegisterSuccess string
+		ShowRegister    bool
 	}{
 		Title:           "Login",
 		Error:           "",
 		RegisterError:   error,
 		RegisterSuccess: success,
+		ShowRegister:    true,
 	}
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	tmpl.ExecuteTemplate(w, "login", data)

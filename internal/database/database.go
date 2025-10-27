@@ -109,6 +109,20 @@ func (db *Database) InitializeTables() error {
 		created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 	);`
 
+	createUserSettingsTable := `
+	CREATE TABLE IF NOT EXISTS user_settings (
+		id SERIAL PRIMARY KEY,
+		user_id INTEGER NOT NULL,
+		sr_time_japanese INTEGER NOT NULL,
+		sr_time_english INTEGER NOT NULL,
+		submit_key VARCHAR(10) NOT NULL,
+		key_1 VARCHAR(10) NOT NULL,
+		key_2 VARCHAR(10) NOT NULL,
+		key_3 VARCHAR(10) NOT NULL,
+		key_4 VARCHAR(10) NOT NULL,
+		key_5 VARCHAR(10) NOT NULL
+	);`
+
 	createSRTable := `
 	CREATE TABLE IF NOT EXISTS sr (
 		id SERIAL PRIMARY KEY,
@@ -117,6 +131,7 @@ func (db *Database) InitializeTables() error {
 		repetitions INTEGER DEFAULT 0,
 		ef FLOAT DEFAULT 2.5,
 		interval INTEGER DEFAULT 0,
+		type VARCHAR(50) NOT NULL,
 		last_reviewed TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 		next_review TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 		note TEXT,
@@ -196,6 +211,10 @@ func (db *Database) InitializeTables() error {
 	if err != nil {
 		return fmt.Errorf("error creating users table: %w", err)
 	}
+	_, err = db.DB.Exec(createUserSettingsTable)
+	if err != nil {
+		return fmt.Errorf("error creating user settings table: %w", err)
+	}
 	_, err = db.DB.Exec(createJLPTTable)
 	if err != nil {
 		return fmt.Errorf("error creating JLPT vocabulary table: %w", err)
@@ -223,19 +242,25 @@ func (db *Database) HasUserSRWords(userID int) (bool, error) {
 }
 
 // InitializeUserSRWords populates SR table with all words from a specific level for a user
+// Each word is duplicated twice: once for english meaning and once for japanese pronunciation
 func (db *Database) InitializeUserSRWords(userID int, level int) error {
+	// Insert each word twice with different types
 	query := `
-		INSERT INTO sr (user_id, word_id, repetitions, ef, interval, last_reviewed, next_review)
-		SELECT $1, id, 0, 2.5, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+		INSERT INTO sr (user_id, word_id, repetitions, ef, interval, type, last_reviewed, next_review)
+		SELECT $1::INTEGER, id, 0, 2.5, 0, 'english meaning', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
 		FROM words
-		WHERE level = $2
+		WHERE level = $2::INTEGER
+		UNION ALL
+		SELECT $1::INTEGER, id, 0, 2.5, 0, 'japanese pronunciation', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+		FROM words
+		WHERE level = $2::INTEGER
 		ON CONFLICT DO NOTHING
 	`
 	_, err := db.DB.Exec(query, userID, level)
 	if err != nil {
 		return fmt.Errorf("failed to initialize user SR words: %w", err)
 	}
-	log.Printf("✅ Initialized SR words for user %d with level %d", userID, level)
+	log.Printf("✅ Initialized SR words for user %d with level %d (duplicated for both types)", userID, level)
 	return nil
 }
 
@@ -248,6 +273,7 @@ type Word struct {
 	Level         int
 	Definitions   string
 	PartsOfSpeech string
+	CreatedAt     string
 }
 
 // SRWord represents a word in the SR system with metadata
@@ -258,6 +284,7 @@ type SRWord struct {
 	Repetitions  int
 	EF           float64
 	Interval     int
+	Type         string
 	LastReviewed string
 	NextReview   string
 	Word         Word
@@ -267,9 +294,9 @@ type SRWord struct {
 func (db *Database) GetNextSRWord(userID int) (*SRWord, error) {
 	query := `
 		SELECT 
-			sr.id, sr.user_id, sr.word_id, sr.repetitions, sr.ef, sr.interval,
+			sr.id, sr.user_id, sr.word_id, sr.repetitions, sr.ef, sr.interval, sr.type,
 			sr.last_reviewed, sr.next_review,
-			w.id, w.word, w.furigana, w.romaji, w.level, w.definitions, w.parts_of_speech
+			w.id, w.word, w.furigana, w.romaji, w.level, w.definitions, w.parts_of_speech, w.created_at
 		FROM sr
 		JOIN words w ON sr.word_id = w.id
 		WHERE sr.user_id = $1 AND sr.next_review <= CURRENT_TIMESTAMP
@@ -280,9 +307,9 @@ func (db *Database) GetNextSRWord(userID int) (*SRWord, error) {
 	var srWord SRWord
 	err := db.DB.QueryRow(query, userID).Scan(
 		&srWord.SRID, &srWord.UserID, &srWord.WordID, &srWord.Repetitions,
-		&srWord.EF, &srWord.Interval, &srWord.LastReviewed, &srWord.NextReview,
+		&srWord.EF, &srWord.Interval, &srWord.Type, &srWord.LastReviewed, &srWord.NextReview,
 		&srWord.Word.ID, &srWord.Word.Word, &srWord.Word.Furigana, &srWord.Word.Romaji,
-		&srWord.Word.Level, &srWord.Word.Definitions, &srWord.Word.PartsOfSpeech,
+		&srWord.Word.Level, &srWord.Word.Definitions, &srWord.Word.PartsOfSpeech, &srWord.Word.CreatedAt,
 	)
 
 	if err == sql.ErrNoRows {
@@ -293,6 +320,48 @@ func (db *Database) GetNextSRWord(userID int) (*SRWord, error) {
 	}
 
 	return &srWord, nil
+}
+
+func (db *Database) LookupWordBySRId(srID int) (*Word, error) {
+	query := `
+	SELECT w.id, w.word, w.furigana, w.romaji, w.level, w.definitions, w.parts_of_speech, w.created_at
+	FROM sr
+	JOIN words w ON sr.word_id = w.id
+	WHERE sr.id = $1
+	`
+	var word Word
+	err := db.DB.QueryRow(query, srID).Scan(&word.ID, &word.Word, &word.Furigana, &word.Romaji, &word.Level, &word.Definitions, &word.PartsOfSpeech, &word.CreatedAt)
+	if err != nil {
+		return nil, fmt.Errorf("failed to lookup word by ID: %w", err)
+	}
+	return &word, nil
+}
+
+type UserSettings struct {
+	UserID         int
+	SRTimeJapanese int
+	SRTimeEnglish  int
+	SubmitKey      string
+	Key1           string
+	Key2           string
+	Key3           string
+	Key4           string
+	Key5           string
+}
+
+func (db *Database) GetUserSettings(userID int) (*UserSettings, error) {
+	var userSettings UserSettings
+	query := `
+		SELECT id, user_id, sr_time_japanese, sr_time_english, submit_key, key_1, key_2, key_3, key_4, key_5 
+		FROM user_settings 
+		WHERE user_id = $1
+	`
+	var id int // temporary variable to scan the id column
+	err := db.DB.QueryRow(query, userID).Scan(&id, &userSettings.UserID, &userSettings.SRTimeJapanese, &userSettings.SRTimeEnglish, &userSettings.SubmitKey, &userSettings.Key1, &userSettings.Key2, &userSettings.Key3, &userSettings.Key4, &userSettings.Key5)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get user settings: %w", err)
+	}
+	return &userSettings, nil
 }
 
 // TODO: Implement additional database operations

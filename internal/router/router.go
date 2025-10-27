@@ -4,6 +4,7 @@ import (
 	"gaijin/internal/auth"
 	"gaijin/internal/database"
 	"gaijin/internal/handlers"
+	"gaijin/internal/handlers/api"
 	"log"
 	"net/http"
 	"os"
@@ -11,22 +12,26 @@ import (
 )
 
 type Router struct {
-	Mux         *http.ServeMux
-	DB          *database.Database
-	auth        *auth.Auth
-	logger      *Logger
-	authHandler *handlers.AuthHandler
-	pageHandler *handlers.PageHandler
+	Mux          *http.ServeMux
+	DB           *database.Database
+	auth         *auth.Auth
+	logger       *Logger
+	authHandler  *handlers.AuthHandler
+	pageHandler  *handlers.PageHandler
+	studyHandler *api.StudyHandler
+	jlptHandler  *api.JLPTHandler
 }
 
 func New(db *database.Database) *Router {
 	authService := auth.New(db)
 	return &Router{
-		Mux:         http.NewServeMux(),
-		auth:        authService,
-		logger:      NewLogger(),
-		authHandler: handlers.NewAuthHandler(db, authService),
-		pageHandler: handlers.NewPageHandler(db, authService),
+		Mux:          http.NewServeMux(),
+		auth:         authService,
+		logger:       NewLogger(),
+		authHandler:  handlers.NewAuthHandler(db, authService),
+		pageHandler:  handlers.NewPageHandler(db, authService),
+		studyHandler: api.NewStudyHandler(db, authService),
+		jlptHandler:  api.NewJLPTHandler(db),
 	}
 }
 
@@ -90,9 +95,13 @@ func (r *Router) SetupRoutes() {
 	r.Mux.HandleFunc("/register", r.logger.Middleware(r.authHandler.HandleRegister))
 	r.Mux.HandleFunc("/logout", r.logger.Middleware(r.authHandler.HandleLogout))
 
-	// Study routes
+	// Page routes
 	r.Mux.HandleFunc("/study", r.logger.Middleware(r.auth.Middleware(r.pageHandler.HandleStudy)))
 	r.Mux.HandleFunc("/profile", r.logger.Middleware(r.auth.Middleware(r.pageHandler.HandleProfile)))
+
+	// Study routes
+	r.Mux.HandleFunc("/answer/pronunciation", r.logger.Middleware(r.auth.Middleware(r.studyHandler.HandleAnswerPronunciation)))
+	r.Mux.HandleFunc("/answer/meaning", r.logger.Middleware(r.auth.Middleware(r.studyHandler.HandleAnswerMeaning)))
 
 	// Static files - no logging for performance (optional)
 	r.Mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))

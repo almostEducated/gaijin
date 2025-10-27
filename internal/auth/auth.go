@@ -125,7 +125,23 @@ func (a *Auth) CreateUser(username, password, email string) error {
 		return err
 	}
 
-	_, err = a.db.DB.Exec("INSERT INTO users (username, password_hash, email) VALUES ($1, $2, $3)",
-		username, hashedPassword, email)
+	// Insert the user and get the user ID
+	var userID int
+	err = a.db.DB.QueryRow(`
+		INSERT INTO users (username, password_hash, email) 
+		VALUES ($1, $2, $3)
+		RETURNING id`,
+		username, hashedPassword, email).Scan(&userID)
+	if err != nil {
+		return err
+	}
+
+	// Initialize user_settings with default values
+	_, err = a.db.DB.Exec(`
+		INSERT INTO user_settings 
+		(user_id, sr_time_japanese, sr_time_english, submit_key, key_1, key_2, key_3, key_4, key_5) 
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+		userID, 5000, 10000, "enter", "1", "2", "3", "4", "5")
+
 	return err
 }

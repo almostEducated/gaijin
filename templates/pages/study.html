@@ -1,6 +1,20 @@
 {{define "content"}}
+<!-- SR Timer Script -->
+<script src="/static/js/srTimer.js"></script>
+
 <div class="container">
-    <h1>Study</h1>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h1>Study</h1>
+        {{if not .NoWords}}
+        <div class="mode-indicator">
+            {{if eq .StudyMode "reading"}}
+                <span class="mode-badge mode-badge-reading">📖 Reading Mode</span>
+            {{else}}
+                <span class="mode-badge mode-badge-meaning">💭 Meaning Mode</span>
+            {{end}}
+        </div>
+        {{end}}
+    </div>
     
     {{if .NoWords}}
         <!-- No words available to study -->
@@ -10,7 +24,7 @@
             <p style="font-size: 16px; margin-top: 10px;">Come back later to continue studying.</p>
         </div>
     {{else}}
-        <div class="kanji-display">
+        <div class="kanji-display {{if eq .StudyMode "reading"}}kanji-display-reading{{else}}kanji-display-meaning{{end}}">
             <p style="font-size: 48px; font-weight: bold;">{{.KanjiWord}}</p>
         </div>
         
@@ -34,15 +48,27 @@
         {{else}}
             <!-- Unanswered View: Show input form -->
             <div class="unanswered-view">
-                <form action="/study" method="post">
-                    <input type="text" id="kanji-input" name="answer" placeholder="Enter romaji" oninput="romanjiToHiragana(this)" autocomplete="off" style="font-size: 24px; text-align: center; padding: 10px; width: 300px; border: 2px solid #ccc; border-radius: 5px;">
-                    <button type="submit" class="submit-btn" style="margin-top: 20px; padding: 15px 30px; font-size: 18px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">Submit Answer</button>
-                </form>
+                {{if eq .StudyMode "reading"}}
+                    <!-- Reading Mode: User types romaji which converts to hiragana -->
+                    <form action="/answer/pronunciation" method="post" onsubmit="return updateTimeBeforeSubmit(this)">
+                        <input type="hidden" name="time" value="0">
+                        <input type="hidden" name="word-id" value="{{.SRWordID}}">
+                        <input type="text" id="kanji-input" name="answer" placeholder="Enter romaji" oninput="romanjiToHiragana(this)" autocomplete="off" style="font-size: 24px; text-align: center; padding: 10px; width: 300px; border: 2px solid #ccc; border-radius: 5px;">
+                        <button type="submit" class="submit-btn" style="margin-top: 20px; padding: 15px 30px; font-size: 18px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">Submit Answer</button>
+                    </form>
+                    <script src="/static/js/romajiToHiragana.js"></script>
+                {{else}}
+                    <!-- Meaning Mode: User types English definition -->
+                    <form action="/answer/meaning" method="post" onsubmit="return updateTimeBeforeSubmit(this)">
+                        <input type="hidden" name="time" value="0">
+                        <input type="hidden" name="word-id" value="{{.SRWordID}}">
+                        <input type="text" id="meaning-input" name="answer" placeholder="Enter English meaning" autocomplete="off" style="font-size: 24px; text-align: center; padding: 10px; width: 300px; border: 2px solid #ccc; border-radius: 5px;">
+                        <button type="submit" class="submit-btn" style="margin-top: 20px; padding: 15px 30px; font-size: 18px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">Submit Answer</button>
+                    </form>
+                {{end}}
             </div>
         {{end}}
     {{end}}
 </div>
-
-<script src="/static/js/romajiToHiragana.js"></script>
 {{end}}
 

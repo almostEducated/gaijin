@@ -12,12 +12,12 @@
             <div class="login-card">
                 <!-- Form Toggle Buttons -->
                 <div class="form-toggle">
-                    <button type="button" id="show-login" class="active">Login</button>
-                    <button type="button" id="show-register">Register</button>
+                    <button type="button" id="show-login" class="{{if not .ShowRegister}}active{{end}}">Login</button>
+                    <button type="button" id="show-register" class="{{if .ShowRegister}}active{{end}}">Register</button>
                 </div>
     
                 <!-- Login Form -->
-                <form id="login-form" class="login-form" method="POST" action="/login">
+                <form id="login-form" class="login-form{{if .ShowRegister}} hidden{{end}}" method="POST" action="/login">
                     <h1>Login to Gaijin</h1>
     
                     <!-- Response area for login messages -->
@@ -45,7 +45,7 @@
                 </form>
     
                 <!-- Registration Form -->
-                <form id="register-form" class="login-form hidden" method="POST" action="/register">
+                <form id="register-form" class="login-form{{if not .ShowRegister}} hidden{{end}}" method="POST" action="/register">
                     <h1>Register for Gaijin</h1>
     
                     <!-- Response area for registration messages -->

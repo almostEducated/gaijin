@@ -12,26 +12,30 @@ import (
 )
 
 type Router struct {
-	Mux          *http.ServeMux
-	DB           *database.Database
-	auth         *auth.Auth
-	logger       *Logger
-	authHandler  *handlers.AuthHandler
-	pageHandler  *handlers.PageHandler
-	studyHandler *api.StudyHandler
-	jlptHandler  *api.JLPTHandler
+	Mux             *http.ServeMux
+	DB              *database.Database
+	auth            *auth.Auth
+	logger          *Logger
+	authHandler     *handlers.AuthHandler
+	pageHandler     *handlers.PageHandler
+	studyHandler    *api.StudyHandler
+	jlptHandler     *api.JLPTHandler
+	settingsHandler *api.SettingsHandler
+	verbHandler     *api.VerbHandler
 }
 
 func New(db *database.Database) *Router {
 	authService := auth.New(db)
 	return &Router{
-		Mux:          http.NewServeMux(),
-		auth:         authService,
-		logger:       NewLogger(),
-		authHandler:  handlers.NewAuthHandler(db, authService),
-		pageHandler:  handlers.NewPageHandler(db, authService),
-		studyHandler: api.NewStudyHandler(db, authService),
-		jlptHandler:  api.NewJLPTHandler(db),
+		Mux:             http.NewServeMux(),
+		auth:            authService,
+		logger:          NewLogger(),
+		authHandler:     handlers.NewAuthHandler(db, authService),
+		pageHandler:     handlers.NewPageHandler(db, authService),
+		studyHandler:    api.NewStudyHandler(db, authService),
+		jlptHandler:     api.NewJLPTHandler(db),
+		settingsHandler: api.NewSettingsHandler(db, authService),
+		verbHandler:     api.NewVerbHandler(db),
 	}
 }
 
@@ -102,6 +106,14 @@ func (r *Router) SetupRoutes() {
 	// Study routes
 	r.Mux.HandleFunc("/answer/pronunciation", r.logger.Middleware(r.auth.Middleware(r.studyHandler.HandleAnswerPronunciation)))
 	r.Mux.HandleFunc("/answer/meaning", r.logger.Middleware(r.auth.Middleware(r.studyHandler.HandleAnswerMeaning)))
+	r.Mux.HandleFunc("/study/answer", r.logger.Middleware(r.auth.Middleware(r.pageHandler.HandleStudyAnswer)))
+	r.Mux.HandleFunc("/study/rate", r.logger.Middleware(r.auth.Middleware(r.studyHandler.HandleSubmitRating)))
+
+	// Settings routes
+	r.Mux.HandleFunc("/api/settings", r.logger.Middleware(r.auth.Middleware(r.settingsHandler.HandleUpdateSettings)))
+
+	// Verb conjugation routes (public - no auth required)
+	r.Mux.HandleFunc("/api/verb/conjugate", r.logger.Middleware(r.verbHandler.HandleConjugate))
 
 	// Static files - no logging for performance (optional)
 	r.Mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))

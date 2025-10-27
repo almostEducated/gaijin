@@ -1,0 +1,215 @@
+{{define "content"}}
+<div class="container answer-container {{if .IsCorrect}}answer-correct{{else}}answer-incorrect{{end}}">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h1>Review Answer</h1>
+        <div class="mode-indicator">
+            {{if eq .Type "pronunciation"}}
+                <span class="mode-badge mode-badge-reading">📖 Pronunciation</span>
+            {{else}}
+                <span class="mode-badge mode-badge-meaning">💭 Meaning</span>
+            {{end}}
+        </div>
+    </div>
+    
+    <div class="kanji-display" style="text-align: center; margin: 40px 0;">
+        <p style="font-size: 48px; font-weight: bold;">{{.KanjiWord}}</p>
+    </div>
+    
+    {{if .UserAnswer}}
+    <div class="user-answer-section" style="margin: 20px auto; padding: 20px; background: rgba(255, 255, 255, 0.95); border-radius: 8px; max-width: 600px; border: 2px solid rgba(0, 0, 0, 0.1);">
+        <p style="font-size: 16px; margin-bottom: 8px; opacity: 0.7;"><strong>Your Answer:</strong></p>
+        <p style="font-size: 28px; font-weight: bold; color: #495057;">{{.UserAnswer}}</p>
+    </div>
+    {{end}}
+    
+    <div class="answer-info" style="margin: 30px auto; padding: 25px; background: rgba(255, 255, 255, 0.9); border-radius: 8px; max-width: 600px;">
+        {{if eq .Type "pronunciation"}}
+            <p style="font-size: 32px; margin-bottom: 10px;"><strong>Correct Answer:</strong></p>
+            <p style="font-size: 36px; font-weight: bold; color: #1976d2;">{{.Furigana}}</p>
+        {{else}}
+            <p style="font-size: 32px; margin-bottom: 10px;"><strong>Correct Answer:</strong></p>
+            <p style="font-size: 28px; font-weight: bold; color: #7b1fa2;">{{.Definitions}}</p>
+        {{end}}
+    </div>
+    
+    <div style="text-align: center; margin: 30px 0;">
+        <p style="font-size: 18px; font-weight: bold; margin-bottom: 20px;">How well did you know this word?</p>
+    </div>
+    
+    <form action="/study/rate" method="post" style="max-width: 700px; margin: 0 auto;">
+        <input type="hidden" name="sr_id" value="{{.SRID}}">
+        
+        <div class="rating-buttons" style="display: flex; flex-direction: column; gap: 12px;">
+            <button type="submit" name="quality" value="5" class="rating-btn rating-5">
+                <strong>5 - Perfect</strong>
+                <span class="rating-description">Instant recall, no hesitation</span>
+            </button>
+            
+            <button type="submit" name="quality" value="4" class="rating-btn rating-4">
+                <strong>4 - Good</strong>
+                <span class="rating-description">Correct after some thought</span>
+            </button>
+            
+            <button type="submit" name="quality" value="3" class="rating-btn rating-3">
+                <strong>3 - Difficult</strong>
+                <span class="rating-description">Correct with significant difficulty</span>
+            </button>
+            
+            <button type="submit" name="quality" value="2" class="rating-btn rating-2">
+                <strong>2 - Wrong</strong>
+                <span class="rating-description">Incorrect, but recognized after seeing answer</span>
+            </button>
+            
+            <button type="submit" name="quality" value="1" class="rating-btn rating-1">
+                <strong>1 - Barely Remembered</strong>
+                <span class="rating-description">Wrong, barely familiar</span>
+            </button>
+            
+            <button type="submit" name="quality" value="0" class="rating-btn rating-0">
+                <strong>0 - Complete Blackout</strong>
+                <span class="rating-description">No memory of this word at all</span>
+            </button>
+        </div>
+    </form>
+</div>
+
+<style>
+/* Answer container background colors */
+.answer-container {
+    transition: background-color 0.3s ease;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.answer-correct {
+    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+}
+
+.answer-incorrect {
+    background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+}
+
+/* Rating buttons - neutral styling */
+.rating-btn {
+    padding: 18px 25px;
+    font-size: 18px;
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #ffffff;
+    color: #212529;
+    text-align: left;
+    transition: all 0.2s;
+}
+
+.rating-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-color: #495057;
+    background-color: #f8f9fa;
+}
+
+.rating-btn:active {
+    transform: translateY(0);
+}
+
+.rating-description {
+    display: block;
+    font-size: 14px;
+    opacity: 0.7;
+    margin-top: 4px;
+    font-weight: normal;
+}
+
+.mode-badge {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.mode-badge-reading {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+.mode-badge-meaning {
+    background-color: #f3e5f5;
+    color: #7b1fa2;
+}
+</style>
+
+<script>
+// Keyboard shortcuts for rating submissions
+document.addEventListener('DOMContentLoaded', function() {
+    // Map keys to quality ratings
+    const keyMap = {
+        '{{.Key0}}': 0,
+        '{{.Key1}}': 1,
+        '{{.Key2}}': 2,
+        '{{.Key3}}': 3,
+        '{{.Key4}}': 4,
+        '{{.Key5}}': 5
+    };
+
+    // Add visual indicators to buttons showing the keyboard shortcut
+    document.querySelectorAll('.rating-btn').forEach(button => {
+        const quality = button.getAttribute('value');
+        let keyForQuality = '';
+        
+        // Find which key maps to this quality
+        for (const [key, value] of Object.entries(keyMap)) {
+            if (value == quality) {
+                keyForQuality = key;
+                break;
+            }
+        }
+        
+        if (keyForQuality) {
+            // Add keyboard hint to button
+            const strong = button.querySelector('strong');
+            if (strong) {
+                const keyHint = document.createElement('span');
+                keyHint.style.cssText = 'float: right; opacity: 0.6; font-size: 16px;';
+                keyHint.textContent = '[' + keyForQuality.toUpperCase() + ']';
+                strong.appendChild(keyHint);
+            }
+        }
+    });
+
+    // Listen for key presses
+    document.addEventListener('keydown', function(event) {
+        // Get the pressed key
+        const pressedKey = event.key.toLowerCase();
+        
+        // Check if the pressed key matches any configured key
+        if (keyMap.hasOwnProperty(pressedKey)) {
+            event.preventDefault();
+            
+            const quality = keyMap[pressedKey];
+            
+            // Find the form and submit it with the appropriate quality value
+            const form = document.querySelector('form[action="/study/rate"]');
+            if (form) {
+                // Remove any existing quality input
+                const existingInput = form.querySelector('input[name="quality"]');
+                if (existingInput) {
+                    existingInput.remove();
+                }
+                
+                // Add hidden input with quality value
+                const qualityInput = document.createElement('input');
+                qualityInput.type = 'hidden';
+                qualityInput.name = 'quality';
+                qualityInput.value = quality;
+                form.appendChild(qualityInput);
+                
+                // Submit the form
+                form.submit();
+            }
+        }
+    });
+});
+</script>
+{{end}}
+

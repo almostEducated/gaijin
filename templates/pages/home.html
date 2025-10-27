@@ -2,14 +2,167 @@
 
     <div class="container">
         <h1 class="welcome-text">よこそう</h1>
-        <p class="subtitle">Welcome to Gaijin</p>
-        <p class="description">
-            Your comprehensive platform for studying Japanese Kanji and Grammar. 
-            Master the beautiful complexity of the Japanese language with our 
-            interactive learning tools and structured curriculum.
-        </p>
+
+        <div class="action-buttons">
+            <button class="cta-button" onclick="window.location.href='/study'">
+                Start Studying
+            </button>
+            <button class="cta-button secondary" onclick="window.location.href='/profile'">
+                Profile
+            </button>
+        </div>
+  
+      
+        <!-- Verb Conjugation Section -->
+        <div class="verb-conjugation-section" style="margin: 40px 0; padding: 30px; background: #f8f9fa; border-radius: 10px;">
+            <h2 style="text-align: center; margin-bottom: 20px; color: #333;">動詞活用 (Verb Conjugation)</h2>
+            
+            <div class="verb-input-container" style="text-align: center; margin-bottom: 30px;">
+                <form id="verbForm" style="display: inline-block;">
+                    <input 
+                        type="text" 
+                        id="verbInput" 
+                        oninput="romanjiToHiragana(this)" 
+                        placeholder="Enter verb in dictionary form (e.g., 食べる)"
+                        style="padding: 12px 20px; font-size: 18px; width: 400px; border: 2px solid #ddd; border-radius: 5px; margin-right: 10px;"
+                    />
+                    <button 
+                        type="submit"
+                        style="padding: 12px 30px; font-size: 18px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;"
+                    >
+                        Conjugate
+                    </button>
+                </form>
+                
+                <!-- Toggle buttons for negation and politeness -->
+                <div style="margin-top: 15px; display: flex; justify-content: center; gap: 15px;">
+                    <button 
+                        id="negativeToggle"
+                        type="button"
+                        style="padding: 10px 20px; font-size: 16px; background: #f8f9fa; color: #333; border: 2px solid #ddd; border-radius: 5px; cursor: pointer; transition: all 0.3s;"
+                        onclick="toggleNegative()"
+                    >
+                        ✗ Negative
+                    </button>
+                    <button 
+                        id="politeToggle"
+                        type="button"
+                        style="padding: 10px 20px; font-size: 16px; background: #f8f9fa; color: #333; border: 2px solid #ddd; border-radius: 5px; cursor: pointer; transition: all 0.3s;"
+                        onclick="togglePolite()"
+                    >
+                        🎩 Polite (ます)
+                    </button>
+                </div>
+                
+                <div id="verbError" style="color: #dc3545; margin-top: 10px; display: none;"></div>
+                <div id="verbType" style="color: #28a745; margin-top: 10px; font-weight: bold; display: none;"></div>
+            </div>
+
+            <div id="conjugationChart" style="display: none;">
+                <!-- Tenses Section -->
+                <div class="conjugation-category" style="margin-bottom: 30px;">
+                    <h3 style="color: #007bff; border-bottom: 2px solid #007bff; padding-bottom: 10px;">Tenses</h3>
+                    
+                    <!-- Time -->
+                    <div class="conjugation-subcategory" style="margin: 20px 0;">
+                        <h4 style="color: #555;">Time</h4>
+                        <table class="conjugation-table" style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background: #e9ecef;">
+                                    <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Form</th>
+                                    <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">English</th>
+                                    <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Japanese</th>
+                                </tr>
+                            </thead>
+                            <tbody id="timeConjugations">
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Aspect -->
+                    <div class="conjugation-subcategory" style="margin: 20px 0;">
+                        <h4 style="color: #555;">Aspect</h4>
+                        <table class="conjugation-table" style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background: #e9ecef;">
+                                    <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Form</th>
+                                    <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">English</th>
+                                    <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Japanese</th>
+                                </tr>
+                            </thead>
+                            <tbody id="aspectConjugations">
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Mood -->
+                    <div class="conjugation-subcategory" style="margin: 20px 0;">
+                        <h4 style="color: #555;">Mood</h4>
+                        <table class="conjugation-table" style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background: #e9ecef;">
+                                    <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Form</th>
+                                    <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">English</th>
+                                    <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Japanese</th>
+                                </tr>
+                            </thead>
+                            <tbody id="moodConjugations">
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Modals -->
+                    <div class="conjugation-subcategory" style="margin: 20px 0;">
+                        <h4 style="color: #555;">Modals</h4>
+                        <table class="conjugation-table" style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background: #e9ecef;">
+                                    <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Form</th>
+                                    <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">English</th>
+                                    <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Japanese</th>
+                                </tr>
+                            </thead>
+                            <tbody id="modalsConjugations">
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Desire -->
+                    <div class="conjugation-subcategory" style="margin: 20px 0;">
+                        <h4 style="color: #555;">Desire</h4>
+                        <table class="conjugation-table" style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background: #e9ecef;">
+                                    <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Form</th>
+                                    <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">English</th>
+                                    <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Japanese</th>
+                                </tr>
+                            </thead>
+                            <tbody id="desireConjugations">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Voice Section -->
+                <div class="conjugation-category" style="margin-bottom: 30px;">
+                    <h3 style="color: #007bff; border-bottom: 2px solid #007bff; padding-bottom: 10px;">Voice</h3>
+                    <table class="conjugation-table" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+                        <thead>
+                            <tr style="background: #e9ecef;">
+                                <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Form</th>
+                                <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">English</th>
+                                <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Japanese</th>
+                            </tr>
+                        </thead>
+                        <tbody id="voiceConjugations">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
         
-        <div class="features">
+        <!-- <div class="features">
             <div class="feature">
                 <h3>漢字 (Kanji)</h3>
                 <p>Learn and practice Japanese characters with stroke order and meanings</p>
@@ -22,16 +175,12 @@
                 <h3>練習 (Practice)</h3>
                 <p>Interactive exercises and quizzes to reinforce your learning</p>
             </div>
-        </div>
+        </div> -->
         
-        <div class="action-buttons">
-            <button class="cta-button" onclick="window.location.href='/study'">
-                Start Studying
-            </button>
-            <button class="cta-button secondary" onclick="window.location.href='/profile'">
-                Profile
-            </button>
-        </div>
+
     </div>
+
+    <script src="/static/js/verbConjugation.js"></script>
+    <script src="/static/js/romajiToHiragana.js"></script>
 
 {{end}}

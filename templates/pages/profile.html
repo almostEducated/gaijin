@@ -2,88 +2,135 @@
 <div class="container">
     <h1>Profile</h1>
     
+    {{if .Success}}
+    <div class="success-message">
+        ✅ Settings saved successfully!
+    </div>
+    {{end}}
+    
     <div class="profile-section">
-        <h2>User Settings</h2>
-        <p>Coming soon...</p>
+        <h2>👤 User Information</h2>
+        <div class="user-info-grid">
+            <div class="info-item">
+                <span class="info-label">Username</span>
+                <span class="info-value">{{.UserInfo.Username}}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Email</span>
+                <span class="info-value">{{.UserInfo.Email}}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Member Since</span>
+                <span class="info-value">{{.UserInfo.CreatedAt}}</span>
+            </div>
+        </div>
     </div>
     
     <div class="profile-section">
-        <h2>⌨️ Keyboard Shortcuts</h2>
-        <p class="section-description">Use these hotkeys to navigate and interact with Gaijin more efficiently:</p>
+        <h2>⚙️ User Settings</h2>
+        <p class="section-description">Customize your study experience by adjusting timers and keyboard shortcuts.</p>
         
-        <div class="hotkeys-grid">
-            <div class="hotkey-item">
-                <div class="hotkey-keys">
-                    <kbd>Enter</kbd>
+        <form action="/api/settings" method="POST" class="settings-form">
+            <div class="form-section">
+                <h3>Study Timers</h3>
+                <p class="form-help">If you answer correctly within these times, you'll automatically move to the next word with a rating of 5.</p>
+                
+                <div class="form-group">
+                    <label for="sr_time_japanese">
+                        Japanese Timer (milliseconds)
+                        <span class="form-help-inline">Time limit for pronunciation questions</span>
+                    </label>
+                    <input type="number" id="sr_time_japanese" name="sr_time_japanese" 
+                           value="{{.UserSettings.SRTimeJapanese}}" min="0" step="100" required>
+                    <small class="form-hint">Default: 5000ms (5 seconds)</small>
                 </div>
-                <div class="hotkey-description">
-                    Submit answer / Continue
-                </div>
-            </div>
-            
-            <div class="hotkey-item">
-                <div class="hotkey-keys">
-                    <kbd>Space</kbd>
-                </div>
-                <div class="hotkey-description">
-                    Reveal answer / Flip card
-                </div>
-            </div>
-            
-            <div class="hotkey-item">
-                <div class="hotkey-keys">
-                    <kbd>Esc</kbd>
-                </div>
-                <div class="hotkey-description">
-                    Close modal / Cancel
+                
+                <div class="form-group">
+                    <label for="sr_time_english">
+                        English Timer (milliseconds)
+                        <span class="form-help-inline">Time limit for meaning questions</span>
+                    </label>
+                    <input type="number" id="sr_time_english" name="sr_time_english" 
+                           value="{{.UserSettings.SRTimeEnglish}}" min="0" step="100" required>
+                    <small class="form-hint">Default: 10000ms (10 seconds)</small>
                 </div>
             </div>
             
-            <div class="hotkey-item">
-                <div class="hotkey-keys">
-                    <kbd>1</kbd> - <kbd>4</kbd>
-                </div>
-                <div class="hotkey-description">
-                    Select multiple choice answer
-                </div>
-            </div>
-            
-            <div class="hotkey-item">
-                <div class="hotkey-keys">
-                    <kbd>←</kbd> <kbd>→</kbd>
-                </div>
-                <div class="hotkey-description">
-                    Navigate between cards
+            <div class="form-section">
+                <h3>📝 Study Preferences</h3>
+                <p class="form-help">Customize what types of words you want to study.</p>
+                
+                <div class="form-group checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="show_hiragana_mostly" name="show_hiragana_mostly" 
+                               {{if .UserSettings.ShowHiraganaMostly}}checked{{end}}>
+                        <span class="checkbox-text">
+                            <strong>Show Kanji for Hiragana-Mostly Words</strong>
+                            <span class="form-help-block">When enabled, you'll see Kanji for words like たくさん (沢山) that are normally written in hiragana. When disabled, these words will only test for the English meaning, not the Japanese pronunciation.</span>
+                        </span>
+                    </label>
                 </div>
             </div>
             
-            <div class="hotkey-item">
-                <div class="hotkey-keys">
-                    <kbd>Ctrl</kbd> + <kbd>K</kbd>
+            <div class="form-section">
+                <h3>⌨️ Keyboard Shortcuts</h3>
+                <p class="form-help">Customize the keys you use to interact with the study interface.</p>
+                
+                <div class="form-group">
+                    <label for="submit_key">
+                        Submit Key
+                        <span class="form-help-inline">Press to submit answer or continue</span>
+                    </label>
+                    <input type="text" id="submit_key" name="submit_key" 
+                           value="{{.UserSettings.SubmitKey}}" maxlength="10" required>
+                    <small class="form-hint">Default: "enter"</small>
                 </div>
-                <div class="hotkey-description">
-                    Quick search
+                
+                <div class="hotkeys-config">
+                    <h4>Answer Rating Hotkeys (0-5)</h4>
+                    <p class="form-help">Configure keys for rating your answers on the answer page.</p>
+                    
+                    <div class="rating-keys-grid">
+                        <div class="form-group compact">
+                            <label for="key_1">Rating 1</label>
+                            <input type="text" id="key_1" name="key_1" 
+                                   value="{{.UserSettings.Key1}}" maxlength="10" required>
+                        </div>
+                        
+                        <div class="form-group compact">
+                            <label for="key_2">Rating 2</label>
+                            <input type="text" id="key_2" name="key_2" 
+                                   value="{{.UserSettings.Key2}}" maxlength="10" required>
+                        </div>
+                        
+                        <div class="form-group compact">
+                            <label for="key_3">Rating 3</label>
+                            <input type="text" id="key_3" name="key_3" 
+                                   value="{{.UserSettings.Key3}}" maxlength="10" required>
+                        </div>
+                        
+                        <div class="form-group compact">
+                            <label for="key_4">Rating 4</label>
+                            <input type="text" id="key_4" name="key_4" 
+                                   value="{{.UserSettings.Key4}}" maxlength="10" required>
+                        </div>
+                        
+                        <div class="form-group compact">
+                            <label for="key_5">Rating 5</label>
+                            <input type="text" id="key_5" name="key_5" 
+                                   value="{{.UserSettings.Key5}}" maxlength="10" required>
+                        </div>
+                    </div>
+                    
+                    <small class="form-hint">Note: Rating 0 is always "0" and cannot be changed.</small>
                 </div>
             </div>
             
-            <div class="hotkey-item">
-                <div class="hotkey-keys">
-                    <kbd>?</kbd>
-                </div>
-                <div class="hotkey-description">
-                    Show help / keyboard shortcuts
-                </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Save Settings</button>
+                <button type="reset" class="btn btn-secondary">Reset</button>
             </div>
-            
-            <div class="hotkey-item">
-                <div class="hotkey-keys">
-                    <kbd>H</kbd>
-                </div>
-                <div class="hotkey-description">
-                    Go to home page
-                </div>
-            </div>
-        </div>
+        </form>
     </div>
     
     <div class="profile-section">
@@ -93,6 +140,16 @@
 </div>
 
 <style>
+.success-message {
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+    padding: 1rem;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
 .profile-section {
     margin: 2rem 0;
     padding: 2rem;
@@ -107,58 +164,207 @@
     color: #333;
 }
 
+.profile-section h3 {
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    color: #555;
+    font-size: 1.25rem;
+}
+
+.profile-section h4 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: #555;
+    font-size: 1.1rem;
+}
+
 .section-description {
     color: #666;
     margin-bottom: 1.5rem;
 }
 
-.hotkeys-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1rem;
+.settings-form {
+    max-width: 800px;
 }
 
-.hotkey-item {
-    display: flex;
-    align-items: center;
-    padding: 1rem;
-    background: #f8f9fa;
-    border-radius: 6px;
-    border: 1px solid #e9ecef;
+.form-section {
+    margin-bottom: 2.5rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid #e9ecef;
 }
 
-.hotkey-keys {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    min-width: 120px;
-    margin-right: 1rem;
+.form-section:last-of-type {
+    border-bottom: none;
+    padding-bottom: 0;
 }
 
-kbd {
-    display: inline-block;
-    padding: 0.3rem 0.6rem;
-    font-family: 'Courier New', monospace;
+.form-help {
+    color: #6c757d;
     font-size: 0.9rem;
-    color: #333;
-    background-color: #ffffff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    white-space: nowrap;
+    margin-bottom: 1rem;
+    display: block;
 }
 
-.hotkey-description {
-    color: #555;
+.form-help-inline {
+    color: #6c757d;
+    font-size: 0.85rem;
+    font-weight: normal;
+    margin-left: 0.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group.compact {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
     font-size: 0.95rem;
 }
 
-.cta-button.secondary {
-    background: #6c757d;
+.form-group input[type="number"],
+.form-group input[type="text"] {
+    width: 100%;
+    max-width: 400px;
+    padding: 0.75rem;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.cta-button.secondary:hover {
-    background: #5a6268;
+.form-group input[type="number"]:focus,
+.form-group input[type="text"]:focus {
+    outline: none;
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.form-hint {
+    display: block;
+    color: #6c757d;
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+}
+
+.hotkeys-config {
+    margin-top: 1.5rem;
+}
+
+.rating-keys-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.rating-keys-grid .form-group input {
+    max-width: none;
+}
+
+.form-actions {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.user-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.info-label {
+    font-weight: 600;
+    color: #6c757d;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.info-value {
+    font-size: 1.1rem;
+    color: #333;
+    font-weight: 500;
+}
+
+.checkbox-group {
+    margin-bottom: 1rem;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    cursor: pointer;
+    font-weight: normal;
+}
+
+.checkbox-label input[type="checkbox"] {
+    margin-top: 0.25rem;
+    width: 1.25rem;
+    height: 1.25rem;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.checkbox-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.checkbox-text strong {
+    color: #333;
+    font-weight: 600;
+}
+
+.form-help-block {
+    display: block;
+    color: #6c757d;
+    font-size: 0.9rem;
+    font-weight: normal;
+    line-height: 1.5;
 }
 </style>
 {{end}}

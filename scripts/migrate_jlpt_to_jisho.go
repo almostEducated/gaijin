@@ -46,6 +46,31 @@ type JLPTVocab struct {
 	Level    int
 }
 
+// isKatakana checks if a rune is a katakana character
+func isKatakana(r rune) bool {
+	return (r >= '\u30A0' && r <= '\u30FF') || // Katakana block
+		(r >= '\u31F0' && r <= '\u31FF') || // Katakana Phonetic Extensions
+		(r >= '\uFF65' && r <= '\uFF9F') // Halfwidth Katakana
+}
+
+// isKatakanaOnly checks if a string contains only katakana characters and common punctuation
+func isKatakanaOnly(s string) bool {
+	if len(s) == 0 {
+		return false
+	}
+
+	hasKatakana := false
+	for _, r := range s {
+		if isKatakana(r) {
+			hasKatakana = true
+		} else if !(r == ' ' || r == '・' || r == 'ー' || r == '〜' || r == '～') {
+			// Not katakana and not allowed punctuation
+			return false
+		}
+	}
+	return hasKatakana
+}
+
 func main() {
 	// Connect to database
 	db, err := database.ConnectDB()
@@ -95,6 +120,12 @@ func main() {
 
 		var wordID int
 
+		// Check if word is katakana-only
+		isKatakanaWord := isKatakanaOnly(vocab.Word)
+		if isKatakanaWord {
+			log.Printf("  📝 Detected katakana-only word")
+		}
+
 		// Query Jisho API
 		jishoData, err := queryJishoAPI(vocab.Word)
 		if err != nil {
@@ -107,15 +138,17 @@ func main() {
 			log.Printf("  ⚠️  No results from Jisho API - using JLPT fallback data")
 			// Use fallback: insert with original JLPT vocabulary data
 			err = db.DB.QueryRow(`
-				INSERT INTO words (word, furigana, romaji, level, definitions, parts_of_speech, created_at)
-				VALUES ($1, $2, $3, $4, $5, $6, NOW())
+				INSERT INTO words (word, furigana, romaji, level, definitions, parts_of_speech, katakana_only, hiragana_only, created_at)
+				VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW())
 				ON CONFLICT (word, level) DO UPDATE 
 				SET furigana = EXCLUDED.furigana, 
 				    romaji = EXCLUDED.romaji,
 				    definitions = EXCLUDED.definitions,
-				    parts_of_speech = EXCLUDED.parts_of_speech
+				    parts_of_speech = EXCLUDED.parts_of_speech,
+				    katakana_only = EXCLUDED.katakana_only,
+				    hiragana_only = EXCLUDED.hiragana_only
 				RETURNING id
-			`, vocab.Word, vocab.Furigana, vocab.Romaji, vocab.Level, vocab.Meaning, "Unknown").Scan(&wordID)
+			`, vocab.Word, vocab.Furigana, vocab.Romaji, vocab.Level, vocab.Meaning, "Unknown", isKatakanaWord, false).Scan(&wordID)
 
 			if err != nil {
 				log.Printf("  ❌ Error inserting fallback word: %v", err)
@@ -152,18 +185,39 @@ func main() {
 		}
 
 		if entry == nil {
-			log.Printf("  ⚠️  No exact match found (slug != %s) - using JLPT fallback data", vocab.Word)
+			// Before falling back, check if the JLPT word matches any reading in the results
+			// This handles cases where JLPT gives us hiragana-only but Jisho has the kanji version
+			log.Printf("  🔍 No slug match - checking if JLPT word matches any reading...")
+
+			for i := range jishoData.Data {
+				for _, japanese := range jishoData.Data[i].Japanese {
+					if japanese.Reading == vocab.Word {
+						log.Printf("  ✨ Found reading match! JLPT has hiragana '%s', Jisho has kanji '%s'", vocab.Word, japanese.Word)
+						entry = &jishoData.Data[i]
+						break
+					}
+				}
+				if entry != nil {
+					break
+				}
+			}
+		}
+
+		if entry == nil {
+			log.Printf("  ⚠️  No exact match or reading match found - using JLPT fallback data")
 			// Use fallback: insert with original JLPT vocabulary data
 			err = db.DB.QueryRow(`
-				INSERT INTO words (word, furigana, romaji, level, definitions, parts_of_speech, created_at)
-				VALUES ($1, $2, $3, $4, $5, $6, NOW())
+				INSERT INTO words (word, furigana, romaji, level, definitions, parts_of_speech, katakana_only, hiragana_only, created_at)
+				VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW())
 				ON CONFLICT (word, level) DO UPDATE 
 				SET furigana = EXCLUDED.furigana, 
 				    romaji = EXCLUDED.romaji,
 				    definitions = EXCLUDED.definitions,
-				    parts_of_speech = EXCLUDED.parts_of_speech
+				    parts_of_speech = EXCLUDED.parts_of_speech,
+				    katakana_only = EXCLUDED.katakana_only,
+				    hiragana_only = EXCLUDED.hiragana_only
 				RETURNING id
-			`, vocab.Word, vocab.Furigana, vocab.Romaji, vocab.Level, vocab.Meaning, "Unknown").Scan(&wordID)
+			`, vocab.Word, vocab.Furigana, vocab.Romaji, vocab.Level, vocab.Meaning, "Unknown", isKatakanaWord, false).Scan(&wordID)
 
 			if err != nil {
 				log.Printf("  ❌ Error inserting fallback word: %v", err)
@@ -218,17 +272,39 @@ func main() {
 			partsOfSpeechStr += pos
 		}
 
+		// Determine the actual word to use and whether this is a hiragana-only case
+		actualWord := vocab.Word
+		actualFurigana := vocab.Furigana
+		isHiraganaOnly := false
+
+		// Check if we matched by reading (JLPT had hiragana, Jisho has kanji)
+		if entry.Slug != vocab.Word && len(entry.Japanese) > 0 {
+			// Look for a Japanese entry that has our vocab.Word as the reading
+			for _, japanese := range entry.Japanese {
+				if japanese.Reading == vocab.Word && japanese.Word != "" && japanese.Word != vocab.Word {
+					// We found the case where JLPT gives hiragana but Jisho has kanji
+					actualWord = japanese.Word
+					actualFurigana = vocab.Word // Use the original hiragana as furigana
+					isHiraganaOnly = true
+					log.Printf("  📚 Using kanji '%s' with hiragana '%s' as furigana (hiragana_only=true)", actualWord, actualFurigana)
+					break
+				}
+			}
+		}
+
 		// Insert into words table with definitions and parts of speech
 		err = db.DB.QueryRow(`
-			INSERT INTO words (word, furigana, romaji, level, definitions, parts_of_speech, created_at)
-			VALUES ($1, $2, $3, $4, $5, $6, NOW())
+			INSERT INTO words (word, furigana, romaji, level, definitions, parts_of_speech, katakana_only, hiragana_only, created_at)
+			VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW())
 			ON CONFLICT (word, level) DO UPDATE 
 			SET furigana = EXCLUDED.furigana, 
 			    romaji = EXCLUDED.romaji,
 			    definitions = EXCLUDED.definitions,
-			    parts_of_speech = EXCLUDED.parts_of_speech
+			    parts_of_speech = EXCLUDED.parts_of_speech,
+			    katakana_only = EXCLUDED.katakana_only,
+			    hiragana_only = EXCLUDED.hiragana_only
 			RETURNING id
-		`, vocab.Word, vocab.Furigana, vocab.Romaji, vocab.Level, definitionsStr, partsOfSpeechStr).Scan(&wordID)
+		`, actualWord, actualFurigana, vocab.Romaji, vocab.Level, definitionsStr, partsOfSpeechStr, isKatakanaWord, isHiraganaOnly).Scan(&wordID)
 
 		if err != nil {
 			log.Printf("  ❌ Error inserting word: %v", err)
@@ -240,8 +316,8 @@ func main() {
 			len(allDefinitions), len(allPartsOfSpeech))
 		successCount++
 
-		// Rate limiting - be nice to Jisho API
-		time.Sleep(100 * time.Millisecond)
+		// Rate limiting - be nice to Jisho API (increased to avoid 423 errors)
+		time.Sleep(1 * time.Second)
 	}
 
 	log.Printf("\n=== Migration Complete ===")

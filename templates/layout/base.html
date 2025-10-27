@@ -9,7 +9,21 @@
         <link rel="stylesheet" href="/static/main.css">
     </head>
     <body>
-        {{template "content" .}}
+        <nav class="nav-menu">
+            <div class="nav-container">
+                <div class="nav-left">
+                    <a href="/" class="nav-link">Home</a>
+                    <a href="/study" class="nav-link">Study</a>
+                    <a href="/profile" class="nav-link">Profile</a>
+                </div>
+                <div class="nav-right">
+                    <a href="/logout" class="nav-link nav-logout">Logout</a>
+                </div>
+            </div>
+        </nav>
+        <div class="main-content">
+            {{template "content" .}}
+        </div>
     </body>
 </html>
 {{end}}

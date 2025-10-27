@@ -50,19 +50,19 @@
             <div class="unanswered-view">
                 {{if eq .StudyMode "reading"}}
                     <!-- Reading Mode: User types romaji which converts to hiragana -->
-                    <form action="/answer/pronunciation" method="post" onsubmit="return updateTimeBeforeSubmit(this)">
+                    <form action="/answer/pronunciation" method="post" onsubmit="return validateAndSubmit(this)">
                         <input type="hidden" name="time" value="0">
                         <input type="hidden" name="word-id" value="{{.SRWordID}}">
-                        <input type="text" id="kanji-input" name="answer" placeholder="Enter romaji" oninput="romanjiToHiragana(this)" autocomplete="off" style="font-size: 24px; text-align: center; padding: 10px; width: 300px; border: 2px solid #ccc; border-radius: 5px;">
+                        <input type="text" id="kanji-input" name="answer" placeholder="Enter romaji" oninput="romanjiToHiragana(this)" autocomplete="off" style="font-size: 24px; text-align: center; padding: 10px; width: 300px; border: 2px solid #ccc; border-radius: 5px; transition: border-color 0.3s;">
                         <button type="submit" class="submit-btn" style="margin-top: 20px; padding: 15px 30px; font-size: 18px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">Submit Answer</button>
                     </form>
                     <script src="/static/js/romajiToHiragana.js"></script>
                 {{else}}
                     <!-- Meaning Mode: User types English definition -->
-                    <form action="/answer/meaning" method="post" onsubmit="return updateTimeBeforeSubmit(this)">
+                    <form action="/answer/meaning" method="post" onsubmit="return validateAndSubmit(this)">
                         <input type="hidden" name="time" value="0">
                         <input type="hidden" name="word-id" value="{{.SRWordID}}">
-                        <input type="text" id="meaning-input" name="answer" placeholder="Enter English meaning" autocomplete="off" style="font-size: 24px; text-align: center; padding: 10px; width: 300px; border: 2px solid #ccc; border-radius: 5px;">
+                        <input type="text" id="meaning-input" name="answer" placeholder="Enter English meaning" autocomplete="off" style="font-size: 24px; text-align: center; padding: 10px; width: 300px; border: 2px solid #ccc; border-radius: 5px; transition: border-color 0.3s;">
                         <button type="submit" class="submit-btn" style="margin-top: 20px; padding: 15px 30px; font-size: 18px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">Submit Answer</button>
                     </form>
                 {{end}}
@@ -70,5 +70,90 @@
         {{end}}
     {{end}}
 </div>
+
+<style>
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+    20%, 40%, 60%, 80% { transform: translateX(10px); }
+}
+
+.shake {
+    animation: shake 0.5s;
+    border-color: #f44336 !important;
+}
+
+.error-message {
+    color: #f44336;
+    font-size: 16px;
+    margin-top: 10px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.error-message.show {
+    opacity: 1;
+}
+</style>
+
+<script>
+// Validate form before submission
+function validateAndSubmit(form) {
+    const answerInput = form.querySelector('input[name="answer"]');
+    const answer = answerInput.value.trim();
+    
+    if (answer === '') {
+        // Shake the input box
+        answerInput.classList.add('shake');
+        answerInput.style.borderColor = '#f44336';
+        
+        // Show error message if it doesn't exist
+        let errorMsg = form.querySelector('.error-message');
+        if (!errorMsg) {
+            errorMsg = document.createElement('div');
+            errorMsg.className = 'error-message';
+            errorMsg.textContent = 'Please enter an answer';
+            answerInput.parentElement.appendChild(errorMsg);
+        }
+        errorMsg.classList.add('show');
+        
+        // Remove shake animation after it completes
+        setTimeout(() => {
+            answerInput.classList.remove('shake');
+        }, 500);
+        
+        // Hide error message and reset border after 2 seconds
+        setTimeout(() => {
+            errorMsg.classList.remove('show');
+            answerInput.style.borderColor = '#ccc';
+        }, 2000);
+        
+        // Focus back on the input
+        answerInput.focus();
+        
+        return false; // Prevent form submission
+    }
+    
+    // If validation passes, update time before submit
+    return updateTimeBeforeSubmit(form);
+}
+
+// Autofocus input field on page load
+document.addEventListener('DOMContentLoaded', function() {
+    // Try to focus the reading input
+    const readingInput = document.getElementById('kanji-input');
+    if (readingInput) {
+        readingInput.focus();
+        return;
+    }
+    
+    // Try to focus the meaning input
+    const meaningInput = document.getElementById('meaning-input');
+    if (meaningInput) {
+        meaningInput.focus();
+        return;
+    }
+});
+</script>
 {{end}}
 

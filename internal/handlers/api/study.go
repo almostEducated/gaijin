@@ -69,11 +69,25 @@ func (h *StudyHandler) HandleAnswerPronunciation(w http.ResponseWriter, r *http.
 	}
 	knowIt := timeMs < userSettings.SRTimeJapanese
 
-	// TODO: Implement SR update logic based on isCorrect and knowIt
-	fmt.Printf("Reading answer: %s, correct: %v, expected: %s, time: %dms, knowIt: %v\n", answer, isCorrect, word.Furigana, timeMs, knowIt)
+	// If correct AND fast (knowIt), auto-rate as 5 and move to next word
+	if isCorrect && knowIt {
+		err = h.db.UpdateSRWord(srID, 5)
+		if err != nil {
+			http.Error(w, "Failed to update SR: "+err.Error(), http.StatusInternalServerError)
+			return
+		}
+		// Redirect back to study page (will load next word)
+		http.Redirect(w, r, "/study", http.StatusSeeOther)
+		return
+	}
 
-	// Redirect back to study page (will load next word)
-	http.Redirect(w, r, "/study", http.StatusSeeOther)
+	// Otherwise, redirect to answer page for manual rating
+	// Pass whether answer was correct for styling purposes
+	correctParam := "false"
+	if isCorrect {
+		correctParam = "true"
+	}
+	http.Redirect(w, r, fmt.Sprintf("/study/answer?sr_id=%d&type=pronunciation&correct=%s&answer=%s", srID, correctParam, answer), http.StatusSeeOther)
 }
 
 func (h *StudyHandler) HandleAnswerMeaning(w http.ResponseWriter, r *http.Request) {
@@ -138,8 +152,73 @@ func (h *StudyHandler) HandleAnswerMeaning(w http.ResponseWriter, r *http.Reques
 	}
 	knowIt := timeMs < userSettings.SRTimeEnglish
 
-	// TODO: Implement SR update logic based on isCorrect and knowIt
-	fmt.Printf("Meaning answer: %s, correct: %v, expected: %s, time: %dms, knowIt: %v\n", answer, isCorrect, word.Definitions, timeMs, knowIt)
+	// If correct AND fast (knowIt), auto-rate as 5 and move to next word
+	if isCorrect && knowIt {
+		err = h.db.UpdateSRWord(srID, 5)
+		if err != nil {
+			http.Error(w, "Failed to update SR: "+err.Error(), http.StatusInternalServerError)
+			return
+		}
+		// Redirect back to study page (will load next word)
+		http.Redirect(w, r, "/study", http.StatusSeeOther)
+		return
+	}
+
+	// Otherwise, redirect to answer page for manual rating
+	// Pass whether answer was correct for styling purposes
+	correctParam := "false"
+	if isCorrect {
+		correctParam = "true"
+	}
+	http.Redirect(w, r, fmt.Sprintf("/study/answer?sr_id=%d&type=meaning&correct=%s&answer=%s", srID, correctParam, answer), http.StatusSeeOther)
+}
+
+// HandleSubmitRating handles the manual quality rating submission (0-5)
+func (h *StudyHandler) HandleSubmitRating(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	userID, err := h.auth.GetCurrentUser(r)
+	if err != nil {
+		http.Error(w, "User not authenticated", http.StatusUnauthorized)
+		return
+	}
+
+	// Verify user owns this SR record
+	srID, err := strconv.Atoi(r.FormValue("sr_id"))
+	if err != nil {
+		http.Error(w, "Failed to parse SR ID: "+err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	// Verify ownership by checking if the SR record belongs to this user
+	var ownerID int
+	query := `SELECT user_id FROM sr WHERE id = $1`
+	err = h.db.DB.QueryRow(query, srID).Scan(&ownerID)
+	if err != nil {
+		http.Error(w, "SR record not found: "+err.Error(), http.StatusNotFound)
+		return
+	}
+	if ownerID != userID {
+		http.Error(w, "Unauthorized access to SR record", http.StatusForbidden)
+		return
+	}
+
+	// Parse quality rating
+	quality, err := strconv.Atoi(r.FormValue("quality"))
+	if err != nil {
+		http.Error(w, "Failed to parse quality: "+err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	// Update SR record with the rating
+	err = h.db.UpdateSRWord(srID, quality)
+	if err != nil {
+		http.Error(w, "Failed to update SR: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
 
 	// Redirect back to study page (will load next word)
 	http.Redirect(w, r, "/study", http.StatusSeeOther)

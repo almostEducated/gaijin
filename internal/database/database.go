@@ -141,14 +141,15 @@ func (db *Database) InitializeTables() error {
 	);`
 
 	// Create a kanji table
-	createKanjiTable := `
-	CREATE TABLE IF NOT EXISTS kanji (
+	createKanjiConfusionTable := `
+	CREATE TABLE IF NOT EXISTS kanji_confusion (
 		id SERIAL PRIMARY KEY,
-		character VARCHAR(10) NOT NULL UNIQUE,
-		meaning VARCHAR(255) NOT NULL,
-		reading VARCHAR(255) NOT NULL,
-		stroke_count INTEGER NOT NULL,
-		grade_level INTEGER,
+		kanji_1 VARCHAR(10) NOT NULL,
+		kanji_2 VARCHAR(10) NOT NULL,
+		word1_id INTEGER NOT NULL,
+		word2_id INTEGER NOT NULL,
+		user_id INTEGER NOT NULL,
+		note TEXT,
 		created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 	);`
 
@@ -203,9 +204,9 @@ func (db *Database) InitializeTables() error {
 	if err != nil {
 		return fmt.Errorf("error creating sr table: %w", err)
 	}
-	_, err = db.DB.Exec(createKanjiTable)
+	_, err = db.DB.Exec(createKanjiConfusionTable)
 	if err != nil {
-		return fmt.Errorf("error creating kanji table: %w", err)
+		return fmt.Errorf("error creating kanji confusion table: %w", err)
 	}
 	_, err = db.DB.Exec(createGrammarTable)
 	if err != nil {
@@ -515,6 +516,52 @@ func (db *Database) UpdateSRWord(srID int, quality int) error {
 	return nil
 }
 
-// TODO: Implement additional database operations
-// - User management
-// - Session storage
+// KanjiConfusionPair represents a pair of visually similar kanji
+type KanjiConfusionPair struct {
+	Kanji1       string
+	Kanji2       string
+	Word1        string
+	Word2        string
+	Furigana1    string
+	Furigana2    string
+	Definitions1 string
+	Definitions2 string
+	Word1ID      int
+	Word2ID      int
+}
+
+// GetRandomKanjiConfusionPair retrieves a random kanji confusion pair for a user
+func (db *Database) GetRandomKanjiConfusionPair(userID int) (*KanjiConfusionPair, error) {
+	query := `
+		SELECT 
+			kc.kanji_1, kc.kanji_2,
+			w1.word, w2.word,
+			w1.furigana, w2.furigana,
+			w1.definitions, w2.definitions,
+			w1.id, w2.id
+		FROM kanji_confusion kc
+		JOIN words w1 ON kc.word1_id = w1.id
+		JOIN words w2 ON kc.word2_id = w2.id
+		WHERE kc.user_id = $1
+		ORDER BY RANDOM()
+		LIMIT 1
+	`
+
+	var pair KanjiConfusionPair
+	err := db.DB.QueryRow(query, userID).Scan(
+		&pair.Kanji1, &pair.Kanji2,
+		&pair.Word1, &pair.Word2,
+		&pair.Furigana1, &pair.Furigana2,
+		&pair.Definitions1, &pair.Definitions2,
+		&pair.Word1ID, &pair.Word2ID,
+	)
+
+	if err == sql.ErrNoRows {
+		return nil, nil // No pairs found
+	}
+	if err != nil {
+		return nil, fmt.Errorf("failed to get confusion pair: %w", err)
+	}
+
+	return &pair, nil
+}

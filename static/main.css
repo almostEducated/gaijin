@@ -119,7 +119,7 @@ body {
     border-radius: 20px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(10px);
-    max-width: 600px;
+    max-width: 1200px;
     width: 90%;
 }
 
@@ -385,4 +385,205 @@ body {
     background: linear-gradient(135deg, rgba(250, 112, 154, 0.1) 0%, rgba(254, 225, 64, 0.1) 100%);
     border: 3px solid #fa709a;
     box-shadow: 0 4px 15px rgba(250, 112, 154, 0.2);
+}
+
+/* Verb Conjugation Grid Styles */
+.control-buttons-table {
+    border-collapse: collapse;
+    margin: 0 auto;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.control-buttons-table thead {
+    background: #333;
+    color: white;
+}
+
+.control-buttons-table th {
+    padding: 12px 20px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+    border: 1px solid #444;
+}
+
+.control-buttons-table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+    background: #f8f9fa;
+}
+
+.control-buttons-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.conjugation-control-btn {
+    padding: 10px 20px;
+    font-size: 14px;
+    background: #f8f9fa;
+    color: #333;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 100%;
+    min-width: 120px;
+}
+
+.conjugation-control-btn.active {
+    background: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.conjugation-control-btn:hover {
+    background: #e9ecef;
+}
+
+.conjugation-control-btn.active:hover {
+    background: #0056b3;
+}
+
+.conjugation-grid-container {
+    display: grid;
+    grid-template-columns: 150px 140px repeat(4, 140px);
+    gap: 2px;
+    background: #ddd;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.grid-header-row {
+    display: contents;
+}
+
+.grid-header-cell {
+    background: #333;
+    color: white;
+    padding: 12px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.grid-row {
+    display: contents;
+}
+
+.grid-english-cell {
+    background: #f0f0f0;
+    padding: 15px 10px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-style: italic;
+    color: #555;
+}
+
+.grid-label-cell {
+    background: #e9ecef;
+    padding: 15px 10px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.grid-cell {
+    background: white;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50px;
+    font-size: 16px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.grid-cell:hover {
+    background: #f0f0f0;
+    transform: scale(1.05);
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 30px;
+    border: 1px solid #888;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 800px;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.modal-close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    cursor: pointer;
+}
+
+.modal-close:hover,
+.modal-close:focus {
+    color: #000;
+}
+
+#conjugationTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#conjugationTable th {
+    background: #e9ecef;
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+    font-weight: 600;
+}
+
+#conjugationTable td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+}
+
+#conjugationTable tbody tr:nth-child(6) {
+    border-top: 2px solid #333;
+}
+
+#conjugationTable tbody tr:nth-child(6) td {
+    padding-top: 20px;
 }

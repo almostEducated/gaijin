@@ -12,30 +12,32 @@ import (
 )
 
 type Router struct {
-	Mux             *http.ServeMux
-	DB              *database.Database
-	auth            *auth.Auth
-	logger          *Logger
-	authHandler     *handlers.AuthHandler
-	pageHandler     *handlers.PageHandler
-	studyHandler    *api.StudyHandler
-	jlptHandler     *api.JLPTHandler
-	settingsHandler *api.SettingsHandler
-	verbHandler     *api.VerbHandler
+	Mux                   *http.ServeMux
+	DB                    *database.Database
+	auth                  *auth.Auth
+	logger                *Logger
+	authHandler           *handlers.AuthHandler
+	pageHandler           *handlers.PageHandler
+	studyHandler          *api.StudyHandler
+	jlptHandler           *api.JLPTHandler
+	settingsHandler       *api.SettingsHandler
+	verbHandler           *api.VerbHandler
+	kanjiConfusionHandler *api.KanjiConfusionHandler
 }
 
 func New(db *database.Database) *Router {
 	authService := auth.New(db)
 	return &Router{
-		Mux:             http.NewServeMux(),
-		auth:            authService,
-		logger:          NewLogger(),
-		authHandler:     handlers.NewAuthHandler(db, authService),
-		pageHandler:     handlers.NewPageHandler(db, authService),
-		studyHandler:    api.NewStudyHandler(db, authService),
-		jlptHandler:     api.NewJLPTHandler(db),
-		settingsHandler: api.NewSettingsHandler(db, authService),
-		verbHandler:     api.NewVerbHandler(db),
+		Mux:                   http.NewServeMux(),
+		auth:                  authService,
+		logger:                NewLogger(),
+		authHandler:           handlers.NewAuthHandler(db, authService),
+		pageHandler:           handlers.NewPageHandler(db, authService),
+		studyHandler:          api.NewStudyHandler(db, authService),
+		jlptHandler:           api.NewJLPTHandler(db),
+		settingsHandler:       api.NewSettingsHandler(db, authService),
+		verbHandler:           api.NewVerbHandler(db),
+		kanjiConfusionHandler: api.NewKanjiConfusionHandler(db, authService),
 	}
 }
 
@@ -101,6 +103,7 @@ func (r *Router) SetupRoutes() {
 
 	// Page routes
 	r.Mux.HandleFunc("/study", r.logger.Middleware(r.auth.Middleware(r.pageHandler.HandleStudy)))
+	r.Mux.HandleFunc("/visual-confusion", r.logger.Middleware(r.auth.Middleware(r.pageHandler.HandleVisualConfusion)))
 	r.Mux.HandleFunc("/profile", r.logger.Middleware(r.auth.Middleware(r.pageHandler.HandleProfile)))
 
 	// Study routes
@@ -111,6 +114,10 @@ func (r *Router) SetupRoutes() {
 
 	// Settings routes
 	r.Mux.HandleFunc("/api/settings", r.logger.Middleware(r.auth.Middleware(r.settingsHandler.HandleUpdateSettings)))
+
+	// Kanji confusion routes
+	r.Mux.HandleFunc("/api/similar-kanji", r.logger.Middleware(r.auth.Middleware(r.kanjiConfusionHandler.HandleGetSimilarKanji)))
+	r.Mux.HandleFunc("/api/link-kanji", r.logger.Middleware(r.auth.Middleware(r.kanjiConfusionHandler.HandleLinkKanji)))
 
 	// Verb conjugation routes (public - no auth required)
 	r.Mux.HandleFunc("/api/verb/conjugate", r.logger.Middleware(r.verbHandler.HandleConjugate))

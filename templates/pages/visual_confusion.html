@@ -1,0 +1,179 @@
+{{define "content"}}
+<div class="container" style="max-width: 900px; margin: 0 auto; padding: 20px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+        <h1>Visual Confusion Practice</h1>
+        <a href="/study" class="back-button">← Back to Study</a>
+    </div>
+
+    {{if .NoPairs}}
+    <div class="no-pairs-message" style="text-align: center; padding: 60px 20px;">
+        <p style="font-size: 24px; margin-bottom: 16px;">📝 No Visual Confusion Pairs Yet</p>
+        <p style="font-size: 16px; opacity: 0.7; margin-bottom: 30px;">
+            Link similar kanji when you get answers wrong to practice distinguishing them.
+        </p>
+        <a href="/study" style="display: inline-block; padding: 12px 24px; background: #1976d2; color: white; text-decoration: none; border-radius: 8px;">
+            Start Studying
+        </a>
+    </div>
+    {{else}}
+    
+    <div style="margin-bottom: 30px;">
+        <p style="font-size: 18px; font-weight: bold; margin-bottom: 10px;">Can you tell these apart?</p>
+        <p style="font-size: 14px; opacity: 0.7;">Match the correct pronunciation and meaning to each kanji.</p>
+    </div>
+
+    <div class="kanji-pair-container" style="display: flex; gap: 40px; justify-content: center; margin-bottom: 40px;">
+        <!-- Kanji 1 -->
+        <div class="kanji-card" data-kanji="1" style="flex: 1; padding: 30px; border: 3px solid #1976d2; border-radius: 12px; background: white; text-align: center; min-height: 200px;">
+            <div style="font-size: 80px; font-weight: bold; margin-bottom: 20px;">{{.Kanji1}}</div>
+            <div class="answer-inputs">
+                <input type="text" id="reading1" placeholder="Reading" style="width: 100%; padding: 12px; font-size: 18px; margin-bottom: 12px; border: 2px solid #dee2e6; border-radius: 6px;">
+                <input type="text" id="meaning1" placeholder="Meaning" style="width: 100%; padding: 12px; font-size: 16px; border: 2px solid #dee2e6; border-radius: 6px;">
+            </div>
+            <div id="result1" style="margin-top: 15px; min-height: 40px;"></div>
+        </div>
+
+        <!-- Kanji 2 -->
+        <div class="kanji-card" data-kanji="2" style="flex: 1; padding: 30px; border: 3px solid #7b1fa2; border-radius: 12px; background: white; text-align: center; min-height: 200px;">
+            <div style="font-size: 80px; font-weight: bold; margin-bottom: 20px;">{{.Kanji2}}</div>
+            <div class="answer-inputs">
+                <input type="text" id="reading2" placeholder="Reading" style="width: 100%; padding: 12px; font-size: 18px; margin-bottom: 12px; border: 2px solid #dee2e6; border-radius: 6px;">
+                <input type="text" id="meaning2" placeholder="Meaning" style="width: 100%; padding: 12px; font-size: 16px; border: 2px solid #dee2e6; border-radius: 6px;">
+            </div>
+            <div id="result2" style="margin-top: 15px; min-height: 40px;"></div>
+        </div>
+    </div>
+
+    <div style="text-align: center;">
+        <button onclick="checkAnswers()" class="check-button" style="padding: 16px 40px; font-size: 18px; background: #4caf50; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">
+            Check Answers
+        </button>
+    </div>
+
+    <!-- Hidden data for checking answers -->
+    <div style="display: none;">
+        <input type="hidden" id="correct-reading1" value="{{.Reading1}}">
+        <input type="hidden" id="correct-reading2" value="{{.Reading2}}">
+        <input type="hidden" id="correct-meaning1" value="{{.Meaning1}}">
+        <input type="hidden" id="correct-meaning2" value="{{.Meaning2}}">
+    </div>
+
+    {{end}}
+</div>
+
+<style>
+.back-button {
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid #dee2e6;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #495057;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+.back-button:hover {
+    background: #f8f9fa;
+    border-color: #495057;
+}
+
+input:focus {
+    outline: none;
+    border-color: #1976d2 !important;
+}
+
+.kanji-card.correct {
+    border-color: #4caf50 !important;
+    background: #f1f8e9 !important;
+}
+
+.kanji-card.incorrect {
+    border-color: #d32f2f !important;
+    background: #ffebee !important;
+}
+
+.check-button:hover {
+    background: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.check-button:active {
+    transform: translateY(0);
+}
+</style>
+
+<script>
+let answered = false;
+
+function checkAnswers() {
+    if (answered) {
+        // Already answered, show next or reload
+        window.location.reload();
+        return;
+    }
+
+    const reading1 = document.getElementById('reading1').value.trim();
+    const reading2 = document.getElementById('reading2').value.trim();
+    const meaning1 = document.getElementById('meaning1').value.trim().toLowerCase();
+    const meaning2 = document.getElementById('meaning2').value.trim().toLowerCase();
+
+    const correctReading1 = document.getElementById('correct-reading1').value.trim();
+    const correctReading2 = document.getElementById('correct-reading2').value.trim();
+    const correctMeaning1 = document.getElementById('correct-meaning1').value.trim().toLowerCase();
+    const correctMeaning2 = document.getElementById('correct-meaning2').value.trim().toLowerCase();
+
+    // Check Kanji 1
+    const kanji1Correct = reading1 === correctReading1 && meaning1 === correctMeaning1;
+    const kanji1Card = document.querySelector('[data-kanji="1"]');
+    const result1Div = document.getElementById('result1');
+
+    if (kanji1Correct) {
+        kanji1Card.classList.add('correct');
+        result1Div.innerHTML = '<span style="color: #4caf50; font-weight: bold;">✓ Correct!</span>';
+    } else {
+        kanji1Card.classList.add('incorrect');
+        result1Div.innerHTML = `<span style="color: #d32f2f; font-weight: bold;">✗ Try again</span><br><small style="opacity: 0.7;">Correct: ${correctReading1}, ${correctMeaning1}</small>`;
+    }
+
+    // Check Kanji 2
+    const kanji2Correct = reading2 === correctReading2 && meaning2 === correctMeaning2;
+    const kanji2Card = document.querySelector('[data-kanji="2"]');
+    const result2Div = document.getElementById('result2');
+
+    if (kanji2Correct) {
+        kanji2Card.classList.add('correct');
+        result2Div.innerHTML = '<span style="color: #4caf50; font-weight: bold;">✓ Correct!</span>';
+    } else {
+        kanji2Card.classList.add('incorrect');
+        result2Div.innerHTML = `<span style="color: #d32f2f; font-weight: bold;">✗ Try again</span><br><small style="opacity: 0.7;">Correct: ${correctReading2}, ${correctMeaning2}</small>`;
+    }
+
+    // Disable inputs
+    document.getElementById('reading1').disabled = true;
+    document.getElementById('reading2').disabled = true;
+    document.getElementById('meaning1').disabled = true;
+    document.getElementById('meaning2').disabled = true;
+
+    // Change button text
+    const btn = document.querySelector('.check-button');
+    btn.textContent = 'Next →';
+    btn.style.background = '#1976d2';
+    answered = true;
+}
+
+// Allow Enter key to submit
+document.addEventListener('DOMContentLoaded', function() {
+    const inputs = document.querySelectorAll('input[type="text"]');
+    inputs.forEach(input => {
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkAnswers();
+            }
+        });
+    });
+});
+</script>
+{{end}}
+

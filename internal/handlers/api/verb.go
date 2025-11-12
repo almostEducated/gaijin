@@ -143,7 +143,7 @@ func (h *VerbHandler) validateVerbAndGetDefinition(verb string) (bool, string, e
 
 	query := `
 		SELECT parts_of_speech, definitions FROM words 
-		WHERE word = $1 
+		WHERE word = $1 OR furigana = $1
 		LIMIT 1
 	`
 	var partsOfSpeech, definitions string

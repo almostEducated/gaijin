@@ -42,6 +42,19 @@ type AnswerData struct {
 	Key5        string // keyboard shortcut for rating 5
 }
 
+type VisualConfusionData struct {
+	Title    string
+	NoPairs  bool
+	Kanji1   string
+	Kanji2   string
+	Reading1 string
+	Reading2 string
+	Meaning1 string
+	Meaning2 string
+	Word1    string
+	Word2    string
+}
+
 // MAYBE rename dashboard
 func (h *PageHandler) HandleHome(w http.ResponseWriter, r *http.Request) {
 	// Parse both the base layout and the page content
@@ -299,6 +312,68 @@ func (h *PageHandler) HandleStudyAnswer(w http.ResponseWriter, r *http.Request) 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 
 	err = tmpl.ExecuteTemplate(w, "base", answerData)
+	if err != nil {
+		http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
+
+// HandleVisualConfusion shows a page for practicing visually similar kanji
+func (h *PageHandler) HandleVisualConfusion(w http.ResponseWriter, r *http.Request) {
+	// Get current user
+	userID, err := h.auth.GetCurrentUser(r)
+	if err != nil {
+		http.Error(w, "User not authenticated", http.StatusUnauthorized)
+		return
+	}
+
+	// Get a random kanji confusion pair for this user
+	confusionPair, err := h.db.GetRandomKanjiConfusionPair(userID)
+	if err != nil {
+		http.Error(w, "Failed to get confusion pair: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	tmpl, err := template.ParseFiles(
+		"templates/layout/base.html",
+		"templates/pages/visual_confusion.html",
+	)
+	if err != nil {
+		http.Error(w, "Template error: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// If no pairs exist
+	if confusionPair == nil {
+		visualConfusionData := VisualConfusionData{
+			Title:   "Visual Confusion Practice",
+			NoPairs: true,
+		}
+		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+		err = tmpl.ExecuteTemplate(w, "base", visualConfusionData)
+		if err != nil {
+			http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+			return
+		}
+		return
+	}
+
+	visualConfusionData := VisualConfusionData{
+		Title:    "Visual Confusion Practice",
+		NoPairs:  false,
+		Kanji1:   confusionPair.Kanji1,
+		Kanji2:   confusionPair.Kanji2,
+		Reading1: confusionPair.Furigana1,
+		Reading2: confusionPair.Furigana2,
+		Meaning1: confusionPair.Definitions1,
+		Meaning2: confusionPair.Definitions2,
+		Word1:    confusionPair.Word1,
+		Word2:    confusionPair.Word2,
+	}
+
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+
+	err = tmpl.ExecuteTemplate(w, "base", visualConfusionData)
 	if err != nil {
 		http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
 		return

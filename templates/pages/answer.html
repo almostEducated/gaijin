@@ -22,6 +22,15 @@
     </div>
     {{end}}
     
+    {{if not .IsCorrect}}
+    <div class="similar-kanji-section" style="text-align: center; margin: 20px 0;">
+        <button id="show-similar-kanji-btn" class="similar-kanji-btn" onclick="showSimilarKanji()">
+            🔍 Show Visually Similar Kanji
+        </button>
+        <div id="similar-kanji-list" style="display: none; margin-top: 20px;"></div>
+    </div>
+    {{end}}
+    
     <div class="answer-info" style="margin: 30px auto; padding: 25px; background: rgba(255, 255, 255, 0.9); border-radius: 8px; max-width: 600px;">
         {{if eq .Type "pronunciation"}}
             <p style="font-size: 32px; margin-bottom: 10px;"><strong>Correct Answer:</strong></p>
@@ -137,6 +146,54 @@
     background-color: #f3e5f5;
     color: #7b1fa2;
 }
+
+.similar-kanji-btn {
+    padding: 12px 24px;
+    font-size: 16px;
+    border: 2px solid #1976d2;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #e3f2fd;
+    color: #1976d2;
+    transition: all 0.2s;
+    font-weight: bold;
+}
+
+.similar-kanji-btn:hover {
+    background-color: #1976d2;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+}
+
+.kanji-suggestion {
+    display: inline-block;
+    margin: 10px;
+    padding: 15px 20px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.kanji-suggestion:hover {
+    border-color: #1976d2;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.kanji-char {
+    font-size: 36px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.kanji-info {
+    font-size: 14px;
+    opacity: 0.8;
+}
 </style>
 
 <script>
@@ -210,6 +267,75 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+// Function to show similar kanji
+function showSimilarKanji() {
+    const srID = {{.SRID}};
+    const btn = document.getElementById('show-similar-kanji-btn');
+    const list = document.getElementById('similar-kanji-list');
+    
+    // Fetch similar kanji from API
+    fetch(`/api/similar-kanji?sr_id=${srID}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                list.innerHTML = `<p style="color: #d32f2f;">${data.error}</p>`;
+                return;
+            }
+            
+            if (data.kanji.length === 0) {
+                list.innerHTML = `<p style="opacity: 0.7;">No visually similar kanji found. Would you like to add some?</p>`;
+                return;
+            }
+            
+            let html = '<p style="margin-bottom: 15px; font-weight: bold;">Click to link this kanji with similar ones:</p>';
+            html += '<div style="display: flex; flex-wrap: wrap; justify-content: center;">';
+            
+            data.kanji.forEach(item => {
+                html += `
+                    <div class="kanji-suggestion" onclick="linkKanji('${item.kanji}', ${item.word_id}, '${item.word}', '${item.furigana}')">
+                        <span class="kanji-char">${item.kanji}</span>
+                        <span class="kanji-info">${item.word}</span>
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            list.innerHTML = html;
+            list.style.display = 'block';
+            btn.style.display = 'none';
+        })
+        .catch(err => {
+            console.error('Error fetching similar kanji:', err);
+            list.innerHTML = `<p style="color: #d32f2f;">Error loading similar kanji</p>`;
+        });
+}
+
+// Function to link two kanji together
+function linkKanji(similarKanji, similarWordId, similarWord, similarFurigana) {
+    const srID = {{.SRID}};
+    
+    fetch('/api/link-kanji', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `sr_id=${srID}&similar_kanji=${encodeURIComponent(similarKanji)}&similar_word_id=${similarWordId}&similar_word=${encodeURIComponent(similarWord)}&similar_furigana=${encodeURIComponent(similarFurigana)}`
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('✅ Kanji linked successfully! This pair will appear in visual confusion practice.');
+                document.getElementById('similar-kanji-list').style.display = 'none';
+            } else {
+                alert('Error: ' + (data.error || 'Failed to link kanji'));
+            }
+        })
+        .catch(err => {
+            console.error('Error linking kanji:', err);
+            alert('Error linking kanji');
+        });
+}
 </script>
 {{end}}
 

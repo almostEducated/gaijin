@@ -69,6 +69,12 @@ func (h *StudyHandler) HandleAnswerPronunciation(w http.ResponseWriter, r *http.
 	}
 	knowIt := timeMs < userSettings.SRTimeJapanese
 
+	// Get return URL (default to /study if not provided)
+	returnURL := r.FormValue("return-url")
+	if returnURL == "" {
+		returnURL = "/study"
+	}
+
 	// If correct AND fast (knowIt), auto-rate as 5 and move to next word
 	if isCorrect && knowIt {
 		err = h.db.UpdateSRWord(srID, 5)
@@ -77,7 +83,7 @@ func (h *StudyHandler) HandleAnswerPronunciation(w http.ResponseWriter, r *http.
 			return
 		}
 		// Redirect back to study page (will load next word)
-		http.Redirect(w, r, "/study", http.StatusSeeOther)
+		http.Redirect(w, r, returnURL, http.StatusSeeOther)
 		return
 	}
 
@@ -87,7 +93,7 @@ func (h *StudyHandler) HandleAnswerPronunciation(w http.ResponseWriter, r *http.
 	if isCorrect {
 		correctParam = "true"
 	}
-	http.Redirect(w, r, fmt.Sprintf("/study/answer?sr_id=%d&type=pronunciation&correct=%s&answer=%s", srID, correctParam, answer), http.StatusSeeOther)
+	http.Redirect(w, r, fmt.Sprintf("/study/answer?sr_id=%d&type=pronunciation&correct=%s&answer=%s&return-url=%s", srID, correctParam, answer, returnURL), http.StatusSeeOther)
 }
 
 func (h *StudyHandler) HandleAnswerMeaning(w http.ResponseWriter, r *http.Request) {
@@ -152,6 +158,12 @@ func (h *StudyHandler) HandleAnswerMeaning(w http.ResponseWriter, r *http.Reques
 	}
 	knowIt := timeMs < userSettings.SRTimeEnglish
 
+	// Get return URL (default to /study if not provided)
+	returnURL := r.FormValue("return-url")
+	if returnURL == "" {
+		returnURL = "/study"
+	}
+
 	// If correct AND fast (knowIt), auto-rate as 5 and move to next word
 	if isCorrect && knowIt {
 		err = h.db.UpdateSRWord(srID, 5)
@@ -160,7 +172,7 @@ func (h *StudyHandler) HandleAnswerMeaning(w http.ResponseWriter, r *http.Reques
 			return
 		}
 		// Redirect back to study page (will load next word)
-		http.Redirect(w, r, "/study", http.StatusSeeOther)
+		http.Redirect(w, r, returnURL, http.StatusSeeOther)
 		return
 	}
 
@@ -170,7 +182,7 @@ func (h *StudyHandler) HandleAnswerMeaning(w http.ResponseWriter, r *http.Reques
 	if isCorrect {
 		correctParam = "true"
 	}
-	http.Redirect(w, r, fmt.Sprintf("/study/answer?sr_id=%d&type=meaning&correct=%s&answer=%s", srID, correctParam, answer), http.StatusSeeOther)
+	http.Redirect(w, r, fmt.Sprintf("/study/answer?sr_id=%d&type=meaning&correct=%s&answer=%s&return-url=%s", srID, correctParam, answer, returnURL), http.StatusSeeOther)
 }
 
 // HandleSubmitRating handles the manual quality rating submission (0-5)
@@ -220,6 +232,12 @@ func (h *StudyHandler) HandleSubmitRating(w http.ResponseWriter, r *http.Request
 		return
 	}
 
+	// Get return URL from query params (default to /study if not provided)
+	returnURL := r.FormValue("return-url")
+	if returnURL == "" {
+		returnURL = "/study"
+	}
+
 	// Redirect back to study page (will load next word)
-	http.Redirect(w, r, "/study", http.StatusSeeOther)
+	http.Redirect(w, r, returnURL, http.StatusSeeOther)
 }

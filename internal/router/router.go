@@ -103,6 +103,7 @@ func (r *Router) SetupRoutes() {
 
 	// Page routes
 	r.Mux.HandleFunc("/study", r.logger.Middleware(r.auth.Middleware(r.pageHandler.HandleStudy)))
+	r.Mux.HandleFunc("/study/adverbs", r.logger.Middleware(r.auth.Middleware(r.pageHandler.HandleStudyAdverbs)))
 	r.Mux.HandleFunc("/visual-confusion", r.logger.Middleware(r.auth.Middleware(r.pageHandler.HandleVisualConfusion)))
 	r.Mux.HandleFunc("/profile", r.logger.Middleware(r.auth.Middleware(r.pageHandler.HandleProfile)))
 

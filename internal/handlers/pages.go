@@ -23,6 +23,7 @@ type StudyData struct {
 	Answered    bool
 	NoWords     bool   // When user has no words due for review
 	StudyMode   string // "reading" or "meaning"
+	ReturnURL   string // URL to return to after answering (e.g., "/study" or "/study/adverbs")
 }
 
 type AnswerData struct {
@@ -34,6 +35,7 @@ type AnswerData struct {
 	Type        string // "pronunciation" or "meaning"
 	IsCorrect   bool   // whether the user's answer was correct
 	UserAnswer  string // the user's actual answer
+	ReturnURL   string // URL to return to after rating (e.g., "/study" or "/study/adverbs")
 	Key0        string // keyboard shortcut for rating 0
 	Key1        string // keyboard shortcut for rating 1
 	Key2        string // keyboard shortcut for rating 2
@@ -208,6 +210,95 @@ func (h *PageHandler) HandleStudy(w http.ResponseWriter, r *http.Request) {
 		Answered:    false,
 		NoWords:     false,
 		StudyMode:   studyMode,
+		ReturnURL:   "/study",
+	}
+
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+
+	// Execute the "base" template which will include the "content" template
+	err = tmpl.ExecuteTemplate(w, "base", studyData)
+	if err != nil {
+		http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
+
+// HandleStudyAdverbs handles the adverb-specific study page
+func (h *PageHandler) HandleStudyAdverbs(w http.ResponseWriter, r *http.Request) {
+	// Get current user
+	userID, err := h.auth.GetCurrentUser(r)
+	if err != nil {
+		http.Error(w, "User not authenticated", http.StatusUnauthorized)
+		return
+	}
+
+	// Check if user has any SR words
+	hasWords, err := h.db.HasUserSRWords(userID)
+	if err != nil {
+		http.Error(w, "Database error: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// If user has no SR words, initialize with Level 5
+	if !hasWords {
+		err = h.db.InitializeUserSRWords(userID, 5)
+		if err != nil {
+			http.Error(w, "Failed to initialize study words: "+err.Error(), http.StatusInternalServerError)
+			return
+		}
+	}
+
+	// Get the next adverb word to study
+	srWord, err := h.db.GetNextSRWordAdverbs(userID)
+	if err != nil {
+		http.Error(w, "Failed to get study word: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	tmpl, err := template.ParseFiles(
+		"templates/layout/base.html",
+		"templates/pages/study.html",
+	)
+	if err != nil {
+		http.Error(w, "Template error: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// Check if there are no words due for review
+	if srWord == nil {
+		studyData := StudyData{
+			Title:     "Study Adverbs",
+			NoWords:   true,
+			StudyMode: "",
+		}
+		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+		err = tmpl.ExecuteTemplate(w, "base", studyData)
+		if err != nil {
+			http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+			return
+		}
+		return
+	}
+
+	// Map SR type to study mode
+	// "japanese pronunciation" -> "reading"
+	// "english meaning" -> "meaning"
+	studyMode := "reading"
+	if srWord.Type == "english meaning" {
+		studyMode = "meaning"
+	}
+
+	studyData := StudyData{
+		Title:       "Study Adverbs",
+		SRWordID:    srWord.SRID,
+		KanjiWord:   srWord.Word.Word,
+		Furigana:    srWord.Word.Furigana,
+		Romaji:      srWord.Word.Romaji,
+		Definitions: srWord.Word.Definitions,
+		Answered:    false,
+		NoWords:     false,
+		StudyMode:   studyMode,
+		ReturnURL:   "/study/adverbs",
 	}
 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
@@ -255,6 +346,12 @@ func (h *PageHandler) HandleStudyAnswer(w http.ResponseWriter, r *http.Request) 
 	// Get the user's answer
 	userAnswer := r.URL.Query().Get("answer")
 
+	// Get return URL (default to /study if not provided)
+	returnURL := r.URL.Query().Get("return-url")
+	if returnURL == "" {
+		returnURL = "/study"
+	}
+
 	// Get user settings for keyboard shortcuts
 	userSettings, err := h.db.GetUserSettings(userID)
 	if err != nil {
@@ -301,6 +398,7 @@ func (h *PageHandler) HandleStudyAnswer(w http.ResponseWriter, r *http.Request) 
 		Type:        studyType,
 		IsCorrect:   isCorrect,
 		UserAnswer:  userAnswer,
+		ReturnURL:   returnURL,
 		Key0:        "0", // Default for now, can be made configurable later
 		Key1:        userSettings.Key1,
 		Key2:        userSettings.Key2,

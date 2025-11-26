@@ -355,6 +355,72 @@ func (db *Database) GetNextSRWord(userID int) (*SRWord, error) {
 	return &srWord, nil
 }
 
+// GetNextSRWordAdverbs retrieves the next adverb word to study for a user (words due for review)
+// It filters words where "adverb" appears in the parts_of_speech column (semicolon-separated)
+// It considers user settings to skip pronunciation study for hiragana_only words if ShowHiraganaMostly is disabled
+func (db *Database) GetNextSRWordAdverbs(userID int) (*SRWord, error) {
+	// First, get user settings to check ShowHiraganaMostly preference
+	userSettings, err := db.GetUserSettings(userID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get user settings: %w", err)
+	}
+
+	// Build query with conditional filtering based on ShowHiraganaMostly setting
+	// Filter for adverbs by checking if "adverb" appears in the semicolon-separated parts_of_speech
+	var query string
+	if userSettings.ShowHiraganaMostly {
+		// Show all words including pronunciation for hiragana_only words
+		query = `
+			SELECT 
+				sr.id, sr.user_id, sr.word_id, sr.repetitions, sr.ef, sr.interval, sr.type,
+				sr.last_reviewed, sr.next_review,
+				w.id, w.word, w.furigana, w.romaji, w.level, w.definitions, w.parts_of_speech, w.hiragana_only, w.created_at
+			FROM sr
+			JOIN words w ON sr.word_id = w.id
+			WHERE sr.user_id = $1 
+				AND sr.next_review <= CURRENT_TIMESTAMP
+				AND w.parts_of_speech IS NOT NULL
+				AND ((';' || w.parts_of_speech || ';') LIKE '%;adverb;%')
+			ORDER BY sr.next_review ASC
+			LIMIT 1
+		`
+	} else {
+		// Skip pronunciation study for hiragana_only words
+		query = `
+			SELECT 
+				sr.id, sr.user_id, sr.word_id, sr.repetitions, sr.ef, sr.interval, sr.type,
+				sr.last_reviewed, sr.next_review,
+				w.id, w.word, w.furigana, w.romaji, w.level, w.definitions, w.parts_of_speech, w.hiragana_only, w.created_at
+			FROM sr
+			JOIN words w ON sr.word_id = w.id
+			WHERE sr.user_id = $1 
+				AND sr.next_review <= CURRENT_TIMESTAMP
+				AND NOT (w.hiragana_only = TRUE AND sr.type = 'japanese pronunciation')
+				AND w.parts_of_speech IS NOT NULL
+				AND ((';' || w.parts_of_speech || ';') LIKE '%;adverb;%')
+			ORDER BY sr.next_review ASC
+			LIMIT 1
+		`
+	}
+
+	var srWord SRWord
+	err = db.DB.QueryRow(query, userID).Scan(
+		&srWord.SRID, &srWord.UserID, &srWord.WordID, &srWord.Repetitions,
+		&srWord.EF, &srWord.Interval, &srWord.Type, &srWord.LastReviewed, &srWord.NextReview,
+		&srWord.Word.ID, &srWord.Word.Word, &srWord.Word.Furigana, &srWord.Word.Romaji,
+		&srWord.Word.Level, &srWord.Word.Definitions, &srWord.Word.PartsOfSpeech, &srWord.Word.HiraganaOnly, &srWord.Word.CreatedAt,
+	)
+
+	if err == sql.ErrNoRows {
+		return nil, nil // No words due for review
+	}
+	if err != nil {
+		return nil, fmt.Errorf("failed to get next SR adverb word: %w", err)
+	}
+
+	return &srWord, nil
+}
+
 func (db *Database) LookupWordBySRId(srID int) (*Word, error) {
 	query := `
 	SELECT w.id, w.word, w.furigana, w.romaji, w.level, w.definitions, w.parts_of_speech, w.hiragana_only, w.created_at

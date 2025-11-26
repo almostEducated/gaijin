@@ -4,6 +4,9 @@
 let currentVerb = '食べる';
 let currentVerbData = null;
 
+// Current selected mood
+let currentMood = 'plain';
+
 // State for control buttons
 const controls = {
     // Voice
@@ -56,7 +59,7 @@ function updateFormLabels() {
     const activeVoice = getActiveVoice();
     const formLabels = {
         'plain': 'Plain',
-        'te': 'T form',
+        'te': 'T Form',
         'volitional': 'Volitional',
         'conditional': 'Conditional',
         'desiderative': 'Desiderative',
@@ -69,16 +72,71 @@ function updateFormLabels() {
         'causative': 'Causative'
     };
     
-    for (const [form, baseLabel] of Object.entries(formLabels)) {
-        const labelElement = document.getElementById(form + 'Label');
-        if (labelElement) {
-            if (activeVoice) {
-                labelElement.textContent = `${voiceNames[activeVoice]} ${baseLabel}`;
-            } else {
-                labelElement.textContent = baseLabel;
-            }
+    // Update the current mood label
+    const labelElement = document.getElementById('currentMoodLabel');
+    if (labelElement) {
+        const baseLabel = formLabels[currentMood] || 'Plain';
+        if (activeVoice) {
+            labelElement.textContent = `${voiceNames[activeVoice]} ${baseLabel}`;
+        } else {
+            labelElement.textContent = baseLabel;
         }
     }
+}
+
+// Toggle mood selection
+function toggleMood(mood) {
+    currentMood = mood;
+    
+    // Update button states
+    const moodButtons = ['plain', 'te', 'volitional', 'conditional', 'desiderative', 'deontic', 'imperative'];
+    moodButtons.forEach(m => {
+        const btn = document.getElementById(m + 'MoodBtn');
+        if (btn) {
+            if (m === mood) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        }
+    });
+    
+    // Update labels and descriptions
+    updateFormLabels();
+    updateMoodDescription();
+    
+    // Update grid cells
+    if (currentVerb && conjugateVerbGlobal) {
+        updateGridCells();
+    }
+}
+
+// Update mood description based on current mood
+function updateMoodDescription() {
+    const descriptions = {
+        'plain': 'I verb',
+        'te': 'be verb-ing',
+        'volitional': 'Let\'s verb',
+        'conditional': 'If I verb',
+        'desiderative': 'I want to verb',
+        'deontic': 'I must verb',
+        'imperative': 'Verb!'
+    };
+    
+    const descriptionElement = document.getElementById('englishDescription');
+    if (descriptionElement) {
+        descriptionElement.textContent = descriptions[currentMood] || 'I verb';
+    }
+    
+    // Update cell onclick handlers
+    const formalities = ['casual', 'standard', 'polite', 'formal'];
+    formalities.forEach(formality => {
+        const cell = document.getElementById(formality + 'Cell');
+        if (cell) {
+            cell.setAttribute('data-form', currentMood);
+            cell.setAttribute('onclick', `openConjugationModal('${currentMood}', '${formality}')`);
+        }
+    });
 }
 
 // Toggle control button
@@ -730,17 +788,14 @@ function convertToMashouForm(verb) {
 
 // Update all grid cells with conjugated forms
 function updateGridCells() {
-    const forms = ['plain', 'te', 'volitional', 'conditional', 'desiderative', 'deontic', 'imperative'];
     const formalities = ['casual', 'standard', 'polite', 'formal'];
 
-    forms.forEach(form => {
-        formalities.forEach(formality => {
-            const cell = document.querySelector(`.grid-row[data-form="${form}"] .grid-cell[data-formality="${formality}"]`);
-            if (cell) {
-                const conjugated = getConjugatedForm(form, formality);
-                cell.textContent = conjugated || '';
-            }
-        });
+    formalities.forEach(formality => {
+        const cell = document.getElementById(formality + 'Cell');
+        if (cell) {
+            const conjugated = getConjugatedForm(currentMood, formality);
+            cell.textContent = conjugated || '';
+        }
     });
 }
 
@@ -752,6 +807,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Load default verb on page load
     if (verbInput.value) {
+        // Initialize mood selection
+        toggleMood('plain');
         updateFormLabels(); // Initialize form labels
         conjugateVerb(verbInput.value);
     }

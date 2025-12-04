@@ -7,42 +7,174 @@ let currentVerbData = null;
 // Current selected mood
 let currentMood = 'plain';
 
+// Global reference to conjugateVerb function (set in DOMContentLoaded)
+let conjugateVerbGlobal = null;
+
 // State for control buttons
 const controls = {
-    // Voice
+    // Person (mutually exclusive)
+    first: false,
+    second: false,
+    third: false,
+    // Voice (mutually exclusive: potential || passive, potential || causative)
     potential: false,
     passive: false,
     causative: false,
-    // Aspect
+    // Aspect (can have multiple)
     continuous: false,
     completion: false,
     resultant: false,
-    // Tense
+    // Tense (mutually exclusive: simple || past)
     simple: false,
     past: false,
+    // Mood (mutually exclusive: plain || te || volitional || imperative || deontic || desiderative)
+    plain: false,
+    te: false,
+    volitional: false,
+    imperative: false,
+    deontic: false,
+    desiderative: false,
+    conditional: false,
     // Other
     negative: false
 };
 
-// Verb examples for the table
-const verbExamples = {
-    irregular: ['ある', 'いる', '行く', 'くる', 'する'],
-    endings: ['い・え　る', 'る', 'う', 'く', 'す', 'つ', 'ぬ', 'ぶ', 'む', 'ぐ']
-};
+// Mode state: 'linguistic' or 'common'
+let currentMode = 'Linguistic';
 
-// Full verb examples matching the endings
-const fullVerbExamples = {
-    'い・え　る': '食べる',
-    'る': '作る',
-    'う': '買う',
-    'く': '歩く',
-    'す': '話す',
-    'つ': '持つ',
-    'ぬ': '死ぬ',
-    'ぶ': '飛ぶ',
-    'む': '飲む',
-    'ぐ': '急ぐ'
-};
+// Constants are now loaded from separate files:
+// - verbConstants.js (verbExamples, fullVerbExamples, endingToIndex, ichidanRoots)
+// - conjugationPatterns.js (conjugationPatterns)
+// - conjugationTranslations.js (conjugationTranslations)
+// - conjugationEndings.js (getConjugationEndingsData function)
+
+// CSV-based conjugation patterns (from Japanese_FULL_map_reorganized.csv for casual)
+// Structure: { construction: { base: string, root: string[], conjugation: string, alts: string[] } }
+// Note: conjugationPatterns is now defined in conjugationPatterns.js
+// conjugationPatterns is loaded from conjugationPatterns.js
+    // Tier 1 - Basic forms
+
+// Get verb ending index (handles ichidan vs godan ru)
+function getVerbEndingIndex(verb) {
+    const lastChar = verb[verb.length - 1];
+    if (lastChar === 'る' && verb.length > 1) {
+        const secondLast = verb[verb.length - 2];
+        // Ichidan verbs end in いる or える sounds
+        if (ichidanRoots[secondLast]) {
+            return 9; // ichidan
+        }
+        return 2; // godan ru
+    }
+    return endingToIndex[lastChar] !== undefined ? endingToIndex[lastChar] : 2;
+}
+
+// Build construction name from active controls
+// CSV column 2 order: tense → negation → voice → aspect → mood
+function getConstructionName() {
+    const parts = [];
+    
+    // Build construction name in the order it appears in CSV column 2:
+    // tense → negation → voice → aspect → mood
+    
+    // 1. TENSE (past or simple present - simple present is default/implied)
+    const isPast = controls.past;
+    
+    // 2. NEGATION
+    const isNegative = controls.negative;
+    
+    // 3. VOICE (potential, passive, causative)
+    const hasPotential = controls.potential;
+    const hasPassive = controls.passive;
+    const hasCausative = controls.causative;
+    
+    // 4. ASPECT (continuous, completion, resultant)
+    const hasContinuous = controls.continuous;
+    const hasCompletion = controls.completion;
+    const hasResultant = controls.resultant;
+    
+    // 5. MOOD (conditional, desiderative, deontic)
+    const hasConditional = controls.conditional;
+    const hasDesiderative = controls.desiderative;
+    const hasDeontic = controls.deontic;
+    
+    // Build name in CSV order: tense → negation → voice → aspect → mood
+    
+    // 1. Start with tense
+    if (isPast) parts.push('past');
+    
+    // 2. Add negation
+    if (isNegative) parts.push('negative');
+    
+    // 3. Add voice (mutually exclusive in practice, but handle combinations from CSV)
+    // Standardize to "causative passive" order when both are present
+    if (hasPotential && hasPassive) {
+        parts.push('potential');
+        parts.push('passive');
+    } else if (hasPotential && hasCausative) {
+        parts.push('potential');
+        parts.push('causative');
+    } else if (hasCausative && hasPassive) {
+        // Always use "causative passive" order for consistency
+        parts.push('causative');
+        parts.push('passive');
+    } else if (hasPotential) {
+        parts.push('potential');
+    } else if (hasPassive) {
+        parts.push('passive');
+    } else if (hasCausative) {
+        parts.push('causative');
+    }
+    
+    // 4. Add aspect (can have multiple, but CSV shows specific combinations)
+    // Note: continuous, completion, resultant use T Form base
+    if (hasCompletion && hasContinuous) {
+        parts.push('completion');
+        parts.push('continuous');
+    } else if (hasCompletion && hasResultant) {
+        parts.push('completion');
+        parts.push('resultant');
+    } else if (hasContinuous && hasResultant) {
+        parts.push('continuous');
+        parts.push('resultant');
+    } else if (hasContinuous) {
+        parts.push('continuous');
+    } else if (hasCompletion) {
+        parts.push('completion');
+    } else if (hasResultant) {
+        parts.push('resultant');
+    }
+    
+    // 5. Add mood (conditional, desiderative, deontic are modifiers)
+    // Note: volitional and imperative are handled separately as base constructions
+    if (hasConditional && hasDesiderative) {
+        parts.push('conditional');
+        parts.push('desiderative');
+    } else if (hasConditional && hasDeontic) {
+        parts.push('conditional');
+        parts.push('deontic');
+    } else if (hasDesiderative) {
+        parts.push('desiderative');
+    } else if (hasDeontic) {
+        parts.push('deontic');
+    } else if (hasConditional) {
+        parts.push('conditional');
+    }
+    
+    // If no modifiers, return basic form
+    if (parts.length === 0) return 'simple present';
+    
+    // Join parts
+    const constructionName = parts.join(' ');
+    
+    // Check if this exact pattern exists, if not try simpler combinations
+    if (conjugationPatterns[constructionName]) {
+        return constructionName;
+    }
+    
+    // Try to find closest match or build from components
+    // For now, return what we have - we'll handle missing patterns in applyConjugationPattern
+    return constructionName;
+}
 
 // Get active voice (potential or causative)
 function getActiveVoice() {
@@ -86,14 +218,84 @@ function updateFormLabels() {
 
 // Toggle mood selection
 function toggleMood(mood) {
-    currentMood = mood;
+    // Handle mutual exclusivity: plain || te || volitional || imperative || deontic || desiderative || conditional
+    const moodButtons = ['plain', 'te', 'volitional', 'conditional', 'desiderative', 'deontic', 'imperative'];
+    
+    // Ensure at least one mood is always on (self-check: clicking the only active one keeps it on)
+    const activeMoodCount = moodButtons.reduce((count, m) => count + (controls[m] ? 1 : 0), 0);
+    const isCurrentlyActive = controls[mood];
+    
+    // If this is the only active mood and it's being clicked, keep it on (don't toggle)
+    if (isCurrentlyActive && activeMoodCount === 1) {
+        // Don't toggle - keep it on
+        return;
+    }
+    
+    // If this mood is already active (but not the only one), toggle it off
+    if (controls[mood]) {
+        controls[mood] = false;
+        currentMood = null;
+    } else {
+        // Turn off all other moods
+        moodButtons.forEach(m => {
+            controls[m] = false;
+            const btn = document.getElementById(m + 'MoodBtn');
+            if (btn) btn.classList.remove('active');
+        });
+        // Turn on selected mood
+        controls[mood] = true;
+        currentMood = mood;
+        
+        // Special logic for T form: reset to first person, simple present, and clear voice and aspect
+        if (mood === 'te') {
+            // Reset to first person
+            controls.first = true;
+            controls.second = false;
+            controls.third = false;
+            const firstBtn = document.getElementById('firstPersonBtn');
+            const secondBtn = document.getElementById('secondPersonBtn');
+            const thirdBtn = document.getElementById('thirdPersonBtn');
+            if (firstBtn) firstBtn.classList.add('active');
+            if (secondBtn) secondBtn.classList.remove('active');
+            if (thirdBtn) thirdBtn.classList.remove('active');
+            
+            // Reset to simple present
+            controls.simple = true;
+            controls.past = false;
+            const simpleBtn = document.getElementById('simpleBtn');
+            const pastBtn = document.getElementById('pastBtn');
+            if (simpleBtn) simpleBtn.classList.add('active');
+            if (pastBtn) pastBtn.classList.remove('active');
+            
+            // Clear voice (potential, passive, causative)
+            controls.potential = false;
+            controls.passive = false;
+            controls.causative = false;
+            const potentialBtn = document.getElementById('potentialBtn');
+            const passiveBtn = document.getElementById('passiveBtn');
+            const causativeBtn = document.getElementById('causativeBtn');
+            if (potentialBtn) potentialBtn.classList.remove('active');
+            if (passiveBtn) passiveBtn.classList.remove('active');
+            if (causativeBtn) causativeBtn.classList.remove('active');
+            
+            // Clear aspect (continuous, completion, resultant)
+            controls.continuous = false;
+            controls.completion = false;
+            controls.resultant = false;
+            const continuousBtn = document.getElementById('continuousBtn');
+            const completionBtn = document.getElementById('completionBtn');
+            const resultantBtn = document.getElementById('resultantBtn');
+            if (continuousBtn) continuousBtn.classList.remove('active');
+            if (completionBtn) completionBtn.classList.remove('active');
+            if (resultantBtn) resultantBtn.classList.remove('active');
+        }
+    }
     
     // Update button states
-    const moodButtons = ['plain', 'te', 'volitional', 'conditional', 'desiderative', 'deontic', 'imperative'];
     moodButtons.forEach(m => {
         const btn = document.getElementById(m + 'MoodBtn');
         if (btn) {
-            if (m === mood) {
+            if (controls[m]) {
                 btn.classList.add('active');
             } else {
                 btn.classList.remove('active');
@@ -107,176 +309,670 @@ function toggleMood(mood) {
     
     // Update grid cells
     if (currentVerb && conjugateVerbGlobal) {
+        conjugateVerbGlobal(currentVerb);
+    } else if (currentVerb) {
         updateGridCells();
     }
 }
 
-// Update mood description based on current mood
-function updateMoodDescription() {
-    const descriptions = {
-        'plain': 'I verb',
-        'te': 'be verb-ing',
-        'volitional': 'Let\'s verb',
-        'conditional': 'If I verb',
-        'desiderative': 'I want to verb',
-        'deontic': 'I must verb',
-        'imperative': 'Verb!'
-    };
+// CSV-based translation mappings (from Japanese Conjugation List Translations.csv)
+// Ordered alphabetically
+// Note: conjugationTranslations is now defined in conjugationTranslations.js
+// conjugationTranslations is loaded from conjugationTranslations.js
+
+// Map button combinations to CSV construction names
+function getCSVConstructionName() {
+    const parts = [];
     
-    const descriptionElement = document.getElementById('englishDescription');
-    if (descriptionElement) {
-        descriptionElement.textContent = descriptions[currentMood] || 'I verb';
+    // Determine tense
+    const isPast = controls.past;
+    const isNegative = controls.negative;
+    
+    // Determine voice
+    const hasPotential = controls.potential;
+    const hasPassive = controls.passive;
+    const hasCausative = controls.causative;
+    
+    // Determine aspect
+    const hasContinuous = controls.continuous;
+    const hasCompletion = controls.completion;
+    const hasResultant = controls.resultant;
+    
+    // Determine mood
+    const hasConditional = controls.conditional;
+    const hasDesiderative = controls.desiderative;
+    const hasDeontic = controls.deontic;
+    const hasVolitional = controls.volitional;
+    const hasImperative = controls.imperative;
+    const hasTe = controls.te;
+    
+    // Handle special moods first (imperative, volitional, te-form)
+    if (hasImperative && !hasPotential && !hasPassive && !hasCausative && !hasContinuous && !hasCompletion && !hasResultant && !hasConditional && !hasDesiderative && !hasDeontic) {
+        if (isNegative) {
+            return 'Negative Volitional'; // Note: CSV doesn't have "Negative Imperative", using closest match
+        }
+        return 'Imperative';
     }
     
-    // Update cell onclick handlers
+    if (hasVolitional && !hasPotential && !hasPassive && !hasCausative && !hasContinuous && !hasCompletion && !hasResultant && !hasConditional && !hasDesiderative && !hasDeontic) {
+        if (isNegative) {
+            return 'Negative Volitional';
+        }
+        return 'Volitional';
+    }
+    
+    if (hasTe && !hasContinuous && !hasCompletion && !hasResultant && !hasPotential && !hasPassive && !hasCausative && !hasConditional && !hasDesiderative && !hasDeontic) {
+        return 'T-Form';
+    }
+    
+    // Build construction name in order: tense → negation → voice → aspect → mood
+    // 1. Tense
+    if (isPast) parts.push('Past');
+    
+    // 2. Negation
+    if (isNegative) parts.push('Negative');
+    
+    // 3. Voice (mutually exclusive in practice, but handle combinations)
+    // Standardize to "Causative Passive" order when both are present
+    if (hasCausative && hasPassive) {
+        parts.push('Causative');
+        parts.push('Passive');
+    } else if (hasCausative) {
+        parts.push('Causative');
+    } else if (hasPassive) {
+        parts.push('Passive');
+    } else if (hasPotential) {
+        parts.push('Potential');
+    }
+    
+    // 4. Aspect
+    if (hasCompletion && hasContinuous) {
+        parts.push('Completion');
+        parts.push('Continuous');
+    } else if (hasCompletion) {
+        parts.push('Completion');
+    } else if (hasContinuous) {
+        parts.push('Continuous');
+    } else if (hasResultant) {
+        parts.push('Resultant');
+    }
+    
+    // 5. Mood
+    if (hasConditional) {
+        // CSV has typo "Conditional" but we'll use "Conditional" and search will handle it
+        parts.push('Conditional');
+    } else if (hasDesiderative) {
+        parts.push('Desiderative');
+    } else if (hasDeontic) {
+        parts.push('Deontic');
+    }
+    
+    // If no parts, check if we have a basic mood selected
+    if (parts.length === 0) {
+        // If plain mood with no modifiers, check tense
+        if (currentMood === 'plain' || !currentMood) {
+            if (isPast) {
+                return 'Past';
+            }
+            // No CSV entry for simple present - return empty string to use fallback
+            return '';
+        }
+    }
+    
+    // Join parts with space
+    let constructionName = parts.join(' ');
+    
+    // Handle special cases and typos in CSV
+    // Check for exact match first
+    if (conjugationTranslations[constructionName]) {
+        return constructionName;
+    }
+    
+    // Try variations
+    // Handle "Past Negative" -> "Past-Negative"
+    if (constructionName === 'Past Negative' && !hasPotential && !hasPassive && !hasCausative && !hasContinuous && !hasCompletion && !hasResultant && !hasConditional && !hasDesiderative && !hasDeontic) {
+        return 'Past-Negative';
+    }
+    
+    // Try with "Completion Past Potential" -> "Completion Past Potential"
+    if (constructionName.includes('Completion') && constructionName.includes('Past') && constructionName.includes('Potential')) {
+        return 'Completion Past Potential';
+    }
+    
+    // Fallback: try to find closest match
+    // Remove spaces and try to match
+    const normalizedName = constructionName.replace(/\s+/g, ' ').trim();
+    for (const key in conjugationTranslations) {
+        if (key.replace(/\s+/g, ' ').trim() === normalizedName) {
+            return key;
+        }
+    }
+    
+    // If still no match, return the constructed name (might not be in CSV)
+    return constructionName;
+}
+
+// Update mood description based on current mood
+function updateMoodDescription() {
+    const descriptionElement = document.getElementById('englishDescription');
+    if (descriptionElement) {
+        // Get CSV construction name from current button state
+        const constructionName = getCSVConstructionName();
+        
+        // If empty construction name (plain present with no modifiers), use fallback
+        if (!constructionName || constructionName === '') {
+            descriptionElement.textContent = 'I verb';
+            // Update cell data-form and return
+            const formalities = ['casual', 'standard', 'polite', 'formal'];
+            formalities.forEach(formality => {
+                const cell = document.getElementById(formality + 'Cell');
+                if (cell && currentMood) {
+                    cell.setAttribute('data-form', currentMood);
+                }
+            });
+            return;
+        }
+        
+        // Get translation from CSV mapping
+        let translation = conjugationTranslations[constructionName];
+        
+        // If no translation found, try to clean up the construction name and search again
+        if (!translation) {
+            // Try trimmed version
+            translation = conjugationTranslations[constructionName.trim()];
+        }
+        
+        // If still no translation, try case-insensitive and normalized search
+        if (!translation) {
+            const normalizedName = constructionName.toLowerCase().trim().replace(/\s+/g, ' ');
+            for (const key in conjugationTranslations) {
+                const normalizedKey = key.toLowerCase().trim().replace(/\s+/g, ' ');
+                // Also try replacing "conditional" with "conitional" to handle CSV typo
+                const normalizedNameAlt = normalizedName.replace(/conditional/g, 'conitional');
+                const normalizedKeyAlt = normalizedKey.replace(/conditional/g, 'conitional');
+                if (normalizedKey === normalizedName || normalizedKeyAlt === normalizedNameAlt) {
+                    translation = conjugationTranslations[key];
+                    break;
+                }
+            }
+        }
+        
+        // Clean up the translation (remove extra quotes if present)
+        if (translation) {
+            if (translation.startsWith('"') && translation.endsWith('"')) {
+                translation = translation.slice(1, -1);
+            }
+            
+            // If translation contains multiple options (separated by ", "), show the first one
+            if (translation.includes('", "')) {
+                translation = translation.split('", "')[0].replace(/^"/, '').replace(/"$/, '');
+            }
+        }
+        
+        // Use translation or fallback
+        descriptionElement.textContent = translation || 'I verb';
+    }
+    
+    // Update cell data-form
     const formalities = ['casual', 'standard', 'polite', 'formal'];
     formalities.forEach(formality => {
         const cell = document.getElementById(formality + 'Cell');
-        if (cell) {
+        if (cell && currentMood) {
             cell.setAttribute('data-form', currentMood);
-            cell.setAttribute('onclick', `openConjugationModal('${currentMood}', '${formality}')`);
         }
     });
 }
 
-// Toggle control button
-function toggleControl(controlName) {
-    // Handle mutual exclusivity for voice buttons
-    if (controlName === 'potential' && controls.potential === false) {
-        controls.causative = false; // Turn off causative if potential is being turned on
-        const causativeBtn = document.getElementById('causativeBtn');
-        if (causativeBtn) causativeBtn.classList.remove('active');
-    } else if (controlName === 'causative' && controls.causative === false) {
-        controls.potential = false; // Turn off potential if causative is being turned on
+// Get current person for common mode labels
+function getCurrentPerson() {
+    if (controls.first) return 'I';
+    if (controls.second) return 'You';
+    if (controls.third) return 'They';
+    return 'I'; // default
+}
+
+// Update button labels based on mode
+function updateButtonLabels() {
+    if (currentMode === 'Common') {
+        const person = getCurrentPerson();
+        const isNegative = controls.negative;
+        const isPast = controls.past;
+        
+        // Person buttons
+        const firstBtn = document.getElementById('firstPersonBtn');
+        const secondBtn = document.getElementById('secondPersonBtn');
+        const thirdBtn = document.getElementById('thirdPersonBtn');
+        if (firstBtn) firstBtn.textContent = 'I';
+        if (secondBtn) secondBtn.textContent = 'You';
+        if (thirdBtn) thirdBtn.textContent = 'They';
+        
+        // Voice buttons
         const potentialBtn = document.getElementById('potentialBtn');
-        if (potentialBtn) potentialBtn.classList.remove('active');
+        const passiveBtn = document.getElementById('passiveBtn');
+        const causativeBtn = document.getElementById('causativeBtn');
+        if (potentialBtn) {
+            if (isPast) {
+                potentialBtn.textContent = isNegative ? `[${person}] could not` : `[${person}] could`;
+            } else {
+                potentialBtn.textContent = isNegative ? `[${person}] can not` : `[${person}] can`;
+            }
+        }
+        if (passiveBtn) {
+            if (isPast) {
+                passiveBtn.textContent = isNegative ? 'it did not verb' : 'it verbed';
+            } else {
+                passiveBtn.textContent = isNegative ? 'it does not verb' : 'it verbs';
+            }
+        }
+        if (causativeBtn) {
+            if (isPast) {
+                causativeBtn.textContent = isNegative ? `[${person}] didn't make someone` : `[${person}] made someone`;
+            } else {
+                causativeBtn.textContent = isNegative ? `[${person}] don't make someone` : `[${person}] make someone`;
+            }
+        }
+        
+        // Aspect buttons
+        const continuousBtn = document.getElementById('continuousBtn');
+        const completionBtn = document.getElementById('completionBtn');
+        const resultantBtn = document.getElementById('resultantBtn');
+        if (continuousBtn) {
+            if (isPast) {
+                continuousBtn.textContent = isNegative ? `[${person}] didn't continue -ing` : `[${person}] continued -ing`;
+            } else {
+                continuousBtn.textContent = isNegative ? `[${person}] don't continue -ing` : `[${person}] continue -ing`;
+            }
+        }
+        if (completionBtn) {
+            if (isPast) {
+                completionBtn.textContent = isNegative ? `[${person}] didn't happen to` : `[${person}] happened to`;
+            } else {
+                completionBtn.textContent = isNegative ? `[${person}] happen to not` : `[${person}] happen to`;
+            }
+        }
+        // Resultant uses appropriate verb form based on person, negative, and tense
+        if (resultantBtn) {
+            if (isPast) {
+                if (isNegative) {
+                    if (person === 'I') {
+                        resultantBtn.textContent = '[I was] still not -ing';
+                    } else if (person === 'You') {
+                        resultantBtn.textContent = '[You were] still not -ing';
+                    } else {
+                        resultantBtn.textContent = '[They were] still not -ing';
+                    }
+                } else {
+                    if (person === 'I') {
+                        resultantBtn.textContent = '[I was] still -ing';
+                    } else if (person === 'You') {
+                        resultantBtn.textContent = '[You were] still -ing';
+                    } else {
+                        resultantBtn.textContent = '[They were] still -ing';
+                    }
+                }
+            } else {
+                if (isNegative) {
+                    if (person === 'I') {
+                        resultantBtn.textContent = '[I am] still not -ing';
+                    } else if (person === 'You') {
+                        resultantBtn.textContent = '[You are] still not -ing';
+                    } else {
+                        resultantBtn.textContent = '[They are] still not -ing';
+                    }
+                } else {
+                    if (person === 'I') {
+                        resultantBtn.textContent = '[I am] still -ing';
+                    } else if (person === 'You') {
+                        resultantBtn.textContent = '[You are] still -ing';
+                    } else {
+                        resultantBtn.textContent = '[They are] still -ing';
+                    }
+                }
+            }
+        }
+        
+        // Mood buttons
+        const plainBtn = document.getElementById('plainMoodBtn');
+        const teBtn = document.getElementById('teMoodBtn');
+        const volitionalBtn = document.getElementById('volitionalMoodBtn');
+        const conditionalBtn = document.getElementById('conditionalMoodBtn');
+        const desiderativeBtn = document.getElementById('desiderativeMoodBtn');
+        const deonticBtn = document.getElementById('deonticMoodBtn');
+        const imperativeBtn = document.getElementById('imperativeMoodBtn');
+        if (plainBtn) {
+            if (isPast) {
+                plainBtn.textContent = isNegative ? `[${person}] didn't verb` : `[${person}] verbed`;
+            } else {
+                plainBtn.textContent = isNegative ? `[${person}] don't verb` : `[${person}] verb`;
+            }
+        }
+        if (teBtn) {
+            if (isPast) {
+                teBtn.textContent = isNegative ? `[${person}] didn't verb and...` : `[${person}] verbed and...`;
+            } else {
+                teBtn.textContent = isNegative ? `[${person}] don't verb and...` : `[${person}] verb and...`;
+            }
+        }
+        if (volitionalBtn) {
+            volitionalBtn.textContent = isNegative ? 'let\'s not verb' : 'let\'s verb';
+        }
+        if (conditionalBtn) {
+            if (isPast) {
+                conditionalBtn.textContent = isNegative ? `if [${person}] didn't verb` : `if [${person}] verbed`;
+            } else {
+                conditionalBtn.textContent = isNegative ? `if [${person}] don't verb` : `if [${person}] verb`;
+            }
+        }
+        if (desiderativeBtn) {
+            if (isPast) {
+                desiderativeBtn.textContent = isNegative ? `[${person}] didn't want to verb` : `[${person}] wanted to verb`;
+            } else {
+                desiderativeBtn.textContent = isNegative ? `[${person}] don't want to verb` : `[${person}] want to verb`;
+            }
+        }
+        if (deonticBtn) {
+            deonticBtn.textContent = isNegative ? `[${person}] must not verb` : `[${person}] must verb`;
+        }
+        if (imperativeBtn) {
+            imperativeBtn.textContent = isNegative ? 'don\'t verb!' : 'verb!';
+        }
+    } else {
+        // Linguistic mode - use original labels
+        const firstBtn = document.getElementById('firstPersonBtn');
+        const secondBtn = document.getElementById('secondPersonBtn');
+        const thirdBtn = document.getElementById('thirdPersonBtn');
+        if (firstBtn) firstBtn.textContent = 'First';
+        if (secondBtn) secondBtn.textContent = 'Second';
+        if (thirdBtn) thirdBtn.textContent = 'Third';
+        
+        const potentialBtn = document.getElementById('potentialBtn');
+        const passiveBtn = document.getElementById('passiveBtn');
+        const causativeBtn = document.getElementById('causativeBtn');
+        if (potentialBtn) potentialBtn.textContent = 'Potential';
+        if (passiveBtn) passiveBtn.textContent = 'Passive';
+        if (causativeBtn) causativeBtn.textContent = 'Causative';
+        
+        const continuousBtn = document.getElementById('continuousBtn');
+        const completionBtn = document.getElementById('completionBtn');
+        const resultantBtn = document.getElementById('resultantBtn');
+        if (continuousBtn) continuousBtn.textContent = 'Continuous';
+        if (completionBtn) completionBtn.textContent = 'Completion';
+        if (resultantBtn) resultantBtn.textContent = 'Resultant';
+        
+        const plainBtn = document.getElementById('plainMoodBtn');
+        const teBtn = document.getElementById('teMoodBtn');
+        const volitionalBtn = document.getElementById('volitionalMoodBtn');
+        const conditionalBtn = document.getElementById('conditionalMoodBtn');
+        const desiderativeBtn = document.getElementById('desiderativeMoodBtn');
+        const deonticBtn = document.getElementById('deonticMoodBtn');
+        const imperativeBtn = document.getElementById('imperativeMoodBtn');
+        if (plainBtn) plainBtn.textContent = 'Plain';
+        if (teBtn) teBtn.textContent = 'T Form';
+        if (volitionalBtn) volitionalBtn.textContent = 'Volitional';
+        if (conditionalBtn) conditionalBtn.textContent = 'Conditional';
+        if (desiderativeBtn) desiderativeBtn.textContent = 'Desiderative';
+        if (deonticBtn) deonticBtn.textContent = 'Deontic';
+        if (imperativeBtn) imperativeBtn.textContent = 'Imperative';
+    }
+}
+
+// Toggle between common and linguistic mode
+function toggleMode() {
+    currentMode = currentMode === 'Linguistic' ? 'Common' : 'Linguistic';
+    const modeBtn = document.getElementById('modeToggleBtn');
+    if (modeBtn) {
+        modeBtn.textContent = currentMode;
+    }
+    updateButtonLabels();
+}
+
+// Validate and enforce mutually exclusive combinations
+// Invalid combinations (order matters):
+// 1. Potential + Continuous
+// 2. Completion + Passive + Continuous
+// 3. Completion + Causative-Passive + Continuous
+// 4. Completion + Passive
+// 5. Completion + Causative
+// 6. Completion + Potential + Continuous + Deontic
+function validateControlCombinations() {
+    // Helper to disable a control and update its button
+    function disableControl(controlName) {
+        controls[controlName] = false;
+        const btn = document.getElementById(controlName + 'Btn') || 
+                    document.getElementById(controlName + 'PersonBtn') ||
+                    document.getElementById(controlName + 'MoodBtn');
+        if (btn) {
+            btn.classList.remove('active');
+        }
     }
     
-    controls[controlName] = !controls[controlName];
-    const btn = document.getElementById(controlName + 'Btn');
-    if (controls[controlName]) {
-        btn.classList.add('active');
-    } else {
-        btn.classList.remove('active');
+    // Check rules in order of priority
+    
+    // 4. Completion + Passive (not allowed) - check this first
+    // If both are on, disable passive (completion takes priority)
+    if (controls.completion && controls.passive) {
+        disableControl('passive');
     }
+    
+    // 5. Completion + Causative (not allowed)
+    // If both are on, disable causative (completion takes priority)
+    if (controls.completion && controls.causative) {
+        disableControl('causative');
+    }
+    
+    // 1. Potential + Continuous (not allowed)
+    // Note: This is handled at the toggle level with swap behavior, but kept as a safety net
+    // If both are on, disable continuous (potential takes priority)
+    if (controls.potential && controls.continuous) {
+        disableControl('continuous');
+    }
+    
+    // 2. Completion + Passive + Continuous (not allowed)
+    // If all three are on, disable continuous
+    // Note: This handles the case even if passive was just disabled above
+    if (controls.completion && controls.passive && controls.continuous) {
+        disableControl('continuous');
+    }
+    
+    // 3. Completion + Causative-Passive + Continuous (not allowed)
+    // Causative-Passive means both causative and passive are active
+    // If completion + causative + passive + continuous are all on, disable continuous
+    if (controls.completion && controls.causative && controls.passive && controls.continuous) {
+        disableControl('continuous');
+    }
+    
+    // 6. Completion + Potential + Continuous + Deontic (not allowed)
+    // If all four are on, disable deontic
+    // Note: This can only happen if rule #1 didn't catch it, so we check it
+    if (controls.completion && controls.potential && controls.continuous && controls.deontic) {
+        disableControl('deontic');
+    }
+}
+
+// Toggle control button
+function toggleControl(controlName) {
+    // Handle mutual exclusivity groups
+    if (controlName === 'simple' || controlName === 'past') {
+        // Tense: simple || past
+        // Ensure at least one is always on (self-check: clicking the only active one keeps it on)
+        const activeTenseCount = (controls.simple ? 1 : 0) + (controls.past ? 1 : 0);
+        const isCurrentlyActive = controls[controlName];
+        
+        // If this is the only active button and it's being clicked, keep it on (don't toggle)
+        if (isCurrentlyActive && activeTenseCount === 1) {
+            // Don't toggle - keep it on
+            return;
+        }
+        
+        // Otherwise, normal toggle behavior
+        if (controlName === 'simple' && !controls.simple) {
+            controls.past = false;
+            const pastBtn = document.getElementById('pastBtn');
+            if (pastBtn) pastBtn.classList.remove('active');
+        } else if (controlName === 'past' && !controls.past) {
+            controls.simple = false;
+            const simpleBtn = document.getElementById('simpleBtn');
+            if (simpleBtn) simpleBtn.classList.remove('active');
+        }
+    } else if (controlName === 'first' || controlName === 'second' || controlName === 'third') {
+        // Person: first || second || third
+        // Ensure at least one is always on (self-check: clicking the only active one keeps it on)
+        const activePersonCount = (controls.first ? 1 : 0) + (controls.second ? 1 : 0) + (controls.third ? 1 : 0);
+        const isCurrentlyActive = controls[controlName];
+        
+        // If this is the only active button and it's being clicked, keep it on (don't toggle)
+        if (isCurrentlyActive && activePersonCount === 1) {
+            // Don't toggle - keep it on
+            return;
+        }
+        
+        // Otherwise, normal toggle behavior
+        if (controlName === 'first' && !controls.first) {
+            controls.second = false;
+            controls.third = false;
+            const secondBtn = document.getElementById('secondPersonBtn');
+            const thirdBtn = document.getElementById('thirdPersonBtn');
+            if (secondBtn) secondBtn.classList.remove('active');
+            if (thirdBtn) thirdBtn.classList.remove('active');
+        } else if (controlName === 'second' && !controls.second) {
+            controls.first = false;
+            controls.third = false;
+            const firstBtn = document.getElementById('firstPersonBtn');
+            const thirdBtn = document.getElementById('thirdPersonBtn');
+            if (firstBtn) firstBtn.classList.remove('active');
+            if (thirdBtn) thirdBtn.classList.remove('active');
+        } else if (controlName === 'third' && !controls.third) {
+            controls.first = false;
+            controls.second = false;
+            const firstBtn = document.getElementById('firstPersonBtn');
+            const secondBtn = document.getElementById('secondPersonBtn');
+            if (firstBtn) firstBtn.classList.remove('active');
+            if (secondBtn) secondBtn.classList.remove('active');
+        }
+    } else if (controlName === 'potential') {
+        // potential || passive, potential || causative, potential || continuous
+        // Swap behavior: if turning potential on and continuous is active, swap them
+        if (!controls.potential) {
+            // Turn off mutually exclusive voice buttons
+            controls.passive = false;
+            controls.causative = false;
+            const passiveBtn = document.getElementById('passiveBtn');
+            const causativeBtn = document.getElementById('causativeBtn');
+            if (passiveBtn) passiveBtn.classList.remove('active');
+            if (causativeBtn) causativeBtn.classList.remove('active');
+            
+            // Swap with continuous if it's active
+            if (controls.continuous) {
+                controls.continuous = false;
+                const continuousBtn = document.getElementById('continuousBtn');
+                if (continuousBtn) continuousBtn.classList.remove('active');
+            }
+        }
+    } else if (controlName === 'passive') {
+        // potential || passive
+        // Swap behavior: if turning passive on and potential is active, swap them
+        if (!controls.passive) {
+            controls.potential = false;
+            const potentialBtn = document.getElementById('potentialBtn');
+            if (potentialBtn) potentialBtn.classList.remove('active');
+        }
+    } else if (controlName === 'causative') {
+        // potential || causative
+        // Swap behavior: if turning causative on and potential is active, swap them
+        if (!controls.causative) {
+            controls.potential = false;
+            const potentialBtn = document.getElementById('potentialBtn');
+            if (potentialBtn) potentialBtn.classList.remove('active');
+        }
+    } else if (controlName === 'continuous') {
+        // continuous || resultant, continuous || potential
+        // Swap behavior: if turning continuous on and potential is active, swap them
+        if (!controls.continuous) {
+            // Turn off mutually exclusive aspect button
+            controls.resultant = false;
+            const resultantBtn = document.getElementById('resultantBtn');
+            if (resultantBtn) resultantBtn.classList.remove('active');
+            
+            // Swap with potential if it's active
+            if (controls.potential) {
+                controls.potential = false;
+                const potentialBtn = document.getElementById('potentialBtn');
+                if (potentialBtn) potentialBtn.classList.remove('active');
+            }
+        }
+    } else if (controlName === 'resultant') {
+        // Aspect: continuous || resultant (mutually exclusive, but both can combine with completion)
+        // Swap behavior: if turning resultant on and continuous is active, swap them
+        if (!controls.resultant) {
+            controls.continuous = false;
+            const continuousBtn = document.getElementById('continuousBtn');
+            if (continuousBtn) continuousBtn.classList.remove('active');
+        }
+    }
+    
+    // If T form is active and user is changing any other control (not the te mood button itself),
+    // reset mood to plain form
+    if (controls.te && controlName !== 'te') {
+        // Reset to plain form
+        controls.te = false;
+        controls.plain = true;
+        currentMood = 'plain';
+        
+        // Update mood button states
+        const teBtn = document.getElementById('teMoodBtn');
+        const plainBtn = document.getElementById('plainMoodBtn');
+        if (teBtn) teBtn.classList.remove('active');
+        if (plainBtn) plainBtn.classList.add('active');
+        
+        // Update mood description
+        updateMoodDescription();
+    }
+    
+    // Toggle the control
+    controls[controlName] = !controls[controlName];
+    const btn = document.getElementById(controlName + 'Btn') || 
+                document.getElementById(controlName + 'PersonBtn') ||
+                document.getElementById(controlName + 'MoodBtn');
+    if (btn) {
+        if (controls[controlName]) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    }
+    
+    // Validate and enforce mutually exclusive combinations
+    validateControlCombinations();
     
     // Update form labels
     updateFormLabels();
     
+    // Update English description from CSV
+    updateMoodDescription();
+    
+    // Update button labels if person, negative, or tense changed and in common mode
+    if (((controlName === 'first' || controlName === 'second' || controlName === 'third' || controlName === 'negative' || controlName === 'simple' || controlName === 'past') && currentMode === 'Common')) {
+        updateButtonLabels();
+    }
+    
     // Re-conjugate the verb if we have one
-    if (currentVerb && conjugateVerbGlobal) {
-        conjugateVerbGlobal(currentVerb);
+    if (currentVerb) {
+        if (conjugateVerbGlobal) {
+            conjugateVerbGlobal(currentVerb);
+        } else {
+            updateGridCells();
+        }
     }
 }
 
 // Get conjugation endings for a specific form
+// Note: endings and irregularEndings are now loaded from conjugationEndings.js
 function getConjugationEndings(form, formality) {
-    const endings = {
-        plain: {
-            casual: { 'い・え　る': '', 'る': '', 'う': '', 'く': '', 'す': '', 'つ': '', 'ぬ': '', 'ぶ': '', 'む': '', 'ぐ': '' },
-            standard: { 'い・え　る': '', 'る': '', 'う': '', 'く': '', 'す': '', 'つ': '', 'ぬ': '', 'ぶ': '', 'む': '', 'ぐ': '' },
-            polite: { 'い・え　る': 'ます', 'る': 'ます', 'う': 'います', 'く': 'きます', 'す': 'します', 'つ': 'ちます', 'ぬ': 'にます', 'ぶ': 'びます', 'む': 'みます', 'ぐ': 'ぎます' },
-            formal: { 'い・え　る': 'ます', 'る': 'ます', 'う': 'います', 'く': 'きます', 'す': 'します', 'つ': 'ちます', 'ぬ': 'にます', 'ぶ': 'びます', 'む': 'みます', 'ぐ': 'ぎます' }
-        },
-        te: {
-            casual: { 'い・え　る': 'て', 'る': 'って', 'う': 'って', 'く': 'いて', 'す': 'して', 'つ': 'って', 'ぬ': 'んで', 'ぶ': 'んで', 'む': 'んで', 'ぐ': 'いで' },
-            standard: { 'い・え　る': 'て', 'る': 'って', 'う': 'って', 'く': 'いて', 'す': 'して', 'つ': 'って', 'ぬ': 'んで', 'ぶ': 'んで', 'む': 'んで', 'ぐ': 'いで' },
-            polite: { 'い・え　る': 'て', 'る': 'って', 'う': 'って', 'く': 'いて', 'す': 'して', 'つ': 'って', 'ぬ': 'んで', 'ぶ': 'んで', 'む': 'んで', 'ぐ': 'いで' },
-            formal: { 'い・え　る': 'て', 'る': 'って', 'う': 'って', 'く': 'いて', 'す': 'して', 'つ': 'って', 'ぬ': 'んで', 'ぶ': 'んで', 'む': 'んで', 'ぐ': 'いで' }
-        },
-        volitional: {
-            casual: { 'い・え　る': 'よう', 'る': 'ろう', 'う': 'おう', 'く': 'こう', 'す': 'そう', 'つ': 'とう', 'ぬ': 'のう', 'ぶ': 'ぼう', 'む': 'もう', 'ぐ': 'ごう' },
-            standard: { 'い・え　る': 'よう', 'る': 'ろう', 'う': 'おう', 'く': 'こう', 'す': 'そう', 'つ': 'とう', 'ぬ': 'のう', 'ぶ': 'ぼう', 'む': 'もう', 'ぐ': 'ごう' },
-            polite: { 'い・え　る': 'ましょう', 'る': 'りましょう', 'う': 'いましょう', 'く': 'きましょう', 'す': 'しましょう', 'つ': 'ちましょう', 'ぬ': 'にましょう', 'ぶ': 'びましょう', 'む': 'みましょう', 'ぐ': 'ぎましょう' },
-            formal: { 'い・え　る': 'ましょう', 'る': 'りましょう', 'う': 'いましょう', 'く': 'きましょう', 'す': 'しましょう', 'つ': 'ちましょう', 'ぬ': 'にましょう', 'ぶ': 'びましょう', 'む': 'みましょう', 'ぐ': 'ぎましょう' }
-        },
-        conditional: {
-            casual: { 'い・え　る': 'たら', 'る': 'ったら', 'う': 'ったら', 'く': 'いたら', 'す': 'したら', 'つ': 'ったら', 'ぬ': 'んだら', 'ぶ': 'んだら', 'む': 'んだら', 'ぐ': 'いだら' },
-            standard: { 'い・え　る': 'れば', 'る': 'れば', 'う': 'えば', 'く': 'けば', 'す': 'せば', 'つ': 'てば', 'ぬ': 'ねば', 'ぶ': 'べば', 'む': 'めば', 'ぐ': 'げば' },
-            polite: { 'い・え　る': 'たら', 'る': 'ったら', 'う': 'ったら', 'く': 'いたら', 'す': 'したら', 'つ': 'ったら', 'ぬ': 'んだら', 'ぶ': 'んだら', 'む': 'んだら', 'ぐ': 'いだら' },
-            formal: { 'い・え　る': 'れば', 'る': 'れば', 'う': 'えば', 'く': 'けば', 'す': 'せば', 'つ': 'てば', 'ぬ': 'ねば', 'ぶ': 'べば', 'む': 'めば', 'ぐ': 'げば' }
-        },
-        causative: {
-            casual: { 'い・え　る': 'させる', 'る': 'らせる', 'う': 'わせる', 'く': 'かせる', 'す': 'させる', 'つ': 'たせる', 'ぬ': 'なせる', 'ぶ': 'ばせる', 'む': 'ませる', 'ぐ': 'がせる' },
-            standard: { 'い・え　る': 'させる', 'る': 'らせる', 'う': 'わせる', 'く': 'かせる', 'す': 'させる', 'つ': 'たせる', 'ぬ': 'なせる', 'ぶ': 'ばせる', 'む': 'ませる', 'ぐ': 'がせる' },
-            polite: { 'い・え　る': 'させます', 'る': 'らせます', 'う': 'わせます', 'く': 'かせます', 'す': 'させます', 'つ': 'たせます', 'ぬ': 'なせます', 'ぶ': 'ばせます', 'む': 'ませます', 'ぐ': 'がせます' },
-            formal: { 'い・え　る': 'させます', 'る': 'らせます', 'う': 'わせます', 'く': 'かせます', 'す': 'させます', 'つ': 'たせます', 'ぬ': 'なせます', 'ぶ': 'ばせます', 'む': 'ませます', 'ぐ': 'がせます' }
-        },
-        potential: {
-            casual: { 'い・え　る': 'られる', 'る': 'れる', 'う': 'える', 'く': 'ける', 'す': 'せる', 'つ': 'てる', 'ぬ': 'ねる', 'ぶ': 'べる', 'む': 'める', 'ぐ': 'げる' },
-            standard: { 'い・え　る': 'られる', 'る': 'れる', 'う': 'える', 'く': 'ける', 'す': 'せる', 'つ': 'てる', 'ぬ': 'ねる', 'ぶ': 'べる', 'む': 'める', 'ぐ': 'げる' },
-            polite: { 'い・え　る': 'られます', 'る': 'れます', 'う': 'えます', 'く': 'けます', 'す': 'せます', 'つ': 'てます', 'ぬ': 'ねます', 'ぶ': 'べます', 'む': 'めます', 'ぐ': 'げます' },
-            formal: { 'い・え　る': 'られます', 'る': 'れます', 'う': 'えます', 'く': 'けます', 'す': 'せます', 'つ': 'てます', 'ぬ': 'ねます', 'ぶ': 'べます', 'む': 'めます', 'ぐ': 'げます' }
-        },
-        desiderative: {
-            casual: { 'い・え　る': 'たい', 'る': 'りたい', 'う': 'いたい', 'く': 'きたい', 'す': 'したい', 'つ': 'ちたい', 'ぬ': 'にたい', 'ぶ': 'びたい', 'む': 'みたい', 'ぐ': 'ぎたい' },
-            standard: { 'い・え　る': 'たい', 'る': 'りたい', 'う': 'いたい', 'く': 'きたい', 'す': 'したい', 'つ': 'ちたい', 'ぬ': 'にたい', 'ぶ': 'びたい', 'む': 'みたい', 'ぐ': 'ぎたい' },
-            polite: { 'い・え　る': 'たいです', 'る': 'りたいです', 'う': 'いたいです', 'く': 'きたいです', 'す': 'したいです', 'つ': 'ちたいです', 'ぬ': 'にたいです', 'ぶ': 'びたいです', 'む': 'みたいです', 'ぐ': 'ぎたいです' },
-            formal: { 'い・え　る': 'たいです', 'る': 'りたいです', 'う': 'いたいです', 'く': 'きたいです', 'す': 'したいです', 'つ': 'ちたいです', 'ぬ': 'にたいです', 'ぶ': 'びたいです', 'む': 'みたいです', 'ぐ': 'ぎたいです' }
-        },
-        deontic: {
-            casual: { 'い・え　る': 'なければならない', 'る': 'らなければならない', 'う': 'わなければならない', 'く': 'かなければならない', 'す': 'さなければならない', 'つ': 'たなければならない', 'ぬ': 'ななければならない', 'ぶ': 'ばなければならない', 'む': 'まなければならない', 'ぐ': 'がなければならない' },
-            standard: { 'い・え　る': 'なければならない', 'る': 'らなければならない', 'う': 'わなければならない', 'く': 'かなければならない', 'す': 'さなければならない', 'つ': 'たなければならない', 'ぬ': 'ななければならない', 'ぶ': 'ばなければならない', 'む': 'まなければならない', 'ぐ': 'がなければならない' },
-            polite: { 'い・え　る': 'なければなりません', 'る': 'らなければなりません', 'う': 'わなければなりません', 'く': 'かければなりません', 'す': 'さなければなりません', 'つ': 'たなければなりません', 'ぬ': 'ななければなりません', 'ぶ': 'ばなければなりません', 'む': 'まなければなりません', 'ぐ': 'がなければなりません' },
-            formal: { 'い・え　る': 'なければなりません', 'る': 'らなければなりません', 'う': 'わなければなりません', 'く': 'かければなりません', 'す': 'さなければなりません', 'つ': 'たなければなりません', 'ぬ': 'ななければなりません', 'ぶ': 'ばなければなりません', 'む': 'まなければなりません', 'ぐ': 'がなければなりません' }
-        },
-        imperative: {
-            casual: { 'い・え　る': 'ろ', 'る': 'れ', 'う': 'え', 'く': 'け', 'す': 'せ', 'つ': 'て', 'ぬ': 'ね', 'ぶ': 'べ', 'む': 'め', 'ぐ': 'げ' },
-            standard: { 'い・え　る': 'ろ', 'る': 'れ', 'う': 'え', 'く': 'け', 'す': 'せ', 'つ': 'て', 'ぬ': 'ね', 'ぶ': 'べ', 'む': 'め', 'ぐ': 'げ' },
-            polite: { 'い・え　る': 'なさい', 'る': 'りなさい', 'う': 'いなさい', 'く': 'きなさい', 'す': 'しなさい', 'つ': 'ちなさい', 'ぬ': 'になさい', 'ぶ': 'びなさい', 'む': 'みなさい', 'ぐ': 'ぎなさい' },
-            formal: { 'い・え　る': 'なさい', 'る': 'りなさい', 'う': 'いなさい', 'く': 'きなさい', 'す': 'しなさい', 'つ': 'ちなさい', 'ぬ': 'になさい', 'ぶ': 'びなさい', 'む': 'みなさい', 'ぐ': 'ぎなさい' }
-        }
-    };
-
-    // Handle irregular verbs
-    const irregularEndings = {
-        'ある': { plain: { casual: 'ある', standard: 'ある', polite: 'あります', formal: 'あります' },
-                  te: { casual: 'あって', standard: 'あって', polite: 'あって', formal: 'あって' },
-                  volitional: { casual: 'あろう', standard: 'あろう', polite: 'ありましょう', formal: 'ありましょう' },
-                  conditional: { casual: 'あったら', standard: 'あれば', polite: 'あったら', formal: 'あれば' },
-                  causative: { casual: 'あらせる', standard: 'あらせる', polite: 'あらせます', formal: 'あらせます' },
-                  potential: { casual: 'あれる', standard: 'あれる', polite: 'あれます', formal: 'あれます' },
-                  desiderative: { casual: 'ありたい', standard: 'ありたい', polite: 'ありたいです', formal: 'ありたいです' },
-                  deontic: { casual: 'あらなければならない', standard: 'あらなければならない', polite: 'あらなければなりません', formal: 'あらなければなりません' },
-                  imperative: { casual: 'あれ', standard: 'あれ', polite: 'ありなさい', formal: 'ありなさい' } },
-        'いる': { plain: { casual: 'いる', standard: 'いる', polite: 'います', formal: 'います' },
-                  te: { casual: 'いて', standard: 'いて', polite: 'いて', formal: 'いて' },
-                  volitional: { casual: 'いよう', standard: 'いよう', polite: 'いましょう', formal: 'いましょう' },
-                  conditional: { casual: 'いたら', standard: 'いれば', polite: 'いたら', formal: 'いれば' },
-                  causative: { casual: 'いさせる', standard: 'いさせる', polite: 'いさせます', formal: 'いさせます' },
-                  potential: { casual: 'いられる', standard: 'いられる', polite: 'いられます', formal: 'いられます' },
-                  desiderative: { casual: 'いたい', standard: 'いたい', polite: 'いたいです', formal: 'いたいです' },
-                  deontic: { casual: 'いなければならない', standard: 'いなければならない', polite: 'いなければなりません', formal: 'いなければなりません' },
-                  imperative: { casual: 'いろ', standard: 'いろ', polite: 'いなさい', formal: 'いなさい' } },
-        '行く': { plain: { casual: '行く', standard: '行く', polite: '行きます', formal: '行きます' },
-                  te: { casual: '行って', standard: '行って', polite: '行って', formal: '行って' },
-                  volitional: { casual: '行こう', standard: '行こう', polite: '行きましょう', formal: '行きましょう' },
-                  conditional: { casual: '行ったら', standard: '行けば', polite: '行ったら', formal: '行けば' },
-                  causative: { casual: '行かせる', standard: '行かせる', polite: '行かせます', formal: '行かせます' },
-                  potential: { casual: '行ける', standard: '行ける', polite: '行けます', formal: '行けます' },
-                  desiderative: { casual: '行きたい', standard: '行きたい', polite: '行きたいです', formal: '行きたいです' },
-                  deontic: { casual: '行かなければならない', standard: '行かなければならない', polite: '行かなければなりません', formal: '行かなければなりません' },
-                  imperative: { casual: '行け', standard: '行け', polite: '行きなさい', formal: '行きなさい' } },
-        'くる': { plain: { casual: 'くる', standard: 'くる', polite: 'きます', formal: 'きます' },
-                  te: { casual: 'きて', standard: 'きて', polite: 'きて', formal: 'きて' },
-                  volitional: { casual: 'こよう', standard: 'こよう', polite: 'きましょう', formal: 'きましょう' },
-                  conditional: { casual: 'きたら', standard: 'くれば', polite: 'きたら', formal: 'くれば' },
-                  causative: { casual: 'こさせる', standard: 'こさせる', polite: 'こさせます', formal: 'こさせます' },
-                  potential: { casual: 'こられる', standard: 'こられる', polite: 'こられます', formal: 'こられます' },
-                  desiderative: { casual: 'きたい', standard: 'きたい', polite: 'きたいです', formal: 'きたいです' },
-                  deontic: { casual: 'こなければならない', standard: 'こなければならない', polite: 'こなければなりません', formal: 'こなければなりません' },
-                  imperative: { casual: 'こい', standard: 'こい', polite: 'きなさい', formal: 'きなさい' } },
-        'する': { plain: { casual: 'する', standard: 'する', polite: 'します', formal: 'します' },
-                  te: { casual: 'して', standard: 'して', polite: 'して', formal: 'して' },
-                  volitional: { casual: 'しよう', standard: 'しよう', polite: 'しましょう', formal: 'しましょう' },
-                  conditional: { casual: 'したら', standard: 'すれば', polite: 'したら', formal: 'すれば' },
-                  causative: { casual: 'させる', standard: 'させる', polite: 'させます', formal: 'させます' },
-                  potential: { casual: 'できる', standard: 'できる', polite: 'できます', formal: 'できます' },
-                  desiderative: { casual: 'したい', standard: 'したい', polite: 'したいです', formal: 'したいです' },
-                  deontic: { casual: 'しなければならない', standard: 'しなければならない', polite: 'しなければなりません', formal: 'しなければなりません' },
-                  imperative: { casual: 'しろ', standard: 'しろ', polite: 'しなさい', formal: 'しなさい' } }
-    };
-
+    // Get data from conjugationEndings.js
+    const endingsData = getConjugationEndingsData();
+    const endings = endingsData.endings;
+    const irregularEndings = endingsData.irregularEndings;
+    
     return { endings: endings[form]?.[formality] || {}, irregularEndings };
 }
 
@@ -306,445 +1002,217 @@ function getFullVerbConjugations(form, formality) {
     return fullVerbs;
 }
 
-// Open conjugation modal
-function openConjugationModal(form, formality) {
-    const modal = document.getElementById('conjugationModal');
-    const modalTitle = document.getElementById('modalTitle');
-    const tableBody = document.getElementById('conjugationTableBody');
 
-    // Set title
-    const formNames = {
-        plain: 'Plain',
-        te: 'T form',
-        volitional: 'Volitional',
-        conditional: 'Conditional',
-        causative: 'Causative',
-        potential: 'Potential',
-        desiderative: 'Desiderative',
-        deontic: 'Deontic',
-        imperative: 'Imperative'
-    };
-
-    const formalityNames = {
-        casual: 'Casual',
-        standard: 'Standard',
-        polite: 'Polite',
-        formal: 'Formal'
-    };
-
-    modalTitle.textContent = `${formNames[form]} - ${formalityNames[formality]}`;
-
-    // Clear table
-    tableBody.innerHTML = '';
-
-    // Get conjugations
-    const conjugations = getConjugationEndings(form, formality);
-    const fullVerbs = getFullVerbConjugations(form, formality);
-
-    // Add irregular verbs first
-    for (const verb of verbExamples.irregular) {
-        const row = document.createElement('tr');
-        const plainCell = document.createElement('td');
-        const verbCell = document.createElement('td');
-        const endingCell = document.createElement('td');
-        const fullCell = document.createElement('td');
-
-        plainCell.textContent = verb; // Plain form is the verb itself for irregular verbs
-        verbCell.textContent = verb;
-        
-        if (conjugations.irregularEndings[verb] && conjugations.irregularEndings[verb][form]) {
-            const fullForm = conjugations.irregularEndings[verb][form][formality] || '';
-            // For irregular verbs, show the full form in both ending and full verb columns
-            // since irregular verbs don't have a clear stem+ending pattern
-            endingCell.textContent = fullForm;
-            fullCell.textContent = fullForm;
+// Apply conjugation pattern to a verb
+// Japanese construction order: stem → voice → aspect → tense → mood
+// The CSV patterns encode the full transformation, so we apply them directly
+function applyConjugationPattern(verb, pattern, verbEndingIndex) {
+    if (!pattern) {
+        // If pattern not found, try to build from components
+        console.warn('Pattern not found, using fallback');
+        return verb;
+    }
+    
+    let stem = '';
+    const lastChar = verb[verb.length - 1];
+    
+    // Get base form based on pattern.base
+    // This extracts the stem and applies the appropriate base transformation
+    if (pattern.base === 'Dictionary') {
+        // Use verb as-is (for deontic, simple present)
+        stem = verb;
+    } else if (pattern.base === 'Continuative / Stem') {
+        // Get stem form
+        if (verbEndingIndex === 9) {
+            // Ichidan: remove る
+            stem = verb.slice(0, -1);
         } else {
-            endingCell.textContent = '';
-            fullCell.textContent = verb;
+            // Godan: change last character to stem form
+            const stemEndings = ['い', 'ち', 'り', 'き', 'ぎ', 'み', 'に', 'び', 'し', ''];
+            stem = verb.slice(0, -1) + stemEndings[verbEndingIndex];
         }
-
-        row.appendChild(plainCell);
-        row.appendChild(verbCell);
-        row.appendChild(endingCell);
-        row.appendChild(fullCell);
-        tableBody.appendChild(row);
-    }
-
-    // Add gap row
-    const gapRow = document.createElement('tr');
-    gapRow.style.height = '20px';
-    const gapCell = document.createElement('td');
-    gapCell.colSpan = 4;
-    gapRow.appendChild(gapCell);
-    tableBody.appendChild(gapRow);
-
-    // Add regular verb endings
-    for (const ending of verbExamples.endings) {
-        const row = document.createElement('tr');
-        const plainCell = document.createElement('td');
-        const endingCell = document.createElement('td');
-        const conjugationCell = document.createElement('td');
-        const fullCell = document.createElement('td');
-
-        // Plain form is the dictionary form of the verb
-        plainCell.textContent = fullVerbExamples[ending] || '';
-        endingCell.textContent = ending;
-        conjugationCell.textContent = conjugations.endings[ending] || '';
-        fullCell.textContent = fullVerbs[ending] || '';
-
-        row.appendChild(plainCell);
-        row.appendChild(endingCell);
-        row.appendChild(conjugationCell);
-        row.appendChild(fullCell);
-        tableBody.appendChild(row);
-    }
-
-    // Add gap row before adjectives
-    const adjectiveGapRow = document.createElement('tr');
-    adjectiveGapRow.style.height = '20px';
-    const adjectiveGapCell = document.createElement('td');
-    adjectiveGapCell.colSpan = 4;
-    adjectiveGapRow.appendChild(adjectiveGapCell);
-    tableBody.appendChild(adjectiveGapRow);
-
-    // Add adjective rows
-    // Get the verb ending from する (suru) conjugation
-    // For adjectives, we use する as the verb, so we need the full する conjugation
-    let verbEndingForAdjective = '';
-    
-    // Check if we have irregular する conjugation
-    if (conjugations.irregularEndings && conjugations.irregularEndings['する'] && 
-        conjugations.irregularEndings['する'][form]) {
-        const suruForm = conjugations.irregularEndings['する'][form][formality] || '';
-        // Use the full する form (e.g., したら, して, しよう)
-        // For adjectives: 早くしたら = 早く + したら
-        verbEndingForAdjective = suruForm;
-    } else if (conjugations.endings['す']) {
-        // Use the す ending pattern (for regular す verbs like 話す)
-        const suEnding = conjugations.endings['す'];
-        // For す verbs, conditional is "したら", te-form is "して", etc.
-        // We need to construct the full する form
-        if (suEnding.startsWith('し')) {
-            // Already has し, use as is (e.g., したら)
-            verbEndingForAdjective = suEnding;
+    } else if (pattern.base === 'Irrealis / Imperfective') {
+        // Get negative stem (Irrealis form)
+        const rootEnding = pattern.root[verbEndingIndex];
+        if (verbEndingIndex === 9) {
+            // Ichidan: remove る, then add root if not ''
+            stem = verb.slice(0, -1);
+            if (rootEnding !== '') {
+                stem = stem + rootEnding;
+            }
         } else {
-            // Add し prefix for する (e.g., て -> して)
-            verbEndingForAdjective = 'し' + suEnding;
+            // Godan: use root from pattern
+            if (rootEnding === '') {
+                stem = verb.slice(0, -1); // ichidan
+            } else {
+                stem = verb.slice(0, -1) + rootEnding;
+            }
         }
-    } else {
-        // Fallback: construct based on form
-        const formEndings = {
-            'plain': 'する',
-            'te': 'して',
-            'volitional': 'しよう',
-            'conditional': 'したら',
-            'causative': 'させる',
-            'potential': 'できる',
-            'desiderative': 'したい',
-            'deontic': 'しなければならない',
-            'imperative': 'しろ'
-        };
-        verbEndingForAdjective = formEndings[form] || 'する';
-    }
-
-    // Row 1: 早い (i-adjective)
-    const hayaiRow = document.createElement('tr');
-    const hayaiPlainCell = document.createElement('td');
-    const hayaiEndingCell = document.createElement('td');
-    const hayaiConjugationCell = document.createElement('td');
-    const hayaiFullCell = document.createElement('td');
-
-    hayaiPlainCell.textContent = '早い';
-    hayaiEndingCell.textContent = 'い';
-    hayaiConjugationCell.textContent = 'く' + verbEndingForAdjective;
-    hayaiFullCell.textContent = '早く' + verbEndingForAdjective;
-
-    hayaiRow.appendChild(hayaiPlainCell);
-    hayaiRow.appendChild(hayaiEndingCell);
-    hayaiRow.appendChild(hayaiConjugationCell);
-    hayaiRow.appendChild(hayaiFullCell);
-    tableBody.appendChild(hayaiRow);
-
-    // Row 2: 静かな (na-adjective)
-    const shizukanaRow = document.createElement('tr');
-    const shizukanaPlainCell = document.createElement('td');
-    const shizukanaEndingCell = document.createElement('td');
-    const shizukanaConjugationCell = document.createElement('td');
-    const shizukanaFullCell = document.createElement('td');
-
-    shizukanaPlainCell.textContent = '静かな';
-    shizukanaEndingCell.textContent = 'な';
-    shizukanaConjugationCell.textContent = 'に' + verbEndingForAdjective;
-    shizukanaFullCell.textContent = '静かに' + verbEndingForAdjective;
-
-    shizukanaRow.appendChild(shizukanaPlainCell);
-    shizukanaRow.appendChild(shizukanaEndingCell);
-    shizukanaRow.appendChild(shizukanaConjugationCell);
-    shizukanaRow.appendChild(shizukanaFullCell);
-    tableBody.appendChild(shizukanaRow);
-
-    // Show modal
-    modal.style.display = 'block';
-}
-
-// Close conjugation modal
-function closeConjugationModal() {
-    const modal = document.getElementById('conjugationModal');
-    modal.style.display = 'none';
-}
-
-// Close modal when clicking outside
-window.onclick = function(event) {
-    const modal = document.getElementById('conjugationModal');
-    if (event.target == modal) {
-        modal.style.display = 'none';
-    }
-}
-
-// Helper function to conjugate a verb form (treats voice forms as ichidan verbs)
-function conjugateVoiceForm(voiceForm, form) {
-    if (!voiceForm || !voiceForm.endsWith('る')) {
-        return '';
+    } else if (pattern.base === 'Hypothetical') {
+        // Get hypothetical form
+        if (verbEndingIndex === 9) {
+            // Ichidan: remove る, add hypothetical
+            stem = verb.slice(0, -1) + 'れ';
+        } else {
+            // Godan: use root from pattern
+            const rootEnding = pattern.root[verbEndingIndex];
+            stem = verb.slice(0, -1) + rootEnding;
+        }
+    } else if (pattern.base === 'T Form') {
+        // Get te-form
+        if (verbEndingIndex === 9) {
+            // Ichidan: remove る, add て
+            stem = verb.slice(0, -1) + 'て';
+        } else {
+            // Godan: use root from pattern
+            const rootEnding = pattern.root[verbEndingIndex];
+            stem = verb.slice(0, -1) + rootEnding;
+        }
+    } else if (pattern.base === 'Modified T') {
+        // Past form (ta-form)
+        if (verbEndingIndex === 9) {
+            // Ichidan: remove る, add た
+            stem = verb.slice(0, -1) + 'た';
+        } else {
+            // Godan: use root from pattern
+            const rootEnding = pattern.root[verbEndingIndex];
+            stem = verb.slice(0, -1) + rootEnding;
+        }
+    } else if (pattern.base === 'Imperative') {
+        // Imperative form
+        if (verbEndingIndex === 9) {
+            // Ichidan: remove る, add ろ
+            stem = verb.slice(0, -1) + 'ろ';
+        } else {
+            // Godan: use root from pattern
+            const rootEnding = pattern.root[verbEndingIndex];
+            stem = verb.slice(0, -1) + rootEnding;
+        }
     }
     
-    // Voice forms (potential/causative) end in る, so treat as ichidan
-    const stem = voiceForm.slice(0, -1); // Remove る
+    // Add conjugation ending
+    return stem + pattern.conjugation;
+}
+
+// Build full construction name including base mood when appropriate
+function getFullConstructionName() {
+    const parts = [];
     
-    switch (form) {
-        case 'plain':
-            return voiceForm;
-        case 'te':
-            return stem + 'て';
-        case 'volitional':
-            return stem + 'よう';
-        case 'conditional':
-            return stem + 'れば';
-        case 'desiderative':
-            return stem + 'たい';
-        case 'deontic':
-            return stem + 'なければならない';
-        case 'imperative':
-            return stem + 'ろ';
-        default:
-            return voiceForm;
+    // 1. TENSE (past or simple present - simple present is default/implied)
+    if (controls.past) parts.push('past');
+    
+    // 2. NEGATION
+    if (controls.negative) parts.push('negative');
+    
+    // 3. VOICE (potential, passive, causative)
+    if (controls.potential && controls.passive) {
+        parts.push('potential');
+        parts.push('passive');
+    } else if (controls.potential && controls.causative) {
+        parts.push('potential');
+        parts.push('causative');
+    } else if (controls.causative && controls.passive) {
+        parts.push('causative');
+        parts.push('passive');
+    } else if (controls.potential) {
+        parts.push('potential');
+    } else if (controls.passive) {
+        parts.push('passive');
+    } else if (controls.causative) {
+        parts.push('causative');
     }
+    
+    // 4. ASPECT (continuous, completion, resultant)
+    if (controls.completion && controls.continuous) {
+        parts.push('completion');
+        parts.push('continuous');
+    } else if (controls.completion && controls.resultant) {
+        parts.push('completion');
+        parts.push('resultant');
+    } else if (controls.continuous && controls.resultant) {
+        parts.push('continuous');
+        parts.push('resultant');
+    } else if (controls.continuous) {
+        parts.push('continuous');
+    } else if (controls.completion) {
+        parts.push('completion');
+    } else if (controls.resultant) {
+        parts.push('resultant');
+    }
+    
+    // 5. MOOD modifiers (conditional, desiderative, deontic)
+    if (controls.conditional && controls.desiderative) {
+        parts.push('conditional');
+        parts.push('desiderative');
+    } else if (controls.conditional && controls.deontic) {
+        parts.push('conditional');
+        parts.push('deontic');
+    } else if (controls.desiderative) {
+        parts.push('desiderative');
+    } else if (controls.deontic) {
+        parts.push('deontic');
+    } else if (controls.conditional) {
+        parts.push('conditional');
+    }
+    
+    // Handle base moods (volitional, imperative) - these are standalone patterns
+    // Note: te-form is handled specially as it has no pattern when standalone
+    if (controls.volitional && parts.length === 0) {
+        return 'volitional';
+    }
+    if (controls.imperative && parts.length === 0) {
+        return 'imperative';
+    }
+    
+    // If no parts, return basic form
+    if (parts.length === 0) return 'simple present';
+    
+    // Join parts
+    return parts.join(' ');
 }
 
 // Get conjugated form for a specific form and formality
 function getConjugatedForm(form, formality) {
-    if (!currentVerbData || !currentVerbData.conjugations) {
+    if (!currentVerb) {
         return '';
     }
 
-    const conjugations = currentVerbData.conjugations;
-    const activeVoice = getActiveVoice();
-    let result = '';
-
-    // If a voice is active, we need to get the voice form first, then apply the conjugation
-    let baseVoiceForm = null;
-    if (activeVoice === 'potential') {
-        const potential = conjugations.tenses?.modals?.potential;
-        if (potential && potential.japanese) {
-            baseVoiceForm = potential.japanese;
-        }
-    } else if (activeVoice === 'causative') {
-        const causative = conjugations.tenses?.modals?.causative;
-        if (causative && causative.japanese) {
-            baseVoiceForm = causative.japanese;
+    const verbEndingIndex = getVerbEndingIndex(currentVerb);
+    
+    // Handle standalone te-form (no modifiers) - build te-form directly
+    if (controls.te && !controls.continuous && !controls.completion && !controls.resultant && 
+        !controls.negative && !controls.past && !controls.potential && !controls.passive && 
+        !controls.causative && !controls.conditional && !controls.desiderative && !controls.deontic) {
+        // Build te-form directly using T Form roots
+        if (verbEndingIndex === 9) {
+            // Ichidan: remove る, add て
+            return currentVerb.slice(0, -1) + 'て';
+        } else {
+            // Godan: use T Form roots
+            const teRoots = ['って', 'って', 'って', 'いて', 'いで', 'んで', 'んで', 'んで', 'して', 'て'];
+            return currentVerb.slice(0, -1) + teRoots[verbEndingIndex];
         }
     }
-
-    // Map our form names to the API response structure
-    if (form === 'plain') {
-        if (baseVoiceForm) {
-            // Use the voice form as the plain form
-            result = baseVoiceForm;
-            // For polite/formal, convert to ます form
-            if ((formality === 'polite' || formality === 'formal') && !result.endsWith('ます')) {
-                if (result.endsWith('る')) {
-                    result = result.slice(0, -1) + 'ます';
-                } else if (result.endsWith('られる')) {
-                    result = result.slice(0, -2) + 'られます';
-                } else if (result.endsWith('せる')) {
-                    result = result.slice(0, -2) + 'せます';
-                } else if (result.endsWith('させる')) {
-                    result = result.slice(0, -3) + 'させます';
-                }
-            }
-        } else {
-            // For polite/formal, use polite conjugations if available
-            if ((formality === 'polite' || formality === 'formal') && currentVerbData.politeConjugations) {
-                const present = currentVerbData.politeConjugations.tenses?.time?.present;
-                if (present && present.japanese) {
-                    result = present.japanese;
-                }
-            } else {
-                const present = conjugations.tenses?.time?.present;
-                if (present && present.japanese) {
-                    result = present.japanese;
-                }
-            }
-        }
-    } else if (form === 'te') {
-        if (baseVoiceForm) {
-            // Conjugate the voice form
-            result = conjugateVoiceForm(baseVoiceForm, 'te');
-            // For polite/formal, add います
-            if ((formality === 'polite' || formality === 'formal') && !result.endsWith('います')) {
-                result = result + 'います';
-            }
-        } else {
-            // Te-form is in progressive aspect (ている), extract just the te-form
-            let progressive;
-            if ((formality === 'polite' || formality === 'formal') && currentVerbData.politeConjugations) {
-                progressive = currentVerbData.politeConjugations.tenses?.aspect?.progressive;
-            } else {
-                progressive = conjugations.tenses?.aspect?.progressive;
-            }
-            if (progressive && progressive.japanese) {
-                result = progressive.japanese;
-                // Remove いる from the end to get just the te-form
-                if (result.endsWith('ている')) {
-                    result = result.slice(0, -2); // Remove いる
-                } else if (result.endsWith('います')) {
-                    result = result.slice(0, -3); // Remove います
-                } else if (result.endsWith('いません')) {
-                    result = result.slice(0, -4); // Remove いません
-                }
-            }
-        }
-    } else if (form === 'volitional') {
-        if (baseVoiceForm) {
-            // Conjugate the voice form
-            result = conjugateVoiceForm(baseVoiceForm, 'volitional');
-            // For polite/formal, convert to ましょう
-            if ((formality === 'polite' || formality === 'formal') && !result.endsWith('ましょう')) {
-                if (result.endsWith('よう')) {
-                    result = result.slice(0, -1) + 'ましょう';
-                }
-            }
-        } else {
-            const volitional = conjugations.tenses?.mood?.volitional;
-            if (volitional && volitional.japanese) {
-                result = volitional.japanese;
-                // For polite/formal, convert to ましょう
-                if ((formality === 'polite' || formality === 'formal') && !result.endsWith('ましょう')) {
-                    // Convert volitional to polite form
-                    if (result.endsWith('よう')) {
-                        result = result.slice(0, -1) + 'ましょう';
-                    } else if (result.endsWith('おう')) {
-                        result = result.slice(0, -1) + 'いましょう';
-                    } else if (result.endsWith('ろう')) {
-                        result = result.slice(0, -1) + 'りましょう';
-                    }
-                }
-            }
-        }
-    } else if (form === 'conditional') {
-        if (baseVoiceForm) {
-            // Conjugate the voice form
-            result = conjugateVoiceForm(baseVoiceForm, 'conditional');
-            // For standard/formal, use ば form (already in れば form)
-            if ((formality === 'standard' || formality === 'formal')) {
-                // Already in ば form (れば)
-            } else {
-                // For casual/polite, use たら form
-                // Convert れば to たら by using past form
-                const stem = baseVoiceForm.slice(0, -1);
-                result = stem + 'たら';
-            }
-        } else {
-            const conditional = conjugations.tenses?.mood?.conditional;
-            if (conditional && conditional.japanese) {
-                result = conditional.japanese;
-                // For standard/formal, use ば form if available in alts
-                if ((formality === 'standard' || formality === 'formal') && conditional.alts && conditional.alts.length > 0) {
-                    // Check if there's a ば form in alternatives
-                    const baForm = conditional.alts.find(alt => alt.includes('ば'));
-                    if (baForm) {
-                        result = baForm;
-                    }
-                }
-            }
-        }
-    } else if (form === 'desiderative') {
-        if (baseVoiceForm) {
-            // Conjugate the voice form
-            result = conjugateVoiceForm(baseVoiceForm, 'desiderative');
-            // For polite/formal, add です
-            if ((formality === 'polite' || formality === 'formal') && !result.endsWith('です')) {
-                result = result + 'です';
-            }
-        } else {
-            const desiderative = conjugations.tenses?.desire?.subject;
-            if (desiderative && desiderative.japanese) {
-                result = desiderative.japanese;
-                // For polite/formal, add です
-                if ((formality === 'polite' || formality === 'formal') && !result.endsWith('です')) {
-                    result = result + 'です';
-                }
-            }
-        }
-    } else if (form === 'deontic') {
-        if (baseVoiceForm) {
-            // Conjugate the voice form
-            result = conjugateVoiceForm(baseVoiceForm, 'deontic');
-            // For polite/formal, convert ならない to なりません
-            if ((formality === 'polite' || formality === 'formal') && result.includes('ならない')) {
-                result = result.replace('ならない', 'なりません');
-            }
-        } else {
-            const deontic = conjugations.tenses?.modals?.deontic;
-            if (deontic && deontic.japanese) {
-                result = deontic.japanese;
-                // For polite/formal, convert ならない to なりません
-                if ((formality === 'polite' || formality === 'formal') && result.includes('ならない')) {
-                    result = result.replace('ならない', 'なりません');
-                }
-            }
-        }
-    } else if (form === 'imperative') {
-        if (baseVoiceForm) {
-            // Conjugate the voice form
-            result = conjugateVoiceForm(baseVoiceForm, 'imperative');
-            // For polite/formal, convert to なさい form
-            if ((formality === 'polite' || formality === 'formal') && !result.endsWith('なさい')) {
-                if (result.endsWith('ろ')) {
-                    result = result.slice(0, -1) + 'りなさい';
-                }
-            }
-        } else {
-            const imperative = conjugations.tenses?.mood?.imperative;
-            if (imperative && imperative.japanese) {
-                result = imperative.japanese;
-                // For polite/formal, convert to なさい form
-                if ((formality === 'polite' || formality === 'formal') && !result.endsWith('なさい')) {
-                    // Convert imperative to polite form
-                    if (result.endsWith('ろ')) {
-                        result = result.slice(0, -1) + 'りなさい';
-                    } else if (result.endsWith('え')) {
-                        result = result.slice(0, -1) + 'いなさい';
-                    } else if (result.endsWith('け')) {
-                        result = result.slice(0, -1) + 'きなさい';
-                    } else if (result.endsWith('せ')) {
-                        result = result.slice(0, -1) + 'しなさい';
-                    } else if (result.endsWith('て')) {
-                        result = result.slice(0, -1) + 'ちなさい';
-                    } else if (result.endsWith('ね')) {
-                        result = result.slice(0, -1) + 'になさい';
-                    } else if (result.endsWith('べ')) {
-                        result = result.slice(0, -1) + 'びなさい';
-                    } else if (result.endsWith('め')) {
-                        result = result.slice(0, -1) + 'みなさい';
-                    } else if (result.endsWith('げ')) {
-                        result = result.slice(0, -1) + 'ぎなさい';
-                    }
-                }
-            }
-        }
+    
+    // Build construction name from active buttons
+    const constructionName = getFullConstructionName();
+    
+    // Select pattern set based on formality
+    const patternSet = (formality === 'polite' || formality === 'formal') 
+        ? conjugationPatternsPolite 
+        : conjugationPatterns;
+    
+    // Look up pattern
+    const pattern = patternSet[constructionName];
+    
+    if (pattern) {
+        // Apply pattern: verb stem + root[verbEndingIndex] + conjugation
+        return applyConjugationPattern(currentVerb, pattern, verbEndingIndex);
     }
-
-    return result;
+    
+    // Fallback: return empty string if pattern not found
+    console.warn(`Pattern not found for construction: ${constructionName}, formality: ${formality}`);
+    return '';
 }
 
 // Convert verb to masu form (simplified - uses API response when available)
@@ -805,10 +1273,31 @@ document.addEventListener('DOMContentLoaded', function() {
     const verbInput = document.getElementById('verbInput');
     const verbError = document.getElementById('verbError');
 
+    // Initialize default controls
+    // Set defaults: first person, simple/present, plain mood
+    controls.first = true;
+    controls.third = false;
+    controls.simple = true;
+    controls.plain = true;
+    currentMood = 'plain';
+    
+    // Update button states to reflect defaults
+    const firstBtn = document.getElementById('firstPersonBtn');
+    const simpleBtn = document.getElementById('simpleBtn');
+    const plainBtn = document.getElementById('plainMoodBtn');
+    if (firstBtn) firstBtn.classList.add('active');
+    if (simpleBtn) simpleBtn.classList.add('active');
+    if (plainBtn) plainBtn.classList.add('active');
+    
+    // Initialize button labels
+    updateButtonLabels();
+    
+    // Initialize English description from CSV
+    updateMoodDescription();
+    
     // Load default verb on page load
     if (verbInput.value) {
         // Initialize mood selection
-        toggleMood('plain');
         updateFormLabels(); // Initialize form labels
         conjugateVerb(verbInput.value);
     }
@@ -890,5 +1379,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Make conjugateVerb available globally for toggleControl
     conjugateVerbGlobal = conjugateVerb;
     window.conjugateVerb = conjugateVerb;
+    window.toggleMode = toggleMode;
 });
 

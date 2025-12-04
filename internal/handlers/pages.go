@@ -416,6 +416,28 @@ func (h *PageHandler) HandleStudyAnswer(w http.ResponseWriter, r *http.Request) 
 	}
 }
 
+// HandleAbout shows the About page with the Way of Thinking content
+func (h *PageHandler) HandleAbout(w http.ResponseWriter, r *http.Request) {
+	tmpl, err := template.ParseFiles(
+		"templates/layout/base.html",
+		"templates/pages/about.html",
+	)
+	if err != nil {
+		http.Error(w, "Template error: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	data.Title = "About"
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+
+	// Execute the "base" template which will include the "content" template
+	err = tmpl.ExecuteTemplate(w, "base", data)
+	if err != nil {
+		http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
+
 // HandleVisualConfusion shows a page for practicing visually similar kanji
 func (h *PageHandler) HandleVisualConfusion(w http.ResponseWriter, r *http.Request) {
 	// Get current user

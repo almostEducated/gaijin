@@ -53,7 +53,15 @@ func (h *StudyHandler) HandleAnswerPronunciation(w http.ResponseWriter, r *http.
 	}
 
 	// Validate answer against furigana (hiragana reading)
-	isCorrect := strings.TrimSpace(answer) == strings.TrimSpace(word.Furigana)
+	// Support alternate readings separated by "/" (e.g., "まいげつ / まいつき")
+	answerTrimmed := strings.TrimSpace(answer)
+	isCorrect := false
+	for _, reading := range strings.Split(word.Furigana, "/") {
+		if answerTrimmed == strings.TrimSpace(reading) {
+			isCorrect = true
+			break
+		}
+	}
 
 	userSettings, err := h.db.GetUserSettings(userID)
 	if err != nil {
@@ -82,8 +90,14 @@ func (h *StudyHandler) HandleAnswerPronunciation(w http.ResponseWriter, r *http.
 			http.Error(w, "Failed to update SR: "+err.Error(), http.StatusInternalServerError)
 			return
 		}
-		// Redirect back to study page (will load next word)
-		http.Redirect(w, r, returnURL, http.StatusSeeOther)
+		// Redirect back to study page with success indicator (will load next word)
+		successURL := returnURL
+		if strings.Contains(returnURL, "?") {
+			successURL += "&success=true"
+		} else {
+			successURL += "?success=true"
+		}
+		http.Redirect(w, r, successURL, http.StatusSeeOther)
 		return
 	}
 
@@ -171,8 +185,14 @@ func (h *StudyHandler) HandleAnswerMeaning(w http.ResponseWriter, r *http.Reques
 			http.Error(w, "Failed to update SR: "+err.Error(), http.StatusInternalServerError)
 			return
 		}
-		// Redirect back to study page (will load next word)
-		http.Redirect(w, r, returnURL, http.StatusSeeOther)
+		// Redirect back to study page with success indicator (will load next word)
+		successURL := returnURL
+		if strings.Contains(returnURL, "?") {
+			successURL += "&success=true"
+		} else {
+			successURL += "?success=true"
+		}
+		http.Redirect(w, r, successURL, http.StatusSeeOther)
 		return
 	}
 

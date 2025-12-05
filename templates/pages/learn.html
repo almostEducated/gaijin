@@ -1,0 +1,556 @@
+{{define "content"}}
+<div class="container" style="max-width: 1400px;">
+    <h1 style="margin-bottom: 20px;">Learn New Words</h1>
+    
+    <!-- Search Bar -->
+    <div style="max-width: 500px; margin: 0 auto 30px auto;">
+        <form action="/search" method="GET" style="display: flex; gap: 10px;">
+            <input type="text" name="q" id="search-input" placeholder="Search words (English or Japanese)..." 
+                   style="flex: 1; padding: 12px 20px; font-size: 16px; border: 2px solid #e0e0e0; 
+                          border-radius: 25px; outline: none; transition: border-color 0.3s;"
+                   onfocus="this.style.borderColor='#667eea'" 
+                   onblur="this.style.borderColor='#e0e0e0'">
+            <button type="submit" class="search-btn"
+                    style="padding: 12px 25px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                           color: white; border: none; border-radius: 25px; font-weight: 600; cursor: pointer;
+                           transition: all 0.3s ease; display: flex; align-items: center; gap: 8px;">
+                <span>🔍</span> Search
+            </button>
+        </form>
+        <p style="text-align: center; font-size: 12px; color: #999; margin-top: 8px;">
+            Type English to search definitions, or Japanese (hiragana/katakana/kanji) to search words
+        </p>
+    </div>
+    
+    <!-- Level Selection Tabs -->
+    <div class="level-tabs" style="display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; justify-content: center;">
+        {{range .Levels}}
+        <a href="/learn?level={{if eq .Level 0}}all{{else}}{{.Level}}{{end}}&page=1" 
+           class="level-tab {{if .IsActive}}active{{end}}"
+           style="padding: 12px 24px; border-radius: 10px; text-decoration: none; font-weight: 600; transition: all 0.3s ease;
+                  {{if .IsActive}}
+                  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+                  {{else}}
+                  background: #f0f0f0; color: #333;
+                  {{end}}">
+            {{if eq .Level 0}}📊 All{{else}}N{{.Level}}{{end}}
+            <span style="font-size: 12px; opacity: 0.8; margin-left: 5px;">
+                ({{.LearnedCount}}/{{.TotalCount}})
+            </span>
+        </a>
+        {{end}}
+    </div>
+
+    <!-- Progress Bar -->
+    <div style="margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; color: #666;">
+            <span>{{if eq .Level 0}}All words by frequency{{else}}Progress for N{{.Level}}{{end}}</span>
+            <span>{{.LearnedCount}} / {{.TotalWords}} words learned</span>
+        </div>
+        <div style="background: #e0e0e0; border-radius: 10px; height: 12px; overflow: hidden;">
+            <div style="background: linear-gradient(90deg, #667eea, #764ba2); height: 100%; width: {{.ProgressPercent}}%; transition: width 0.5s ease;"></div>
+        </div>
+    </div>
+
+    <!-- Filter Toggle -->
+    <div style="display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 20px;">
+        <span style="font-size: 14px; color: #666;">Show:</span>
+        <div class="filter-toggle" style="display: flex; background: #f0f0f0; border-radius: 25px; padding: 4px;">
+            <button id="filter-new" class="filter-btn active" onclick="setFilter('new')"
+                    style="padding: 8px 20px; border: none; border-radius: 20px; font-size: 14px; font-weight: 600; 
+                           cursor: pointer; transition: all 0.3s ease;">
+                New Words
+            </button>
+            <button id="filter-all" class="filter-btn" onclick="setFilter('all')"
+                    style="padding: 8px 20px; border: none; border-radius: 20px; font-size: 14px; font-weight: 600; 
+                           cursor: pointer; transition: all 0.3s ease;">
+                All Words
+            </button>
+            <button id="filter-known" class="filter-btn" onclick="setFilter('known')"
+                    style="padding: 8px 20px; border: none; border-radius: 20px; font-size: 14px; font-weight: 600; 
+                           cursor: pointer; transition: all 0.3s ease;">
+                Known
+            </button>
+        </div>
+    </div>
+
+    <!-- Add All / Know All Buttons -->
+    <div id="add-all-container" style="text-align: center; margin-bottom: 30px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+        <form action="/api/learn/add-all?level={{if eq .Level 0}}all{{else}}{{.Level}}{{end}}&page={{.Page}}" method="POST" style="display: inline;">
+            <button type="submit" class="add-all-btn" 
+                    style="padding: 12px 30px; font-size: 16px; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); 
+                           color: white; border: none; border-radius: 25px; cursor: pointer; font-weight: 600;
+                           box-shadow: 0 4px 15px rgba(17, 153, 142, 0.3); transition: all 0.3s ease;">
+                Add All Words on This Page
+            </button>
+        </form>
+        <form action="/api/learn/suspend-all?level={{if eq .Level 0}}all{{else}}{{.Level}}{{end}}&page={{.Page}}" method="POST" style="display: inline;">
+            <button type="submit" class="know-all-btn" 
+                    style="padding: 12px 20px; font-size: 14px; background: #f8f9fa; 
+                           color: #666; border: 2px solid #dee2e6; border-radius: 25px; cursor: pointer; font-weight: 500;
+                           transition: all 0.3s ease;"
+                    title="Mark all words on this page as known (suspend from reviews)">
+                ✓ I Know All These
+            </button>
+        </form>
+    </div>
+
+    <!-- All Learned Message (hidden by default) -->
+    <div id="all-learned-message" style="display: none; text-align: center; padding: 40px; margin-bottom: 30px; 
+         background: linear-gradient(135deg, rgba(56, 239, 125, 0.1) 0%, rgba(17, 153, 142, 0.1) 100%); 
+         border-radius: 15px; border: 2px solid #38ef7d;">
+        <div style="font-size: 48px; margin-bottom: 15px;">🎉</div>
+        <h2 style="color: #155724; margin-bottom: 10px;">All Done!</h2>
+        <p style="color: #666; font-size: 16px;">You've added all words on this page to your study deck.</p>
+        <p style="color: #999; font-size: 14px; margin-top: 10px;">Go to the next page or switch to "All Words" to review.</p>
+    </div>
+
+    <!-- Word Cards Grid -->
+    {{if .Words}}
+    <div class="learn-cards-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; margin-bottom: 40px;">
+        {{range .Words}}
+        <div class="learn-card" data-learned="{{if .IsLearned}}true{{else}}false{{end}}" data-suspended="{{if .IsSuspended}}true{{else}}false{{end}}"
+             style="background: white; border-radius: 15px; padding: 25px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); 
+                    transition: all 0.3s ease; border: 2px solid {{if .IsSuspended}}#28a745{{else if .IsLearned}}#38ef7d{{else}}transparent{{end}};
+                    display: flex; flex-direction: column; position: relative;">
+            <!-- Level Badge (upper left) -->
+            <span class="level-badge" style="position: absolute; top: 12px; left: 12px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                                              color: white; padding: 5px 12px; border-radius: 15px; font-size: 12px; font-weight: 600;">
+                N{{.Level}}
+            </span>
+
+            <!-- Frequency Badge (upper right) -->
+            {{if .Frequency}}
+            <span class="frequency-badge" style="position: absolute; top: 12px; right: 12px; background: #f0f0f0; 
+                                                  color: #666; padding: 5px 12px; border-radius: 15px; font-size: 11px; font-weight: 500;"
+                  title="Frequency rank (lower = more common)">
+                #{{.Frequency}}
+            </span>
+            {{end}}
+
+            <!-- Kanji (clickable characters) -->
+            <div class="card-kanji clickable-kanji" style="font-size: 42px; font-weight: bold; text-align: center; color: #2c3e50; margin-bottom: 10px; margin-top: 15px;"
+                 data-word="{{.Word}}">
+                {{.Word}}
+            </div>
+            
+            <!-- Furigana -->
+            <div class="card-furigana" style="font-size: 20px; text-align: center; color: #667eea; margin-bottom: 15px;">
+                {{if .Furigana}}{{.Furigana}}{{else}}<span style="color: #ccc;">-</span>{{end}}
+            </div>
+            
+            <!-- Definitions -->
+            <div class="card-definitions" style="font-size: 16px; text-align: center; color: #34495e; margin-bottom: 10px; 
+                                                  padding: 15px; background: #f8f9fa; border-radius: 10px; min-height: 60px;"
+                 data-definitions="{{.Definitions}}">
+                {{if .Definitions}}<span class="definitions-text">{{.Definitions}}</span>{{else}}<span style="color: #999;">No definition available</span>{{end}}
+            </div>
+            
+            <!-- Part of Speech (centered) -->
+            <div style="text-align: center; margin-bottom: 15px;">
+                <span class="pos-badge" style="background: #e8f4f8; color: #2980b9; padding: 5px 12px; border-radius: 15px; 
+                                                font-size: 12px; font-weight: 500;">
+                    {{if .PartsOfSpeech}}{{.PartsOfSpeech}}{{else}}unknown{{end}}
+                </span>
+            </div>
+            
+            <!-- Spacer to push button to bottom -->
+            <div style="flex-grow: 1;"></div>
+            
+            <!-- Add Button (sticky to bottom) -->
+            <div class="card-action" style="text-align: center; margin-top: auto; padding-top: 10px; border-top: 1px solid #eee;" id="word-action-{{.ID}}">
+                {{if .IsLearned}}
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                    <span class="learn-status learned" style="display: inline-block; padding: 10px 20px; background: #d4edda; 
+                                                              color: #155724; border-radius: 25px; font-weight: 600; font-size: 14px;">
+                        ✓ Added to Deck
+                    </span>
+                    <!-- Know it button -->
+                    {{if .IsSuspended}}
+                    <button class="know-btn known" 
+                            hx-post="/api/learn/toggle-suspended?word_id={{.ID}}" 
+                            hx-swap="outerHTML"
+                            style="padding: 6px 12px; font-size: 12px; background: #28a745; color: white; border: none; border-radius: 15px; cursor: pointer; font-weight: 500;">
+                        ✓ Known
+                    </button>
+                    {{else}}
+                    <button class="know-btn" 
+                            hx-post="/api/learn/toggle-suspended?word_id={{.ID}}" 
+                            hx-swap="outerHTML"
+                            style="padding: 6px 12px; font-size: 12px; background: #f0f0f0; color: #666; border: none; border-radius: 15px; cursor: pointer; font-weight: 500;">
+                        Know it
+                    </button>
+                    {{end}}
+                </div>
+                {{else}}
+                <form action="/api/learn/add" method="POST" style="display: inline;"
+                      hx-post="/api/learn/add" hx-target="#word-action-{{.ID}}" hx-swap="innerHTML">
+                    <input type="hidden" name="word_id" value="{{.ID}}">
+                    <button type="submit" class="add-word-btn" 
+                            style="padding: 10px 25px; font-size: 14px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                                   color: white; border: none; border-radius: 25px; cursor: pointer; font-weight: 600;
+                                   transition: all 0.3s ease;">
+                        + Add to Study Deck
+                    </button>
+                </form>
+                {{end}}
+            </div>
+        </div>
+        {{end}}
+    </div>
+    {{else}}
+    <div style="text-align: center; padding: 50px; color: #666;">
+        <p style="font-size: 24px;">No words found at this level.</p>
+    </div>
+    {{end}}
+
+    <!-- Pagination -->
+    {{if gt .TotalPages 1}}
+    <div class="pagination" style="display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 30px; flex-wrap: wrap;">
+        {{if gt .Page 1}}
+        <a href="/learn?level={{if eq .Level 0}}all{{else}}{{.Level}}{{end}}&page=1" class="page-btn" 
+           style="padding: 10px 15px; background: #f0f0f0; border-radius: 8px; text-decoration: none; color: #333; font-weight: 500;">
+            &laquo; First
+        </a>
+        <a href="/learn?level={{if eq .Level 0}}all{{else}}{{.Level}}{{end}}&page={{.PrevPage}}" class="page-btn"
+           style="padding: 10px 15px; background: #f0f0f0; border-radius: 8px; text-decoration: none; color: #333; font-weight: 500;">
+            &lsaquo; Previous
+        </a>
+        {{end}}
+        
+        <span style="padding: 10px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                     color: white; border-radius: 8px; font-weight: 600;">
+            Page {{.Page}} of {{.TotalPages}}
+        </span>
+        
+        {{if lt .Page .TotalPages}}
+        <a href="/learn?level={{if eq .Level 0}}all{{else}}{{.Level}}{{end}}&page={{.NextPage}}" class="page-btn"
+           style="padding: 10px 15px; background: #f0f0f0; border-radius: 8px; text-decoration: none; color: #333; font-weight: 500;">
+            Next &rsaquo;
+        </a>
+        <a href="/learn?level={{if eq .Level 0}}all{{else}}{{.Level}}{{end}}&page={{.TotalPages}}" class="page-btn"
+           style="padding: 10px 15px; background: #f0f0f0; border-radius: 8px; text-decoration: none; color: #333; font-weight: 500;">
+            Last &raquo;
+        </a>
+        {{end}}
+    </div>
+    {{end}}
+</div>
+
+<style>
+.learn-card {
+    min-height: 380px;
+}
+
+.learn-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.add-word-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.add-all-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(17, 153, 142, 0.4);
+}
+
+.search-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.know-btn:hover {
+    transform: translateY(-1px);
+    opacity: 0.9;
+}
+
+.know-btn.known:hover {
+    background: #218838 !important;
+}
+
+.know-all-btn:hover {
+    background: #28a745 !important;
+    color: white !important;
+    border-color: #28a745 !important;
+}
+
+.page-btn:hover {
+    background: #e0e0e0 !important;
+}
+
+.level-tab:hover:not(.active) {
+    background: #e0e0e0 !important;
+}
+
+.learn-status.learned {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #d4edda;
+    color: #155724;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* Clickable kanji characters */
+.kanji-char {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+.kanji-char:hover {
+    color: #667eea;
+    transform: scale(1.1);
+}
+
+/* Definition items */
+.definition-item {
+    margin: 4px 0;
+    padding: 4px 8px;
+    background: white;
+    border-radius: 6px;
+    display: inline-block;
+    font-size: 14px;
+}
+
+.definition-item:not(:last-child)::after {
+    content: "";
+}
+
+.definitions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+}
+
+.show-more-btn {
+    background: none;
+    border: none;
+    color: #667eea;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 5px 10px;
+    margin-top: 8px;
+    transition: all 0.2s ease;
+}
+
+.show-more-btn:hover {
+    color: #764ba2;
+    text-decoration: underline;
+}
+
+.hidden-definitions {
+    display: none;
+}
+
+.hidden-definitions.show {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+}
+
+/* Filter toggle buttons */
+.filter-btn {
+    background: transparent;
+    color: #666;
+}
+
+.filter-btn.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.filter-btn:not(.active):hover {
+    background: #e0e0e0;
+}
+
+/* Card hiding */
+.learn-card.hidden-by-filter {
+    display: none !important;
+}
+</style>
+
+<script>
+// Make individual kanji characters clickable
+document.addEventListener('DOMContentLoaded', function() {
+    const kanjiDivs = document.querySelectorAll('.clickable-kanji');
+    
+    kanjiDivs.forEach(div => {
+        const word = div.getAttribute('data-word');
+        if (!word) return;
+        
+        // Split into individual characters and wrap each in a clickable span
+        let html = '';
+        for (const char of word) {
+            // Check if character is a kanji (CJK Unified Ideographs range)
+            const isKanji = /[\u4e00-\u9faf\u3400-\u4dbf]/.test(char);
+            if (isKanji) {
+                html += `<span class="kanji-char" onclick="window.location.href='/kanji?kanji=${encodeURIComponent(char)}'" title="Click to see all words with ${char}">${char}</span>`;
+            } else {
+                html += char;
+            }
+        }
+        div.innerHTML = html;
+    });
+
+    // Process definitions - split by semicolon and show first 3
+    const definitionDivs = document.querySelectorAll('.card-definitions');
+    
+    definitionDivs.forEach(div => {
+        const definitions = div.getAttribute('data-definitions');
+        if (!definitions) return;
+        
+        // Split by semicolon and trim each definition
+        const defArray = definitions.split(';').map(d => d.trim()).filter(d => d.length > 0);
+        
+        if (defArray.length === 0) return;
+        
+        // If 3 or fewer definitions, just display them nicely
+        if (defArray.length <= 3) {
+            let html = '<div class="definitions-list">';
+            defArray.forEach(def => {
+                html += `<span class="definition-item">${def}</span>`;
+            });
+            html += '</div>';
+            div.innerHTML = html;
+            return;
+        }
+        
+        // More than 3 definitions - show first 3 with "show more" button
+        const firstThree = defArray.slice(0, 3);
+        const remaining = defArray.slice(3);
+        const uniqueId = 'defs-' + Math.random().toString(36).substr(2, 9);
+        
+        let html = '<div class="definitions-list">';
+        
+        // First 3 definitions
+        firstThree.forEach(def => {
+            html += `<span class="definition-item">${def}</span>`;
+        });
+        
+        // Hidden definitions
+        html += `<div class="hidden-definitions" id="${uniqueId}">`;
+        remaining.forEach(def => {
+            html += `<span class="definition-item">${def}</span>`;
+        });
+        html += '</div>';
+        
+        // Show more/less button
+        html += `<button class="show-more-btn" onclick="toggleDefinitions('${uniqueId}', this)">+ ${remaining.length} more</button>`;
+        
+        html += '</div>';
+        div.innerHTML = html;
+    });
+});
+
+// Toggle hidden definitions
+function toggleDefinitions(id, btn) {
+    const hiddenDiv = document.getElementById(id);
+    if (hiddenDiv.classList.contains('show')) {
+        hiddenDiv.classList.remove('show');
+        const count = hiddenDiv.querySelectorAll('.definition-item').length;
+        btn.textContent = `+ ${count} more`;
+    } else {
+        hiddenDiv.classList.add('show');
+        btn.textContent = '− show less';
+    }
+}
+
+// Filter functionality
+let currentFilter = 'new'; // 'new', 'all', or 'known'
+
+function setFilter(filter) {
+    currentFilter = filter;
+    
+    // Update button states
+    document.getElementById('filter-new').classList.toggle('active', filter === 'new');
+    document.getElementById('filter-all').classList.toggle('active', filter === 'all');
+    document.getElementById('filter-known').classList.toggle('active', filter === 'known');
+    
+    // Apply filter to cards
+    applyFilter();
+    
+    // Save preference to localStorage
+    localStorage.setItem('learnPageFilter', filter);
+}
+
+function applyFilter() {
+    const cards = document.querySelectorAll('.learn-card');
+    let visibleCount = 0;
+    let unlearnedCount = 0;
+    let knownCount = 0;
+    
+    cards.forEach(card => {
+        const isLearned = card.getAttribute('data-learned') === 'true';
+        const isSuspended = card.getAttribute('data-suspended') === 'true';
+        
+        if (currentFilter === 'new') {
+            // Show only unlearned cards (not in deck yet)
+            if (isLearned) {
+                card.classList.add('hidden-by-filter');
+            } else {
+                card.classList.remove('hidden-by-filter');
+                visibleCount++;
+            }
+        } else if (currentFilter === 'known') {
+            // Show only suspended (known) cards
+            if (isSuspended) {
+                card.classList.remove('hidden-by-filter');
+                visibleCount++;
+            } else {
+                card.classList.add('hidden-by-filter');
+            }
+        } else {
+            // Show all cards
+            card.classList.remove('hidden-by-filter');
+            visibleCount++;
+        }
+        
+        if (!isLearned) {
+            unlearnedCount++;
+        }
+        if (isSuspended) {
+            knownCount++;
+        }
+    });
+    
+    // Show/hide the "all learned" message and buttons
+    const allLearnedMsg = document.getElementById('all-learned-message');
+    const addAllContainer = document.getElementById('add-all-container');
+    const cardsGrid = document.querySelector('.learn-cards-grid');
+    
+    if (currentFilter === 'new' && unlearnedCount === 0) {
+        // All cards are learned, show the message
+        if (allLearnedMsg) allLearnedMsg.style.display = 'block';
+        if (addAllContainer) addAllContainer.style.display = 'none';
+        if (cardsGrid) cardsGrid.style.display = 'none';
+    } else if (currentFilter === 'known' && knownCount === 0) {
+        // No known cards
+        if (allLearnedMsg) allLearnedMsg.style.display = 'none';
+        if (addAllContainer) addAllContainer.style.display = 'none';
+        if (cardsGrid) cardsGrid.style.display = 'grid';
+    } else {
+        // Some cards to show
+        if (allLearnedMsg) allLearnedMsg.style.display = 'none';
+        // Show buttons for 'new' and 'all' filters
+        if (addAllContainer) addAllContainer.style.display = (currentFilter === 'new' || currentFilter === 'all') ? 'flex' : 'none';
+        if (cardsGrid) cardsGrid.style.display = 'grid';
+    }
+}
+
+// Initialize filter on page load
+document.addEventListener('DOMContentLoaded', function() {
+    // Restore saved filter preference
+    const savedFilter = localStorage.getItem('learnPageFilter') || 'new';
+    setFilter(savedFilter);
+});
+</script>
+{{end}}

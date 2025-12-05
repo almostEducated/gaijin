@@ -1,0 +1,105 @@
+{{define "content"}}
+<div class="container" style="max-width: 900px;">
+    <!-- Header -->
+    <div style="text-align: center; margin-bottom: 30px;">
+        <div style="font-size: 80px; font-weight: bold; color: #2c3e50; margin-bottom: 10px;">
+            {{.Kanji}}
+        </div>
+        <h1 style="font-size: 24px; color: #666; margin: 0;">Words containing this kanji</h1>
+        <p style="color: #999; margin-top: 10px;">{{.WordCount}} word{{if ne .WordCount 1}}s{{end}} found</p>
+    </div>
+
+    <!-- Back to Learn -->
+    <div style="text-align: center; margin-bottom: 30px;">
+        <a href="/learn" style="color: #667eea; text-decoration: none; font-weight: 500;">
+            ← Back to Learn
+        </a>
+    </div>
+
+    {{if .NoResults}}
+    <div style="text-align: center; padding: 50px; color: #666;">
+        <p style="font-size: 20px;">No words found containing this kanji.</p>
+        <p style="font-size: 14px; margin-top: 10px;">This kanji might not be in the vocabulary database yet.</p>
+    </div>
+    {{else}}
+    <!-- Word List -->
+    <div class="kanji-word-list">
+        {{range .WordsByLevel}}
+        <!-- Level Header -->
+        <div class="level-header" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; padding: 10px 20px; border-radius: 8px; margin: 20px 0 15px 0; font-weight: 600;">
+            JLPT N{{.Level}}
+        </div>
+        
+        {{range .Words}}
+        <!-- Word Row -->
+        <div class="word-row" style="display: flex; align-items: center; padding: 15px 20px; 
+            background: white; border-radius: 10px; margin-bottom: 10px; 
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); transition: all 0.2s ease;">
+            
+            <!-- Word/Kanji -->
+            <div class="word-kanji" style="flex: 0 0 150px; font-size: 24px; font-weight: bold; color: #2c3e50;">
+                {{.Word}}
+            </div>
+            
+            <!-- Furigana -->
+            <div class="word-furigana" style="flex: 0 0 120px; font-size: 14px; color: #667eea;">
+                {{if .Furigana}}{{.Furigana}}{{else}}<span style="color: #ccc;">-</span>{{end}}
+            </div>
+            
+            <!-- Definition -->
+            <div class="word-definition" style="flex: 1; font-size: 15px; color: #34495e; padding-right: 15px;">
+                {{if .Definitions}}{{.Definitions}}{{else}}<span style="color: #999;">No definition</span>{{end}}
+            </div>
+            
+            <!-- Part of Speech -->
+            <div class="word-pos" style="flex: 0 0 auto;">
+                {{if .PartsOfSpeech}}
+                <span style="background: #e8f4f8; color: #2980b9; padding: 4px 10px; 
+                    border-radius: 12px; font-size: 12px; white-space: nowrap;">
+                    {{.PartsOfSpeech}}
+                </span>
+                {{end}}
+            </div>
+        </div>
+        {{end}}
+        {{end}}
+    </div>
+    {{end}}
+</div>
+
+<style>
+.word-row:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .word-row {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .word-kanji {
+        flex: 0 0 100% !important;
+        margin-bottom: 5px;
+    }
+    
+    .word-furigana {
+        flex: 0 0 auto !important;
+    }
+    
+    .word-definition {
+        flex: 1 1 100% !important;
+        order: 3;
+        padding-right: 0 !important;
+        margin-top: 5px;
+    }
+    
+    .word-pos {
+        order: 2;
+    }
+}
+</style>
+{{end}}

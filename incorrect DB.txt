@@ -1,0 +1,6 @@
+incorrect DB entries to be hand fixed
+search DB for all / entries and maybe add an alt category for hiragana correct answers
+ラジカセ / ラジオカセット should be katakana only
+いい / よい separate or make kana only
+練習, has suru in the answer should just be れんしゅう
+何　

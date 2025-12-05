@@ -23,6 +23,8 @@ type Router struct {
 	settingsHandler       *api.SettingsHandler
 	verbHandler           *api.VerbHandler
 	kanjiConfusionHandler *api.KanjiConfusionHandler
+	kanaHandler           *api.KanaHandler
+	learnHandler          *api.LearnHandler
 }
 
 func New(db *database.Database) *Router {
@@ -38,6 +40,8 @@ func New(db *database.Database) *Router {
 		settingsHandler:       api.NewSettingsHandler(db, authService),
 		verbHandler:           api.NewVerbHandler(db),
 		kanjiConfusionHandler: api.NewKanjiConfusionHandler(db, authService),
+		kanaHandler:           api.NewKanaHandler(db, authService),
+		learnHandler:          api.NewLearnHandler(db, authService),
 	}
 }
 
@@ -107,6 +111,9 @@ func (r *Router) SetupRoutes() {
 	r.Mux.HandleFunc("/visual-confusion", r.logger.Middleware(r.auth.Middleware(r.pageHandler.HandleVisualConfusion)))
 	r.Mux.HandleFunc("/profile", r.logger.Middleware(r.auth.Middleware(r.pageHandler.HandleProfile)))
 	r.Mux.HandleFunc("/about", r.logger.Middleware(r.auth.Middleware(r.pageHandler.HandleAbout)))
+	r.Mux.HandleFunc("/learn", r.logger.Middleware(r.auth.Middleware(r.pageHandler.HandleLearn)))
+	r.Mux.HandleFunc("/kanji", r.logger.Middleware(r.auth.Middleware(r.pageHandler.HandleKanjiLookup)))
+	r.Mux.HandleFunc("/search", r.logger.Middleware(r.auth.Middleware(r.pageHandler.HandleSearch)))
 
 	// Study routes
 	r.Mux.HandleFunc("/answer/pronunciation", r.logger.Middleware(r.auth.Middleware(r.studyHandler.HandleAnswerPronunciation)))
@@ -114,8 +121,23 @@ func (r *Router) SetupRoutes() {
 	r.Mux.HandleFunc("/study/answer", r.logger.Middleware(r.auth.Middleware(r.pageHandler.HandleStudyAnswer)))
 	r.Mux.HandleFunc("/study/rate", r.logger.Middleware(r.auth.Middleware(r.studyHandler.HandleSubmitRating)))
 
+	// Kana study routes (beginners deck)
+	r.Mux.HandleFunc("/study/hiragana", r.logger.Middleware(r.auth.Middleware(r.pageHandler.HandleStudyHiragana)))
+	r.Mux.HandleFunc("/study/katakana", r.logger.Middleware(r.auth.Middleware(r.pageHandler.HandleStudyKatakana)))
+	r.Mux.HandleFunc("/answer/kana", r.logger.Middleware(r.auth.Middleware(r.kanaHandler.HandleAnswerKana)))
+	r.Mux.HandleFunc("/study/kana/answer", r.logger.Middleware(r.auth.Middleware(r.pageHandler.HandleStudyKanaAnswer)))
+	r.Mux.HandleFunc("/study/kana/rate", r.logger.Middleware(r.auth.Middleware(r.kanaHandler.HandleSubmitKanaRating)))
+	r.Mux.HandleFunc("/api/kana/initialize", r.logger.Middleware(r.auth.Middleware(r.kanaHandler.HandleInitializeKana)))
+
 	// Settings routes
 	r.Mux.HandleFunc("/api/settings", r.logger.Middleware(r.auth.Middleware(r.settingsHandler.HandleUpdateSettings)))
+
+	// Learn routes
+	r.Mux.HandleFunc("/api/learn/add", r.logger.Middleware(r.auth.Middleware(r.learnHandler.HandleAddWord)))
+	r.Mux.HandleFunc("/api/learn/add-multiple", r.logger.Middleware(r.auth.Middleware(r.learnHandler.HandleAddWords)))
+	r.Mux.HandleFunc("/api/learn/add-all", r.logger.Middleware(r.auth.Middleware(r.learnHandler.HandleAddAllOnPage)))
+	r.Mux.HandleFunc("/api/learn/toggle-suspended", r.logger.Middleware(r.auth.Middleware(r.learnHandler.HandleToggleSuspended)))
+	r.Mux.HandleFunc("/api/learn/suspend-all", r.logger.Middleware(r.auth.Middleware(r.learnHandler.HandleSuspendAllOnPage)))
 
 	// Kanji confusion routes
 	r.Mux.HandleFunc("/api/similar-kanji", r.logger.Middleware(r.auth.Middleware(r.kanjiConfusionHandler.HandleGetSimilarKanji)))

@@ -57,6 +57,39 @@ type VisualConfusionData struct {
 	Word2    string
 }
 
+// KanaStudyData holds data for the kana study page
+type KanaStudyData struct {
+	Title            string
+	SRKanaID         int
+	Character        string
+	Romaji           string
+	Category         string
+	Answered         bool
+	NoKana           bool   // When user has no kana due for review
+	NeverInitialized bool   // True if user has never added kana to their deck
+	KanaType         string // "hiragana" or "katakana"
+	ReturnURL        string // URL to return to after answering
+}
+
+// KanaAnswerData holds data for the kana answer/rating page
+type KanaAnswerData struct {
+	Title      string
+	SRID       int
+	Character  string
+	Romaji     string
+	Category   string
+	KanaType   string // "hiragana" or "katakana"
+	IsCorrect  bool   // whether the user's answer was correct
+	UserAnswer string // the user's actual answer
+	ReturnURL  string // URL to return to after rating
+	Key0       string
+	Key1       string
+	Key2       string
+	Key3       string
+	Key4       string
+	Key5       string
+}
+
 // MAYBE rename dashboard
 func (h *PageHandler) HandleHome(w http.ResponseWriter, r *http.Request) {
 	// Parse both the base layout and the page content
@@ -144,22 +177,6 @@ func (h *PageHandler) HandleStudy(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Check if user has any SR words
-	hasWords, err := h.db.HasUserSRWords(userID)
-	if err != nil {
-		http.Error(w, "Database error: "+err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	// If user has no SR words, initialize with Level 5
-	if !hasWords {
-		err = h.db.InitializeUserSRWords(userID, 5)
-		if err != nil {
-			http.Error(w, "Failed to initialize study words: "+err.Error(), http.StatusInternalServerError)
-			return
-		}
-	}
-
 	// Get the next word to study
 	srWord, err := h.db.GetNextSRWord(userID)
 	if err != nil {
@@ -230,22 +247,6 @@ func (h *PageHandler) HandleStudyAdverbs(w http.ResponseWriter, r *http.Request)
 	if err != nil {
 		http.Error(w, "User not authenticated", http.StatusUnauthorized)
 		return
-	}
-
-	// Check if user has any SR words
-	hasWords, err := h.db.HasUserSRWords(userID)
-	if err != nil {
-		http.Error(w, "Database error: "+err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	// If user has no SR words, initialize with Level 5
-	if !hasWords {
-		err = h.db.InitializeUserSRWords(userID, 5)
-		if err != nil {
-			http.Error(w, "Failed to initialize study words: "+err.Error(), http.StatusInternalServerError)
-			return
-		}
 	}
 
 	// Get the next adverb word to study
@@ -438,6 +439,182 @@ func (h *PageHandler) HandleAbout(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// HandleStudyHiragana handles the hiragana study page
+func (h *PageHandler) HandleStudyHiragana(w http.ResponseWriter, r *http.Request) {
+	h.handleKanaStudy(w, r, "hiragana")
+}
+
+// HandleStudyKatakana handles the katakana study page
+func (h *PageHandler) HandleStudyKatakana(w http.ResponseWriter, r *http.Request) {
+	h.handleKanaStudy(w, r, "katakana")
+}
+
+// handleKanaStudy is the shared handler for both hiragana and katakana study
+func (h *PageHandler) handleKanaStudy(w http.ResponseWriter, r *http.Request, kanaType string) {
+	// Get current user
+	userID, err := h.auth.GetCurrentUser(r)
+	if err != nil {
+		http.Error(w, "User not authenticated", http.StatusUnauthorized)
+		return
+	}
+
+	// Get the next kana to study
+	srKana, err := h.db.GetNextSRKana(userID, kanaType)
+	if err != nil {
+		http.Error(w, "Failed to get study kana: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	tmpl, err := template.ParseFiles(
+		"templates/layout/base.html",
+		"templates/pages/study_kana.html",
+	)
+	if err != nil {
+		http.Error(w, "Template error: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	title := "Study Hiragana"
+	if kanaType == "katakana" {
+		title = "Study Katakana"
+	}
+
+	// Check if there are no kana due for review
+	if srKana == nil {
+		// Check if user has never initialized kana
+		hasKana, err := h.db.HasUserSRKana(userID, kanaType)
+		if err != nil {
+			http.Error(w, "Database error: "+err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		studyData := KanaStudyData{
+			Title:            title,
+			NoKana:           true,
+			NeverInitialized: !hasKana,
+			KanaType:         kanaType,
+		}
+		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+		err = tmpl.ExecuteTemplate(w, "base", studyData)
+		if err != nil {
+			http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+			return
+		}
+		return
+	}
+
+	studyData := KanaStudyData{
+		Title:     title,
+		SRKanaID:  srKana.SRID,
+		Character: srKana.Kana.Character,
+		Romaji:    srKana.Kana.Romaji,
+		Category:  srKana.Kana.Category,
+		Answered:  false,
+		NoKana:    false,
+		KanaType:  kanaType,
+		ReturnURL: "/study/" + kanaType,
+	}
+
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+
+	err = tmpl.ExecuteTemplate(w, "base", studyData)
+	if err != nil {
+		http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
+
+// HandleStudyKanaAnswer shows the answer page for kana with rating options
+func (h *PageHandler) HandleStudyKanaAnswer(w http.ResponseWriter, r *http.Request) {
+	// Get current user
+	userID, err := h.auth.GetCurrentUser(r)
+	if err != nil {
+		http.Error(w, "User not authenticated", http.StatusUnauthorized)
+		return
+	}
+
+	// Get SR ID from query params
+	srIDStr := r.URL.Query().Get("sr_id")
+	if srIDStr == "" {
+		http.Error(w, "SR ID is required", http.StatusBadRequest)
+		return
+	}
+
+	srID, err := strconv.Atoi(srIDStr)
+	if err != nil {
+		http.Error(w, "Invalid SR ID", http.StatusBadRequest)
+		return
+	}
+
+	// Get kana type
+	kanaType := r.URL.Query().Get("type")
+	if kanaType != "hiragana" && kanaType != "katakana" {
+		http.Error(w, "Invalid kana type", http.StatusBadRequest)
+		return
+	}
+
+	// Get whether answer was correct
+	isCorrect := r.URL.Query().Get("correct") == "true"
+
+	// Get the user's answer
+	userAnswer := r.URL.Query().Get("answer")
+
+	// Get return URL
+	returnURL := r.URL.Query().Get("return-url")
+	if returnURL == "" {
+		returnURL = "/study/" + kanaType
+	}
+
+	// Get user settings for keyboard shortcuts
+	userSettings, err := h.db.GetUserSettings(userID)
+	if err != nil {
+		http.Error(w, "Failed to get user settings: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// Get the kana details
+	kana, _, err := h.db.LookupKanaBySRId(srID)
+	if err != nil {
+		http.Error(w, "Failed to get kana: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	tmpl, err := template.ParseFiles(
+		"templates/layout/base.html",
+		"templates/pages/answer_kana.html",
+	)
+	if err != nil {
+		http.Error(w, "Template error: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	answerData := KanaAnswerData{
+		Title:      "Answer",
+		SRID:       srID,
+		Character:  kana.Character,
+		Romaji:     kana.Romaji,
+		Category:   kana.Category,
+		KanaType:   kanaType,
+		IsCorrect:  isCorrect,
+		UserAnswer: userAnswer,
+		ReturnURL:  returnURL,
+		Key0:       "0",
+		Key1:       userSettings.Key1,
+		Key2:       userSettings.Key2,
+		Key3:       userSettings.Key3,
+		Key4:       userSettings.Key4,
+		Key5:       userSettings.Key5,
+	}
+
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+
+	err = tmpl.ExecuteTemplate(w, "base", answerData)
+	if err != nil {
+		http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
+
 // HandleVisualConfusion shows a page for practicing visually similar kanji
 func (h *PageHandler) HandleVisualConfusion(w http.ResponseWriter, r *http.Request) {
 	// Get current user
@@ -494,6 +671,326 @@ func (h *PageHandler) HandleVisualConfusion(w http.ResponseWriter, r *http.Reque
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 
 	err = tmpl.ExecuteTemplate(w, "base", visualConfusionData)
+	if err != nil {
+		http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
+
+// LevelInfo represents info about a JLPT level for the template
+type LevelInfo struct {
+	Level        int
+	TotalCount   int
+	LearnedCount int
+	IsActive     bool
+}
+
+// LearnData holds data for the Learn page
+type LearnData struct {
+	Title           string
+	Words           []database.LearnWord
+	Level           int         // Current JLPT level being viewed (5 = N5)
+	Page            int         // Current page number
+	TotalPages      int         // Total pages for this level
+	TotalWords      int         // Total words at this level
+	LearnedCount    int         // How many words user has learned at this level
+	Levels          []LevelInfo // Info for each level tab
+	BatchSize       int         // Words per page
+	ProgressPercent int         // Progress percentage for progress bar
+	PrevPage        int         // Previous page number
+	NextPage        int         // Next page number
+}
+
+// HandleLearn shows the Learn page where users can discover new words in batches
+func (h *PageHandler) HandleLearn(w http.ResponseWriter, r *http.Request) {
+	// Get current user
+	userID, err := h.auth.GetCurrentUser(r)
+	if err != nil {
+		http.Error(w, "User not authenticated", http.StatusUnauthorized)
+		return
+	}
+
+	// Get query parameters
+	levelStr := r.URL.Query().Get("level")
+	pageStr := r.URL.Query().Get("page")
+
+	// Default to N5 (level 5) and page 1
+	// level=0 means "all levels by frequency"
+	level := 5
+	page := 1
+	batchSize := 10 // Words per page
+
+	if levelStr != "" {
+		if levelStr == "all" || levelStr == "0" {
+			level = 0 // All levels mode
+		} else if l, err := strconv.Atoi(levelStr); err == nil && l >= 1 && l <= 5 {
+			level = l
+		}
+	}
+	if pageStr != "" {
+		if p, err := strconv.Atoi(pageStr); err == nil && p >= 1 {
+			page = p
+		}
+	}
+
+	// Calculate offset
+	offset := (page - 1) * batchSize
+
+	// Get words for this level
+	words, totalWords, err := h.db.GetWordsForLearning(userID, level, batchSize, offset)
+	if err != nil {
+		http.Error(w, "Failed to get words: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// Calculate total pages
+	totalPages := (totalWords + batchSize - 1) / batchSize
+	if totalPages == 0 {
+		totalPages = 1
+	}
+
+	// If requested page is beyond available pages, redirect to last page
+	if page > totalPages {
+		page = totalPages
+		offset = (page - 1) * batchSize
+		words, _, err = h.db.GetWordsForLearning(userID, level, batchSize, offset)
+		if err != nil {
+			http.Error(w, "Failed to get words: "+err.Error(), http.StatusInternalServerError)
+			return
+		}
+	}
+
+	// Get level word counts
+	levelCounts, err := h.db.GetLevelWordCounts()
+	if err != nil {
+		http.Error(w, "Failed to get level counts: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// Get user's learned counts per level
+	learnedCounts, err := h.db.GetUserLearnedCountByLevel(userID)
+	if err != nil {
+		http.Error(w, "Failed to get learned counts: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// Count how many words user has learned at current level (or all levels if level=0)
+	var learnedCount int
+	if level == 0 {
+		// Sum all learned counts for "all" mode
+		for _, count := range learnedCounts {
+			learnedCount += count
+		}
+	} else {
+		learnedCount = learnedCounts[level]
+	}
+
+	// Calculate total words with frequency for "All" tab
+	totalWithFrequency := 0
+	totalLearnedAll := 0
+	for _, count := range levelCounts {
+		totalWithFrequency += count
+	}
+	for _, count := range learnedCounts {
+		totalLearnedAll += count
+	}
+
+	// Build level info for tabs (N5 to N1, then All)
+	var levels []LevelInfo
+	for _, lvl := range []int{5, 4, 3, 2, 1} {
+		levels = append(levels, LevelInfo{
+			Level:        lvl,
+			TotalCount:   levelCounts[lvl],
+			LearnedCount: learnedCounts[lvl],
+			IsActive:     lvl == level,
+		})
+	}
+	// Add "All" tab (level=0)
+	levels = append(levels, LevelInfo{
+		Level:        0,
+		TotalCount:   totalWithFrequency,
+		LearnedCount: totalLearnedAll,
+		IsActive:     level == 0,
+	})
+
+	// Calculate progress percentage
+	progressPercent := 0
+	if totalWords > 0 {
+		progressPercent = (learnedCount * 100) / totalWords
+	}
+
+	tmpl, err := template.ParseFiles(
+		"templates/layout/base.html",
+		"templates/pages/learn.html",
+	)
+	if err != nil {
+		http.Error(w, "Template error: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	learnData := LearnData{
+		Title:           "Learn",
+		Words:           words,
+		Level:           level,
+		Page:            page,
+		TotalPages:      totalPages,
+		TotalWords:      totalWords,
+		LearnedCount:    learnedCount,
+		Levels:          levels,
+		BatchSize:       batchSize,
+		ProgressPercent: progressPercent,
+		PrevPage:        page - 1,
+		NextPage:        page + 1,
+	}
+
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+
+	err = tmpl.ExecuteTemplate(w, "base", learnData)
+	if err != nil {
+		http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
+
+// WordsByLevel groups words by their JLPT level
+type WordsByLevel struct {
+	Level int
+	Words []database.KanjiWord
+}
+
+// KanjiLookupData holds data for the kanji lookup page
+type KanjiLookupData struct {
+	Title        string
+	Kanji        string
+	WordsByLevel []WordsByLevel
+	WordCount    int
+	NoResults    bool
+}
+
+// HandleKanjiLookup shows all words containing a specific kanji
+func (h *PageHandler) HandleKanjiLookup(w http.ResponseWriter, r *http.Request) {
+	// Get the kanji from query parameter
+	kanji := r.URL.Query().Get("kanji")
+	if kanji == "" {
+		http.Error(w, "Kanji parameter is required", http.StatusBadRequest)
+		return
+	}
+
+	// Search for words containing this kanji
+	words, err := h.db.GetWordsByKanji(kanji)
+	if err != nil {
+		http.Error(w, "Failed to search words: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// Group words by level
+	levelGroups := make(map[int][]database.KanjiWord)
+	for _, word := range words {
+		levelGroups[word.Level] = append(levelGroups[word.Level], word)
+	}
+
+	// Convert to ordered slice (N5 first, then N4, etc.)
+	var wordsByLevel []WordsByLevel
+	for _, lvl := range []int{5, 4, 3, 2, 1} {
+		if wordsAtLevel, ok := levelGroups[lvl]; ok {
+			wordsByLevel = append(wordsByLevel, WordsByLevel{
+				Level: lvl,
+				Words: wordsAtLevel,
+			})
+		}
+	}
+
+	tmpl, err := template.ParseFiles(
+		"templates/layout/base.html",
+		"templates/pages/kanji_lookup.html",
+	)
+	if err != nil {
+		http.Error(w, "Template error: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	lookupData := KanjiLookupData{
+		Title:        "Words with " + kanji,
+		Kanji:        kanji,
+		WordsByLevel: wordsByLevel,
+		WordCount:    len(words),
+		NoResults:    len(words) == 0,
+	}
+
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+
+	err = tmpl.ExecuteTemplate(w, "base", lookupData)
+	if err != nil {
+		http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
+
+// SearchResultsData holds data for the search results page
+type SearchResultsData struct {
+	Title        string
+	Query        string
+	SearchType   string // "japanese" or "english"
+	WordsByLevel []WordsByLevel
+	WordCount    int
+	NoResults    bool
+}
+
+// HandleSearch shows search results for words
+func (h *PageHandler) HandleSearch(w http.ResponseWriter, r *http.Request) {
+	// Get the search query
+	query := r.URL.Query().Get("q")
+	if query == "" {
+		// If no query, redirect to learn page
+		http.Redirect(w, r, "/learn", http.StatusSeeOther)
+		return
+	}
+
+	// Search for words
+	words, searchType, err := h.db.SearchWords(query)
+	if err != nil {
+		http.Error(w, "Failed to search words: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// Group words by level
+	levelGroups := make(map[int][]database.KanjiWord)
+	for _, word := range words {
+		levelGroups[word.Level] = append(levelGroups[word.Level], word)
+	}
+
+	// Convert to ordered slice (N5 first, then N4, etc.)
+	var wordsByLevel []WordsByLevel
+	for _, lvl := range []int{5, 4, 3, 2, 1} {
+		if wordsAtLevel, ok := levelGroups[lvl]; ok {
+			wordsByLevel = append(wordsByLevel, WordsByLevel{
+				Level: lvl,
+				Words: wordsAtLevel,
+			})
+		}
+	}
+
+	tmpl, err := template.ParseFiles(
+		"templates/layout/base.html",
+		"templates/pages/search_results.html",
+	)
+	if err != nil {
+		http.Error(w, "Template error: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	searchData := SearchResultsData{
+		Title:        "Search: " + query,
+		Query:        query,
+		SearchType:   searchType,
+		WordsByLevel: wordsByLevel,
+		WordCount:    len(words),
+		NoResults:    len(words) == 0,
+	}
+
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+
+	err = tmpl.ExecuteTemplate(w, "base", searchData)
 	if err != nil {
 		http.Error(w, "Template execution error: "+err.Error(), http.StatusInternalServerError)
 		return

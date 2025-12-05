@@ -1,0 +1,161 @@
+{{define "content"}}
+<!-- SR Timer Script -->
+<script src="/static/js/srTimer.js"></script>
+
+<div class="container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h1>{{.Title}}</h1>
+        {{if not .NoKana}}
+        <div class="mode-indicator">
+            {{if eq .KanaType "hiragana"}}
+                <span class="mode-badge mode-badge-hiragana">あ Hiragana</span>
+            {{else}}
+                <span class="mode-badge mode-badge-katakana">ア Katakana</span>
+            {{end}}
+        </div>
+        {{end}}
+    </div>
+    
+    {{if .NoKana}}
+        <!-- No kana available to study -->
+        <div class="no-words-view" style="text-align: center; margin-top: 50px;">
+            {{if .NeverInitialized}}
+            <p style="font-size: 24px;">📚 Ready to learn {{.KanaType}}?</p>
+            <p style="font-size: 18px; margin-top: 20px; color: #666;">Start your {{.KanaType}} journey by adding all characters to your study deck.</p>
+            <div style="margin-top: 30px;">
+                <form action="/api/kana/initialize" method="POST" style="display: inline;">
+                    <input type="hidden" name="kana_type" value="{{.KanaType}}">
+                    <button type="submit" class="cta-button" style="padding: 15px 30px; 
+                        background: linear-gradient(135deg, {{if eq .KanaType "hiragana"}}#00b894 0%, #00cec9{{else}}#6c5ce7 0%, #a29bfe{{end}} 100%); 
+                        color: white; border: none; border-radius: 25px; font-weight: 600; font-size: 16px; cursor: pointer;
+                        box-shadow: 0 4px 15px rgba({{if eq .KanaType "hiragana"}}0, 184, 148{{else}}108, 92, 231{{end}}, 0.3); transition: all 0.3s ease;">
+                        Start Learning {{.KanaType}} →
+                    </button>
+                </form>
+            </div>
+            {{else}}
+            <p style="font-size: 24px;">🎉 You're all caught up!</p>
+            <p style="font-size: 18px; margin-top: 20px;">No {{.KanaType}} characters are due for review right now.</p>
+            <p style="font-size: 16px; margin-top: 10px;">Come back later to continue studying.</p>
+            {{end}}
+            <div style="margin-top: 30px;">
+                {{if eq .KanaType "hiragana"}}
+                    <a href="/study/katakana" class="btn" style="padding: 12px 24px; background-color: #6c5ce7; color: white; text-decoration: none; border-radius: 5px;">Study Katakana Instead</a>
+                {{else}}
+                    <a href="/study/hiragana" class="btn" style="padding: 12px 24px; background-color: #00b894; color: white; text-decoration: none; border-radius: 5px;">Study Hiragana Instead</a>
+                {{end}}
+            </div>
+        </div>
+    {{else}}
+        <div class="kana-display {{if eq .KanaType "hiragana"}}kana-display-hiragana{{else}}kana-display-katakana{{end}}" style="text-align: center; padding: 40px; margin: 20px 0; border-radius: 10px; background: linear-gradient(135deg, {{if eq .KanaType "hiragana"}}#00b894{{else}}#6c5ce7{{end}}15, {{if eq .KanaType "hiragana"}}#00b894{{else}}#6c5ce7{{end}}30);">
+            <p style="font-size: 120px; font-weight: bold; margin: 0; color: {{if eq .KanaType "hiragana"}}#00b894{{else}}#6c5ce7{{end}};">{{.Character}}</p>
+            <!-- <p style="font-size: 14px; color: #666; margin-top: 10px;">{{.Category}}</p> -->
+        </div>
+        
+        <!-- Unanswered View: Show input form -->
+        <div class="unanswered-view" style="text-align: center;">
+            <form action="/answer/kana" method="post" onsubmit="return validateAndSubmit(this)">
+                <input type="hidden" name="time" value="0">
+                <input type="hidden" name="kana-id" value="{{.SRKanaID}}">
+                <input type="hidden" name="return-url" value="{{.ReturnURL}}">
+                <input type="text" id="kana-input" name="answer" placeholder="Enter romaji (e.g., 'ka', 'shi')" autocomplete="off" style="font-size: 24px; text-align: center; padding: 15px; width: 300px; border: 2px solid {{if eq .KanaType "hiragana"}}#00b894{{else}}#6c5ce7{{end}}; border-radius: 5px; transition: border-color 0.3s;">
+                <br>
+                <button type="submit" class="submit-btn" style="margin-top: 20px; padding: 15px 30px; font-size: 18px; background-color: {{if eq .KanaType "hiragana"}}#00b894{{else}}#6c5ce7{{end}}; color: white; border: none; border-radius: 5px; cursor: pointer;">Submit Answer</button>
+            </form>
+        </div>
+    {{end}}
+</div>
+
+<style>
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+    20%, 40%, 60%, 80% { transform: translateX(10px); }
+}
+
+.shake {
+    animation: shake 0.5s;
+    border-color: #f44336 !important;
+}
+
+.error-message {
+    color: #f44336;
+    font-size: 16px;
+    margin-top: 10px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.error-message.show {
+    opacity: 1;
+}
+
+.mode-badge-hiragana {
+    background-color: #00b894;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+.mode-badge-katakana {
+    background-color: #6c5ce7;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+</style>
+
+<script>
+// Validate form before submission
+function validateAndSubmit(form) {
+    const answerInput = form.querySelector('input[name="answer"]');
+    const answer = answerInput.value.trim();
+    
+    if (answer === '') {
+        // Shake the input box
+        answerInput.classList.add('shake');
+        answerInput.style.borderColor = '#f44336';
+        
+        // Show error message if it doesn't exist
+        let errorMsg = form.querySelector('.error-message');
+        if (!errorMsg) {
+            errorMsg = document.createElement('div');
+            errorMsg.className = 'error-message';
+            errorMsg.textContent = 'Please enter an answer';
+            answerInput.parentElement.appendChild(errorMsg);
+        }
+        errorMsg.classList.add('show');
+        
+        // Remove shake animation after it completes
+        setTimeout(() => {
+            answerInput.classList.remove('shake');
+        }, 500);
+        
+        // Hide error message and reset border after 2 seconds
+        setTimeout(() => {
+            errorMsg.classList.remove('show');
+            answerInput.style.borderColor = '{{if eq .KanaType "hiragana"}}#00b894{{else}}#6c5ce7{{end}}';
+        }, 2000);
+        
+        // Focus back on the input
+        answerInput.focus();
+        
+        return false; // Prevent form submission
+    }
+    
+    // If validation passes, update time before submit
+    return updateTimeBeforeSubmit(form);
+}
+
+// Autofocus input field on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const kanaInput = document.getElementById('kana-input');
+    if (kanaInput) {
+        kanaInput.focus();
+    }
+});
+</script>
+{{end}}
+

@@ -2,8 +2,10 @@
 <!-- SR Timer Script -->
 <script src="/static/js/srTimer.js"></script>
 
-<div class="container">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+<div class="container" style="position: relative; overflow: hidden;">
+    <!-- Success Flash Overlay -->
+    <div id="success-flash" class="success-flash"></div>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; position: relative; z-index: 2;">
         <h1>Study</h1>
         {{if not .NoWords}}
         <div class="mode-indicator">
@@ -18,19 +20,26 @@
     
     {{if .NoWords}}
         <!-- No words available to study -->
-        <div class="no-words-view" style="text-align: center; margin-top: 50px;">
-            <p style="font-size: 24px;">🎉 You're all caught up!</p>
-            <p style="font-size: 18px; margin-top: 20px;">No words are due for review right now.</p>
-            <p style="font-size: 16px; margin-top: 10px;">Come back later to continue studying.</p>
+        <div class="no-words-view" style="text-align: center; margin-top: 50px; position: relative; z-index: 2;">
+            <p style="font-size: 24px;">📚 No words to review!</p>
+            <p style="font-size: 18px; margin-top: 20px; color: #666;">You either have no words in your study deck, or all words are scheduled for later.</p>
+            <div style="margin-top: 30px;">
+                <a href="/learn" class="cta-button" style="text-decoration: none; display: inline-block; padding: 15px 30px; 
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 25px; 
+                    font-weight: 600; font-size: 16px; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3); transition: all 0.3s ease;">
+                    Learn New Words →
+                </a>
+            </div>
+            <p style="font-size: 14px; margin-top: 20px; color: #999;">Visit the Learn page to discover and add new words to your study deck.</p>
         </div>
     {{else}}
-        <div class="kanji-display {{if eq .StudyMode "reading"}}kanji-display-reading{{else}}kanji-display-meaning{{end}}">
+        <div class="kanji-display {{if eq .StudyMode "reading"}}kanji-display-reading{{else}}kanji-display-meaning{{end}}" style="position: relative; z-index: 2;">
             <p style="font-size: 48px; font-weight: bold;">{{.KanjiWord}}</p>
         </div>
         
         {{if .Answered}}
             <!-- Answered View: Show the answer and rating buttons -->
-            <div class="answered-view">
+            <div class="answered-view" style="position: relative; z-index: 2;">
                 <div class="answer-info" style="margin: 20px 0; padding: 20px; background: #f5f5f5; border-radius: 8px;">
                     <p style="font-size: 20px; margin-bottom: 10px;"><strong>Furigana:</strong> {{.Furigana}}</p>
                     <p style="font-size: 20px; margin-bottom: 10px;"><strong>Romaji:</strong> {{.Romaji}}</p>
@@ -47,7 +56,7 @@
             </div>
         {{else}}
             <!-- Unanswered View: Show input form -->
-            <div class="unanswered-view">
+            <div class="unanswered-view" style="position: relative; z-index: 2;">
                 {{if eq .StudyMode "reading"}}
                     <!-- Reading Mode: User types romaji which converts to hiragana -->
                     <form action="/answer/pronunciation" method="post" onsubmit="return validateAndSubmit(this)">
@@ -96,6 +105,47 @@
 .error-message.show {
     opacity: 1;
 }
+
+/* Success flash animation */
+@keyframes successSweep {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+.success-flash {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent 0%,
+        rgba(56, 239, 125, 0.3) 20%,
+        rgba(17, 153, 142, 0.5) 50%,
+        rgba(56, 239, 125, 0.3) 80%,
+        transparent 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+    transform: translateX(-100%);
+    opacity: 0;
+    border-radius: inherit;
+    will-change: transform;
+    contain: layout style paint;
+}
+
+.success-flash.animate {
+    animation: successSweep 0.6s ease-out forwards;
+}
 </style>
 
 <script>
@@ -142,6 +192,24 @@ function validateAndSubmit(form) {
 
 // Autofocus input field on page load
 document.addEventListener('DOMContentLoaded', function() {
+    // Check if we just had a successful answer
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('success') === 'true') {
+        // Trigger the success flash animation
+        const flash = document.getElementById('success-flash');
+        if (flash) {
+            flash.classList.add('animate');
+            // Remove the animation class after it completes
+            setTimeout(() => {
+                flash.classList.remove('animate');
+            }, 600);
+        }
+        
+        // Clean up the URL (remove success parameter)
+        const newUrl = window.location.pathname;
+        window.history.replaceState({}, document.title, newUrl);
+    }
+    
     // Try to focus the reading input
     const readingInput = document.getElementById('kanji-input');
     if (readingInput) {

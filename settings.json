@@ -1,0 +1,11 @@
+// settings.json
+{
+    "theme": "light",
+    "continue": "enter",
+    "1_no_idea": "1",
+    "2_forgot": "2",
+    "3_figured_it_out": "3",
+    "4_i_know_it": "4",
+    "5_burn_it": "5",
+    "know_it_timer_milliseconds": 10000
+}
